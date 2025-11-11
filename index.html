@@ -8,7 +8,6 @@
     <link rel="apple-touch-icon" href="/favicon.png">   
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- إعدادات Tailwind المحدثة لربط الألوان المخصصة -->
     <script>
       tailwind.config = {
         theme: {
@@ -43,25 +42,18 @@
     <div class="min-h-screen flex flex-col" dir="rtl">
         
         <header class="pt-8 pb-12 px-4">
-            <!-- تم تغيير max-w-7xl إلى max-w-5xl -->
             <div class="max-w-5xl mx-auto">
                 <div class="flex justify-between items-center mb-10">
-                    
-                    <!-- تم تصغير حجم الخط -->
                     <div class="text-base md:text-lg font-semibold text-text-primary">
                         مرحباً، <span class="text-primary-dark font-bold">محمد</span> ..
                     </div>
-
-                    <!-- حاوية جديدة لأيقونات الإعدادات والخروج -->
                     <div class="flex items-center space-x-2 space-x-reverse">
-                        <!-- أيقونة الإعدادات الجديدة -->
                         <a href="settings.html" title="الإعدادات" class="p-2 flex items-center text-primary hover:opacity-70 transition">
                             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="3"></circle>
                                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09A1.65 1.65 0 0 0 15 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                             </svg>
                         </a>
-                        <!-- أيقونة تسجيل الخروج -->
                         <a href="login.html" title="تسجيل الخروج" class="p-2 flex items-center text-primary hover:opacity-70 transition">
                             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
@@ -71,9 +63,7 @@
                         </a>
                     </div>
                 </div>
-
                 <div class="text-center">
-                    <!-- تم تصغير حجم الخطوط لتكون مريحة ومتجانسة -->
                     <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 gradient-text" style="font-weight: 800;">
                         صندوق
                     </h1>
@@ -85,62 +75,59 @@
         </header>
 
         <main class="flex-1 px-4 pb-4">
-                       <div class="max-w-5xl mx-auto">
-                <!-- تم تغيير عدد الأعمدة ليصبح 4 بعد حذف الإعدادات -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+            <div class="max-w-5xl mx-auto">
+                <!-- ==================================================== -->
+                <!-- ▼▼▼ هذا هو السطر الذي تم تعديله ▼▼▼ -->
+                <!-- ==================================================== -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
 
-                
                     <a href="members.html">
-                        <div class="menu-card secondary rounded-2xl p-2 flex flex-col items-center justify-center text-center rounded-xl-radius">
-                            <div class="icon-wrapper mb-4 p-4 rounded-full bg-secondary-light rounded-pill-radius">
+                        <div class="menu-card secondary rounded-2xl p-4 flex flex-col items-center justify-center text-center rounded-xl-radius aspect-square">
+                            <div class="icon-wrapper mb-2 p-3 rounded-full bg-secondary-light rounded-pill-radius">
                                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary-color">
                                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold mb-1 text-text-primary">الأعضاء</h3>
-                            <p class="text-sm text-text-muted">إدارة الأعضاء</p>
+                            <h3 class="text-base sm:text-lg font-bold mb-1 text-text-primary">الأعضاء</h3>
+                            <p class="text-xs sm:text-sm text-text-muted">إدارة الأعضاء</p>
                         </div>
                     </a>
 
                     <a href="deposit.html" > 
-                        <div class="menu-card success rounded-2xl p-2 flex flex-col items-center justify-center text-center rounded-xl-radius">
-                            <div class="icon-wrapper mb-4 p-4 rounded-full bg-success-light rounded-pill-radius">
+                        <div class="menu-card success rounded-2xl p-4 flex flex-col items-center justify-center text-center rounded-xl-radius aspect-square">
+                            <div class="icon-wrapper mb-2 p-3 rounded-full bg-success-light rounded-pill-radius">
                                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success-color">
                                     <circle cx="12" cy="12" r="10"></circle><path d="M12 8v8"></path><path d="m8 12 4 4 4-4"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold mb-1 text-text-primary">إيداع</h3>
-                            <p class="text-sm text-text-muted">إضافة رصيد</p>
+                            <h3 class="text-base sm:text-lg font-bold mb-1 text-text-primary">إيداع</h3>
+                            <p class="text-xs sm:text-sm text-text-muted">إضافة رصيد</p>
                         </div>
                     </a>
 
-                    <!-- تم تغيير لون بطاقة السحب إلى الأحمر (danger) -->
                     <a href="withdrawal.html">
-                        <div class="menu-card danger rounded-2xl p-2 flex flex-col items-center justify-center text-center rounded-xl-radius">
-                            <div class="icon-wrapper mb-4 p-4 rounded-full bg-danger-light rounded-pill-radius">
+                        <div class="menu-card danger rounded-2xl p-4 flex flex-col items-center justify-center text-center rounded-xl-radius aspect-square">
+                            <div class="icon-wrapper mb-2 p-3 rounded-full bg-danger-light rounded-pill-radius">
                                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-danger">
                                     <circle cx="12" cy="12" r="10"></circle><path d="m16 12-4-4-4 4"></path><path d="M12 16V8"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold mb-1 text-text-primary">سحب</h3>
-                            <p class="text-sm text-text-muted">سحب رصيد</p>
+                            <h3 class="text-base sm:text-lg font-bold mb-1 text-text-primary">سحب</h3>
+                            <p class="text-xs sm:text-sm text-text-muted">سحب رصيد</p>
                         </div>
                     </a>
 
                     <a href="reports.html">
-                        <div class="menu-card info rounded-2xl p-2 flex flex-col items-center justify-center text-center rounded-xl-radius">
-                            <div class="icon-wrapper mb-4 p-4 rounded-full bg-info-light rounded-pill-radius">
+                        <div class="menu-card info rounded-2xl p-4 flex flex-col items-center justify-center text-center rounded-xl-radius aspect-square">
+                            <div class="icon-wrapper mb-2 p-3 rounded-full bg-info-light rounded-pill-radius">
                                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-info-color">
                                     <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M12 18v-4"></path><path d="M8 18v-2"></path><path d="M16 18v-6"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold mb-1 text-text-primary">التقارير</h3>
-                            <p class="text-sm text-text-muted">عرض التقارير</p>
+                            <h3 class="text-base sm:text-lg font-bold mb-1 text-text-primary">التقارير</h3>
+                            <p class="text-xs sm:text-sm text-text-muted">عرض التقارير</p>
                         </div>
                     </a>
-                    
-                    <!-- تم حذف بطاقة الإعدادات من هنا -->
-
                 </div>
             </div>
         </main>
@@ -153,7 +140,3 @@
     </div>
 </body>
 </html>
-
-
-
-

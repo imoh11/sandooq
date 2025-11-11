@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الأعضاء</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+       tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: 'var(--primary)',
+        'primary-light': 'var(--primary-light)',
+        'primary-dark': 'var(--primary-dark)',
+        'bg-primary': 'var(--gray-50)',
+        'border-border-color': 'var(--gray-300)',
+      }
+    }
+  }
+}
+    </script>
+    <style>
+        /* التأكد من تطبيق الخط على الجسم */
+        body { font-family: 'Tajawal', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* تنسيق الأزرار المشترك */
+        .btn {
+            color: var(--text-inverse); /* لون النص أبيض */
+            transition: all 0.2s;
+            padding: 0.8rem 1.8rem; /* زيادة الحشوة لجعل الزر أكبر وأجمل */
+            border-radius: var(--border-radius); /* زوايا دائرية */
+            font-weight: 700;
+            flex-grow: 1; /* لجعل الأزرار تتساوى في العرض داخل الحاوية */
+            text-align: center;
+            min-width: 150px; /* ضمان حد أدنى للعرض */
+        }
+        
+        /* تعريف الأزرار الأربعة باستخدام ألوان مختلفة من المتغيرات */
+        .btn-primary {
+            background-color: var(--primary);
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+        }
+        .btn-success:hover {
+            background-color: var(--success-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+        }
+        .btn-warning:hover {
+            background-color: var(--warning-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+    </style>
+</head>
+<body class="font-tajawal">
+    <div class="min-h-screen flex flex-col" dir="rtl">
+        <header class="pt-12 pb-8 px-4 border-b border-border-color bg-bg-primary">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-text-primary">
+                    إدارة الأعضاء
+                </h1>
+           <a href="index.html"
+   class="p-3 border border-border-color bg-bg-primary text-primary rounded-lg hover:bg-primary-light transition inline-flex items-center justify-center"
+   aria-label="العودة للصفحة الرئيسية"
+   title="العودة للصفحة الرئيسية">
+    <svg class="w-6 h-6 transform rotate-180" fill="none" stroke="currentColor"
+         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+    </svg>
+</a>
+
+            </div>
+        </header>
+
+        <main class="flex-1 px-4 py-8 bg-bg-secondary">
+            <div class="max-w-7xl mx-auto">
+                
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    
+                    <button class="btn btn-secondary flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        إضافة فريق
+                    </button>
+
+                    <button class="btn btn-primary flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <line x1="18" y1="8" x2="18" y2="14"></line>
+                            <line x1="15" y1="11" x2="21" y2="11"></line>
+                        </svg>
+                        إضافة عضو
+                    </button>
+
+                    <button class="btn btn-success flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <path d="M4 16l4-4 4 4"></path>
+                            <path d="M12 12v4"></path>
+                        </svg>
+                        إضافة أعضاء (جماعي)
+                    </button>
+                    
+                    <button class="btn btn-warning flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+                            <path d="M16 2a4 4 0 0 0-4 4h-4a4 4 0 0 0-4 4"></path>
+                            <line x1="12" y1="12" x2="12" y2="16"></line>
+                            <line x1="10" y1="14" x2="14" y2="14"></line>
+                        </svg>
+                        إضافة صندوق
+                    </button>
+
+                </div>
+                
+                <div class="bg-bg-primary p-6 md:p-8 rounded-xl-radius shadow-md border border-border-color">
+                    <p class="text-text-muted text-lg">سيتم عرض قائمة الأعضاء هنا لاحقاً...</p>
+                    <p class="text-sm mt-4 text-gray-500">ملاحظة: هذه الأزرار منسقة لتكون متساوية العرض وجميلة الشكل.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="py-6 text-center bg-bg-primary border-t border-border-color">
+            <p class="text-sm md:text-base text-text-muted">
+                © Studio10 للأنظمة الإدارية
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

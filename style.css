@@ -1,0 +1,195 @@
+/* ربط خط "تجوال" (Tajawal) في حال لم يتم استدعاؤه بالفعل في مكان آخر */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+
+/* تعريف متغيرات CSS (الألوان، الظلال، الحدود) */
+:root {
+    /* الألوان الرئيسية - ظلال هادئة */
+    --primary: #5b7db1; /* أزرق أساسي */
+    --primary-dark: #47668c; /* أزرق داكن */
+    --primary-light: #e8eef7; /* أزرق فاتح جداً */
+    --primary-lighter: #f5f7fb; /* أزرق أفتح */
+    :root {
+    --primary: #3498db;
+    --primary-dark: #2980b9;
+    --secondary: #2ecc71;
+    --secondary-dark: #27ae60;
+    --success: #10b981;
+    --success-dark: #059669;
+    --warning: #f59e0b;
+    --warning-dark: #d97706;
+    --text-inverse: #fff;
+    --border-color: #e5e7eb;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --border-radius: 0.75rem;
+}
+
+    --secondary: #a882dd; /* بنفسجي ثانوي */
+    --secondary-dark: #8c6bb8; /* بنفسجي داكن */
+    --secondary-light: #f0eafb; /* بنفسجي فاتح جداً */
+    
+    --success: #6bc4a6; /* أخضر للنجاح */
+    --success-dark: #4da38a;
+    --success-light: #e8f6f1;
+    
+    --warning: #e9b949; /* برتقالي/أصفر للتحذير */
+    --warning-dark: #d4a63c;
+    --warning-light: #fcf6e9;
+    
+    --danger: #e67e8c; /* أحمر للخطر */
+    --danger-dark: #d16a7a;
+    --danger-light: #fbeaed;
+    
+    --info: #64c3d5; /* سماوي للمعلومات */
+    --info-dark: #4fa9b9;
+    --info-light: #e8f6f9;
+    
+    /* الألوان المحايدة - ظلال ناعمة (الرماديات) */
+    --gray-50: #fdfdfe;
+    --gray-100: #f7f8fa;
+    --gray-200: #f0f1f5;
+    --gray-300: #e2e4eb;
+    --gray-400: #c8ccd8;
+    --gray-500: #9ea5b8;
+    --gray-600: #6f7890;
+    --gray-700: #4a546c;
+    --gray-800: #2d3748;
+    --gray-900: #1a202c;
+    
+    /* ألوان النصوص المعرفة */
+    --text-primary: var(--gray-800);
+    --text-secondary: var(--gray-700);
+    --text-muted: var(--gray-600);
+    --text-inverse: #ffffff;
+    
+    /* ألوان الخلفيات المعرفة */
+    --bg-primary: #ffffff;
+    --bg-secondary: var(--gray-100);
+    --bg-tertiary: var(--gray-200);
+    
+    /* الحدود والظلال المعرفة */
+    --border-color: var(--gray-200);
+    --border-color-light: var(--gray-100);
+    --border-color-dark: var(--gray-300);
+    
+    /* أنصاف الأقطار للزوايا الدائرية */
+    --border-radius: 12px;
+    --border-radius-sm: 8px;
+    --border-radius-lg: 16px;
+    --border-radius-xl: 24px;
+    --border-radius-pill: 50px;
+    
+    /* تعريفات الظلال */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.03), 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 8px 24px -4px rgba(0, 0, 0, 0.06), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 16px 40px -6px rgba(0, 0, 0, 0.08), 0 8px 20px -4px rgba(0, 0, 0, 0.04);
+    
+    /* ظلال مخصصة تعتمد على الألوان الأساسية */
+    --shadow-primary: 0 4px 12px -2px rgba(91, 125, 177, 0.15);
+    --shadow-success: 0 4px 12px -2px rgba(107, 196, 166, 0.15);
+    --shadow-danger: 0 4px 12px -2px rgba(230, 126, 140, 0.15);
+}
+html {
+        font-size: 90%; 
+    }
+/* تنسيقات الجسم (Body) وتطبيق الخط واللون الخلفي المتدرج */
+body {
+    /* تطبيق خط تجوال والخطوط الاحتياطية */
+    font-family: 'Tajawal', Tahoma, Geneva, Verdana, sans-serif;
+    /* خلفية متدرجة تبدأ من الرمادي الفاتح وتنتهي بالأزرق الأفتح */
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--primary-lighter) 100%);
+}
+
+/* التنسيق العام لبطاقات القائمة (Menu Card) */
+.menu-card {
+    background: var(--bg-primary); /* خلفية بيضاء */
+    border: 1px solid var(--border-color); /* حدود رقيقة */
+    /* مؤثر انتقالي سلس لتأثير التحويم */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer; /* تغيير شكل المؤشر ليشير إلى القابلية للنقر */
+}
+
+/* تأثير التحويم (Hover) على بطاقة القائمة */
+.menu-card:hover {
+    transform: translateY(-8px); /* رفع البطاقة للأعلى قليلاً */
+    box-shadow: var(--shadow-lg); /* تطبيق ظل كبير */
+}
+
+/* تأثير التحويم الخاص لكل لون من البطاقات (تغيير لون الإطار والظل) */
+.menu-card.primary:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-primary);
+}
+
+.menu-card.secondary:hover {
+    border-color: var(--secondary);
+    box-shadow: 0 4px 12px -2px rgba(168, 130, 221, 0.15); /* ظل ثانوي مخصص */
+}
+
+.menu-card.success:hover {
+    border-color: var(--success);
+    box-shadow: var(--shadow-success);
+}
+
+.menu-card.warning:hover {
+    border-color: var(--warning);
+    box-shadow: 0 4px 12px -2px rgba(233, 185, 73, 0.15); /* ظل تحذيري مخصص */
+}
+
+.menu-card.info:hover {
+    border-color: var(--info);
+    box-shadow: 0 4px 12px -2px rgba(100, 195, 213, 0.15); /* ظل معلومات مخصص */
+}
+
+/* تنسيق غلاف الأيقونة (Icon Wrapper) */
+.icon-wrapper {
+    transition: transform 0.3s ease; /* مؤثر انتقالي لحركة الأيقونة */
+}
+
+/* تأثير التحويم على غلاف الأيقونة (تصغير/تكبير) */
+.menu-card:hover .icon-wrapper {
+    transform: scale(1.1); /* تكبير الأيقونة قليلاً */
+}
+
+/* تنسيق النص المتدرج (Gradient Text) - يستخدم للعنوان الرئيسي */
+.gradient-text {
+    /* خلفية متدرجة من الأزرق الأساسي إلى البنفسجي الثانوي */
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    /* قص الخلفية لتظهر فقط من خلال النص (خاص بمتصفحات الويب كيت) */
+    -webkit-background-clip: text;
+    /* إزالة لون النص ليعرض التدرج (خاص بمتصفحات الويب كيت) */
+    -webkit-text-fill-color: transparent;
+    /* قص الخلفية لتظهر فقط من خلال النص (قياسي) */
+    background-clip: text;
+}
+
+/* تنسيقات إضافية لربط متغيرات CSS بفئات Tailwind لتسهيل القراءة في HTML */
+/* ملاحظة: هذه الطريقة غير قياسية في Tailwind ولكنها مستخدمة لتبسيط الكود الأصلي */
+.text-primary-color { color: var(--primary); }
+.text-secondary-color { color: var(--secondary); }
+.text-success-color { color: var(--success); }
+.text-warning-color { color: var(--warning); }
+.text-info-color { color: var(--info); }
+
+.bg-primary-light { background-color: var(--primary-light); }
+.bg-secondary-light { background-color: var(--secondary-light); }
+.bg-success-light { background-color: var(--success-light); }
+.bg-warning-light { background-color: var(--warning-light); }
+.bg-info-light { background-color: var(--info-light); }
+
+.text-text-primary { color: var(--text-primary); }
+.text-text-secondary { color: var(--text-secondary); }
+.text-text-muted { color: var(--text-muted); }
+
+.bg-bg-primary { background-color: var(--bg-primary); }
+
+.border-border-color { border-color: var(--border-color); }
+
+.rounded-xl-radius { border-radius: var(--border-radius-xl); }
+.rounded-pill-radius { border-radius: var(--border-radius-pill); }
+
+.font-bold-700 { font-weight: 700; }
+.font-tajawal { font-family: 'Tajawal', Tahoma, Geneva, Verdana, sans-serif; }

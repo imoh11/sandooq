@@ -35,6 +35,7 @@
                         'danger-light': 'var(--danger-light)', 
                         'info': 'var(--info)',
                         'info-dark': 'var(--info-dark)',
+                        'info-light': 'var(--info-light)', 
                     }
                 }
             }
@@ -140,13 +141,13 @@
                     التقارير والإحصائيات 📊
                 </h1>
            <a href="index.html" 
-   class="p-3 border border-border-color bg-bg-primary text-primary rounded-lg hover:bg-primary-light transition inline-flex items-center justify-center"
-   aria-label="العودة للصفحة الرئيسية"
-   title="العودة للصفحة الرئيسية">
-    <svg class="w-6 h-6 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-    </svg>
-</a>
+    class="p-3 border border-border-color bg-bg-primary text-primary rounded-lg hover:bg-primary-light transition inline-flex items-center justify-center"
+    aria-label="العودة للصفحة الرئيسية"
+    title="العودة للصفحة الرئيسية">
+     <svg class="w-6 h-6 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+     </svg>
+ </a>
             </div>
         </header>
 
@@ -341,15 +342,16 @@
             const reportIds = ['deposits', 'withdrawals', 'combined'];
             
             // العناصر التي يجب إخفاؤها في تقرير الرصيد (combined)
-            // ملاحظة: بما أن جميع الـ <label> حُذفت، فهذه الحاويات الآن لا تحتوي إلا على الـ <select> أو الـ <input>
-            const elementsToHideInCombined = [
+            // وهي فلاتر: الفريق والحالة.
+            const elementsToHide = [
                 document.getElementById('filter-team-container'),
                 document.getElementById('filter-status-container')
             ];
 
             // 1. إخفاء كل محتويات التقارير
             reportIds.forEach(id => {
-                document.getElementById(id + '-report-content').classList.add('hidden');
+                const content = document.getElementById(id + '-report-content');
+                if (content) content.classList.add('hidden');
             });
 
             // 2. إزالة حالة النشاط (active) من كل بطاقات التنقل وإعادة تلوين النص
@@ -357,9 +359,11 @@
                 const tab = document.getElementById('tab-' + id);
                 const label = document.getElementById('label-' + id);
                 
-                tab.classList.remove('active-deposits', 'active-withdrawals', 'active-combined');
-                label.classList.remove('text-success-dark', 'text-danger-dark', 'text-primary-dark');
-                label.classList.add('text-text-primary'); 
+                if (tab) tab.classList.remove('active-deposits', 'active-withdrawals', 'active-combined');
+                if (label) {
+                    label.classList.remove('text-success-dark', 'text-danger-dark', 'text-primary-dark');
+                    label.classList.add('text-text-primary'); 
+                }
             });
 
             // 3. إظهار المحتوى المطلوب وتفعيل بطاقة التنقل المطابقة
@@ -370,48 +374,64 @@
             if (content && tab) {
                 content.classList.remove('hidden');
 
-                // 4. التحكم في إظهار وإخفاء الفلاتر
-                if (reportType === 'combined') {
-                    // إخفاء فلاتر الفريق والحالة لتقرير الرصيد
-                    elementsToHideInCombined.forEach(el => {
+                // 4. التحكم في إظهار وإخفاء الفلاتر وتعديل التخطيط
+                const filtersGrid = document.getElementById('report-filters-grid');
+
+                if (reportType === 'deposits') {
+                    // **[حالة الإيداع]**: إظهار جميع الفلاتر
+                    elementsToHide.forEach(el => {
+                        if (el) el.classList.remove('hidden');
+                    });
+                    
+                    // إعادة تخطيط الشبكة الأصلية (6 أعمدة)
+                    if(filtersGrid) {
+                        filtersGrid.classList.remove('lg:grid-cols-4');
+                        filtersGrid.classList.add('xl:grid-cols-6');
+                    }
+                    
+                    // تفعيل الألوان المخصصة للإيداع
+                    tab.classList.add('active-deposits');
+                    if (label) {
+                        label.classList.remove('text-text-primary');
+                        label.classList.add('text-success-dark');
+                    }
+
+                } else if (reportType === 'withdrawals') {
+                    // **[حالة السحب]**: إخفاء فلتر الفريق والحالة (كما الرصيد)
+                    elementsToHide.forEach(el => {
                         if (el) el.classList.add('hidden');
                     });
                     
-                    // تعديل تخطيط الشبكة للفلاتر المتبقية (3 فلاتر + زر التطبيق)
-                    const filtersGrid = document.getElementById('report-filters-grid');
+                    // تعديل تخطيط الشبكة (4 أعمدة)
                     if(filtersGrid) {
                         filtersGrid.classList.remove('xl:grid-cols-6');
                         filtersGrid.classList.add('lg:grid-cols-4');
                     }
 
+                    // تفعيل الألوان المخصصة للسحب
+                    tab.classList.add('active-withdrawals');
+                    if (label) {
+                        label.classList.remove('text-text-primary');
+                        label.classList.add('text-danger-dark');
+                    }
+
+                } else if (reportType === 'combined') {
+                    // **[حالة الرصيد]**: إخفاء فلتر الفريق والحالة
+                    elementsToHide.forEach(el => {
+                        if (el) el.classList.add('hidden');
+                    });
+                    
+                    // تعديل تخطيط الشبكة (4 أعمدة)
+                    if(filtersGrid) {
+                        filtersGrid.classList.remove('xl:grid-cols-6');
+                        filtersGrid.classList.add('lg:grid-cols-4');
+                    }
 
                     // تفعيل الألوان المخصصة للتقرير المدمج
                     tab.classList.add('active-combined');
-                    label.classList.remove('text-text-primary');
-                    label.classList.add('text-primary-dark');
-
-                } else {
-                    // إظهار جميع الفلاتر لباقي التقارير (الإيداعات والسحوبات)
-                    elementsToHideInCombined.forEach(el => {
-                        if (el) el.classList.remove('hidden');
-                    });
-                    
-                    // إعادة تخطيط الشبكة للفلاتر الأصلية
-                    const filtersGrid = document.getElementById('report-filters-grid');
-                    if(filtersGrid) {
-                        filtersGrid.classList.remove('lg:grid-cols-4');
-                        filtersGrid.classList.add('xl:grid-cols-6');
-                    }
-
-                    // تفعيل الألوان المخصصة
-                    if (reportType === 'deposits') {
-                        tab.classList.add('active-deposits');
+                    if (label) {
                         label.classList.remove('text-text-primary');
-                        label.classList.add('text-success-dark');
-                    } else if (reportType === 'withdrawals') {
-                        tab.classList.add('active-withdrawals');
-                        label.classList.remove('text-text-primary');
-                        label.classList.add('text-danger-dark');
+                        label.classList.add('text-primary-dark');
                     }
                 }
             }

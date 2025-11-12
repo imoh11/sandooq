@@ -3,42 +3,51 @@
 
 /* تعريف متغيرات CSS (الألوان، الظلال، الحدود) */
 :root {
-    /* الألوان الرئيسية - ظلال هادئة */
-    --primary: #5b7db1; /* أزرق أساسي */
-    --primary-dark: #47668c; /* أزرق داكن */
-    --primary-light: #e8eef7; /* أزرق فاتح جداً */
-    --primary-lighter: #f5f7fb; /* أزرق أفتح */
-    --secondary: #a882dd; /* بنفسجي ثانوي */
-    --secondary-dark: #8c6bb8; /* بنفسجي داكن */
-    --secondary-light: #f0eafb; /* بنفسجي فاتح جداً */
+    /* الألوان الرئيسية - ظلال أكثر جمالاً وتناسقاً */
+    --primary: #6366f1; /* أزرق نيلي جميل */
+    --primary-dark: #4f46e5; /* أزرق نيلي داكن */
+    --primary-light: #e0e7ff; /* أزرق فاتح جداً */
+    --primary-lighter: #f5f7ff; /* أزرق أفتح */
     
-    --success: #6bc4a6; /* أخضر للنجاح */
-    --success-dark: #4da38a;
-    --success-light: #e8f6f1;
+    --secondary: #ec4899; /* وردي غامق جميل */
+    --secondary-dark: #db2777; /* وردي داكن */
+    --secondary-light: #fce7f3; /* وردي فاتح جداً */
     
-    --warning: #e9b949; /* برتقالي/أصفر للتحذير */
-    --warning-dark: #d4a63c;
-    --warning-light: #fcf6e9;
+    --success: #10b981; /* زمردي أخضر */
+    --success-dark: #059669; /* زمردي داكن */
+    --success-light: #d1fae5; /* أخضر فاتح */
     
-    --danger: #e67e8c; /* أحمر للخطر */
-    --danger-dark: #d16a7a;
-    --danger-light: #fbeaed;
+    --warning: #f59e0b; /* كهرماني ذهبي */
+    --warning-dark: #d97706; /* كهرماني داكن */
+    --warning-light: #fef3c7; /* أصفر فاتح */
     
-    --info: #64c3d5; /* سماوي للمعلومات */
-    --info-dark: #4fa9b9;
-    --info-light: #e8f6f9;
+    --danger: #ef4444; /* أحمر مرجاني */
+    --danger-dark: #dc2626; /* أحمر داكن */
+    --danger-light: #fee2e2; /* أحمر فاتح */
     
+    --info: #06b6d4; /* فيروزي */
+    --info-dark: #0891b2; /* فيروزي داكن */
+    --info-light: #cffafe; /* فيروزي فاتح */
+    
+    --purple: #8b5cf6; /* بنفسجي جميل */
+    --purple-dark: #7c3aed; /* بنفسجي داكن */
+    --purple-light: #ede9fe; /* بنفسجي فاتح */
+    
+    --indigo: #4f46e5; /* نيلي غامق */
+    --indigo-dark: #4338ca; /* نيلي داكن */
+    --indigo-light: #e0e7ff; /* نيلي فاتح */
+
     /* الألوان المحايدة - ظلال ناعمة (الرماديات) */
-    --gray-50: #fdfdfe;
-    --gray-100: #f7f8fa;
-    --gray-200: #f0f1f5;
-    --gray-300: #e2e4eb;
-    --gray-400: #c8ccd8;
-    --gray-500: #9ea5b8;
-    --gray-600: #6f7890;
-    --gray-700: #4a546c;
-    --gray-800: #2d3748;
-    --gray-900: #1a202c;
+    --gray-50: #fafafa;
+    --gray-100: #f4f4f5;
+    --gray-200: #e4e4e7;
+    --gray-300: #d4d4d8;
+    --gray-400: #a1a1aa;
+    --gray-500: #71717a;
+    --gray-600: #52525b;
+    --gray-700: #3f3f46;
+    --gray-800: #27272a;
+    --gray-900: #18181b;
     
     /* ألوان النصوص المعرفة */
     --text-primary: var(--gray-800);
@@ -48,8 +57,8 @@
     
     /* ألوان الخلفيات المعرفة */
     --bg-primary: #ffffff;
-    --bg-secondary: var(--gray-100);
-    --bg-tertiary: var(--gray-200);
+    --bg-secondary: var(--gray-50);
+    --bg-tertiary: var(--gray-100);
     
     /* الحدود والظلال المعرفة */
     --border-color: var(--gray-200);
@@ -57,28 +66,32 @@
     --border-color-dark: var(--gray-300);
     
     /* أنصاف الأقطار للزوايا الدائرية */
-    --border-radius: 12px;
-    --border-radius-sm: 8px;
-    --border-radius-lg: 16px;
-    --border-radius-xl: 24px;
+    --border-radius: 16px;
+    --border-radius-sm: 12px;
+    --border-radius-lg: 20px;
+    --border-radius-xl: 28px;
     --border-radius-pill: 50px;
+    --border-radius-circle: 50%;
     
     /* تعريفات الظلال */
-    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
-    --shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.03), 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
-    --shadow-lg: 0 8px 24px -4px rgba(0, 0, 0, 0.06), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
-    --shadow-xl: 0 16px 40px -6px rgba(0, 0, 0, 0.08), 0 8px 20px -4px rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 2px 8px 0 rgba(0, 0, 0, 0.04), 0 1px 4px 0 rgba(0, 0, 0, 0.06);
+    --shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.06), 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 8px 32px -4px rgba(0, 0, 0, 0.08), 0 4px 16px -2px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 16px 48px -8px rgba(0, 0, 0, 0.12), 0 8px 24px -4px rgba(0, 0, 0, 0.08);
+    --shadow-xl: 0 24px 64px -12px rgba(0, 0, 0, 0.16), 0 12px 32px -6px rgba(0, 0, 0, 0.1);
     
     /* ظلال مخصصة تعتمد على الألوان الأساسية */
-    --shadow-primary: 0 4px 12px -2px rgba(91, 125, 177, 0.15);
-    --shadow-success: 0 4px 12px -2px rgba(107, 196, 166, 0.15);
-    --shadow-danger: 0 4px 12px -2px rgba(230, 126, 140, 0.15);
+    --shadow-primary: 0 8px 32px -4px rgba(99, 102, 241, 0.2);
+    --shadow-secondary: 0 8px 32px -4px rgba(236, 72, 153, 0.2);
+    --shadow-success: 0 8px 32px -4px rgba(16, 185, 129, 0.2);
+    --shadow-warning: 0 8px 32px -4px rgba(245, 158, 11, 0.2);
+    --shadow-info: 0 8px 32px -4px rgba(6, 182, 212, 0.2);
+    --shadow-purple: 0 8px 32px -4px rgba(139, 92, 246, 0.2);
 }
 
 /* تحسين حجم الخط الأساسي */
 html {
-    font-size: 100%; /* العودة للحجم الطبيعي (16px عادة) */
+    font-size: 100%;
 }
 
 /* تنسيقات الجسم (Body) وتطبيق الخط واللون الخلفي المتدرج */
@@ -87,7 +100,8 @@ body {
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--primary-lighter) 100%);
     color: var(--text-primary);
     line-height: 1.6;
-    font-size: 1rem; /* حجم خط متوازن */
+    font-size: 1rem;
+    min-height: 100vh;
 }
 
 /* تحسين حجم الخط للعناوين */
@@ -97,51 +111,30 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0.5em;
 }
 
-h1 {
-    font-size: 2.5rem;
-}
-
-h2 {
-    font-size: 2rem;
-}
-
-h3 {
-    font-size: 1.75rem;
-}
-
-h4 {
-    font-size: 1.5rem;
-}
-
-h5 {
-    font-size: 1.25rem;
-}
-
-h6 {
-    font-size: 1.125rem;
-}
-
-/* تحسين حجم الخط للنصوص العادية */
-p, span, div, a, li {
-    font-size: 1rem;
-    line-height: 1.6;
-}
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1.125rem; }
 
 /* التنسيق العام لبطاقات القائمة (Menu Card) */
 .menu-card {
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--border-radius-xl);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
-    padding: 1.5rem;
-    font-size: 1rem; /* حجم خط مناسب للبطاقات */
+    padding: 2rem;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
 }
 
 /* تأثير التحويم (Hover) على بطاقة القائمة */
 .menu-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: var(--shadow-xl);
 }
 
 /* تأثير التحويم الخاص لكل لون من البطاقات */
@@ -152,7 +145,7 @@ p, span, div, a, li {
 
 .menu-card.secondary:hover {
     border-color: var(--secondary);
-    box-shadow: 0 4px 12px -2px rgba(168, 130, 221, 0.15);
+    box-shadow: var(--shadow-secondary);
 }
 
 .menu-card.success:hover {
@@ -162,29 +155,98 @@ p, span, div, a, li {
 
 .menu-card.warning:hover {
     border-color: var(--warning);
-    box-shadow: 0 4px 12px -2px rgba(233, 185, 73, 0.15);
+    box-shadow: var(--shadow-warning);
 }
 
 .menu-card.info:hover {
     border-color: var(--info);
-    box-shadow: 0 4px 12px -2px rgba(100, 195, 213, 0.15);
+    box-shadow: var(--shadow-info);
 }
 
-/* تنسيق غلاف الأيقونة (Icon Wrapper) */
+.menu-card.purple:hover {
+    border-color: var(--purple);
+    box-shadow: var(--shadow-purple);
+}
+
+/* تنسيق غلاف الأيقونة (Icon Wrapper) - أشكال جديدة */
 .icon-wrapper {
-    transition: transform 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
-    border-radius: var(--border-radius);
-    margin-bottom: 1rem;
+    width: 80px;
+    height: 80px;
+    border-radius: var(--border-radius-lg);
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* أشكال مختلفة لحاويات الأيقونات */
+.icon-wrapper.circle {
+    border-radius: var(--border-radius-circle);
+}
+
+.icon-wrapper.rounded {
+    border-radius: var(--border-radius-xl);
+}
+
+.icon-wrapper.diamond {
+    border-radius: 20px;
+    transform: rotate(45deg);
+}
+
+.icon-wrapper.diamond i {
+    transform: rotate(-45deg);
+}
+
+.icon-wrapper.hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
 
 /* تأثير التحويم على غلاف الأيقونة */
 .menu-card:hover .icon-wrapper {
-    transform: scale(1.1);
+    transform: scale(1.15) rotate(5deg);
+}
+
+.menu-card:hover .icon-wrapper.diamond {
+    transform: scale(1.15) rotate(50deg);
+}
+
+/* خلفيات متدرجة للأيقونات */
+.icon-wrapper.primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+}
+
+.icon-wrapper.secondary {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+    box-shadow: 0 8px 24px rgba(236, 72, 153, 0.3);
+}
+
+.icon-wrapper.success {
+    background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+}
+
+.icon-wrapper.warning {
+    background: linear-gradient(135deg, var(--warning) 0%, var(--warning-dark) 100%);
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+}
+
+.icon-wrapper.info {
+    background: linear-gradient(135deg, var(--info) 0%, var(--info-dark) 100%);
+    box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
+}
+
+.icon-wrapper.purple {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+}
+
+.icon-wrapper.indigo {
+    background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 100%);
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
 }
 
 /* تنسيق النص المتدرج (Gradient Text) */
@@ -202,12 +264,16 @@ p, span, div, a, li {
 .text-success-color { color: var(--success); }
 .text-warning-color { color: var(--warning); }
 .text-info-color { color: var(--info); }
+.text-purple-color { color: var(--purple); }
+.text-indigo-color { color: var(--indigo); }
 
 .bg-primary-light { background-color: var(--primary-light); }
 .bg-secondary-light { background-color: var(--secondary-light); }
 .bg-success-light { background-color: var(--success-light); }
 .bg-warning-light { background-color: var(--warning-light); }
 .bg-info-light { background-color: var(--info-light); }
+.bg-purple-light { background-color: var(--purple-light); }
+.bg-indigo-light { background-color: var(--indigo-light); }
 
 .text-text-primary { color: var(--text-primary); }
 .text-text-secondary { color: var(--text-secondary); }
@@ -219,9 +285,27 @@ p, span, div, a, li {
 
 .rounded-xl-radius { border-radius: var(--border-radius-xl); }
 .rounded-pill-radius { border-radius: var(--border-radius-pill); }
+.rounded-circle { border-radius: var(--border-radius-circle); }
 
 .font-bold-700 { font-weight: 700; }
 .font-tajawal { font-family: 'Tajawal', Tahoma, Geneva, Verdana, sans-serif; }
+
+/* تأثيرات إضافية للبطاقات */
+.menu-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.menu-card:hover::before {
+    transform: scaleX(1);
+}
 
 /* تحسينات للاستجابة على الشاشات الصغيرة */
 @media (max-width: 768px) {
@@ -238,7 +322,12 @@ p, span, div, a, li {
     }
     
     .menu-card {
-        padding: 1.25rem;
+        padding: 1.5rem;
+    }
+    
+    .icon-wrapper {
+        width: 70px;
+        height: 70px;
     }
 }
 
@@ -253,5 +342,14 @@ p, span, div, a, li {
     
     h2 {
         font-size: 1.5rem;
+    }
+    
+    .menu-card {
+        padding: 1.25rem;
+    }
+    
+    .icon-wrapper {
+        width: 60px;
+        height: 60px;
     }
 }

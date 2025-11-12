@@ -8,23 +8,6 @@
     --primary-dark: #47668c; /* أزرق داكن */
     --primary-light: #e8eef7; /* أزرق فاتح جداً */
     --primary-lighter: #f5f7fb; /* أزرق أفتح */
-    :root {
-    --primary: #3498db;
-    --primary-dark: #2980b9;
-    --secondary: #2ecc71;
-    --secondary-dark: #27ae60;
-    --success: #10b981;
-    --success-dark: #059669;
-    --warning: #f59e0b;
-    --warning-dark: #d97706;
-    --text-inverse: #fff;
-    --border-color: #e5e7eb;
-    --bg-primary: #ffffff;
-    --bg-secondary: #f9fafb;
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-    --border-radius: 0.75rem;
-}
-
     --secondary: #a882dd; /* بنفسجي ثانوي */
     --secondary-dark: #8c6bb8; /* بنفسجي داكن */
     --secondary-light: #f0eafb; /* بنفسجي فاتح جداً */
@@ -92,33 +75,76 @@
     --shadow-success: 0 4px 12px -2px rgba(107, 196, 166, 0.15);
     --shadow-danger: 0 4px 12px -2px rgba(230, 126, 140, 0.15);
 }
+
+/* تحسين حجم الخط الأساسي */
 html {
-        font-size: 90%; 
-    }
+    font-size: 100%; /* العودة للحجم الطبيعي (16px عادة) */
+}
+
 /* تنسيقات الجسم (Body) وتطبيق الخط واللون الخلفي المتدرج */
 body {
-    /* تطبيق خط تجوال والخطوط الاحتياطية */
     font-family: 'Tajawal', Tahoma, Geneva, Verdana, sans-serif;
-    /* خلفية متدرجة تبدأ من الرمادي الفاتح وتنتهي بالأزرق الأفتح */
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--primary-lighter) 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-size: 1rem; /* حجم خط متوازن */
+}
+
+/* تحسين حجم الخط للعناوين */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.5em;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1.125rem;
+}
+
+/* تحسين حجم الخط للنصوص العادية */
+p, span, div, a, li {
+    font-size: 1rem;
+    line-height: 1.6;
 }
 
 /* التنسيق العام لبطاقات القائمة (Menu Card) */
 .menu-card {
-    background: var(--bg-primary); /* خلفية بيضاء */
-    border: 1px solid var(--border-color); /* حدود رقيقة */
-    /* مؤثر انتقالي سلس لتأثير التحويم */
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer; /* تغيير شكل المؤشر ليشير إلى القابلية للنقر */
+    cursor: pointer;
+    padding: 1.5rem;
+    font-size: 1rem; /* حجم خط مناسب للبطاقات */
 }
 
 /* تأثير التحويم (Hover) على بطاقة القائمة */
 .menu-card:hover {
-    transform: translateY(-8px); /* رفع البطاقة للأعلى قليلاً */
-    box-shadow: var(--shadow-lg); /* تطبيق ظل كبير */
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
 }
 
-/* تأثير التحويم الخاص لكل لون من البطاقات (تغيير لون الإطار والظل) */
+/* تأثير التحويم الخاص لكل لون من البطاقات */
 .menu-card.primary:hover {
     border-color: var(--primary);
     box-shadow: var(--shadow-primary);
@@ -126,7 +152,7 @@ body {
 
 .menu-card.secondary:hover {
     border-color: var(--secondary);
-    box-shadow: 0 4px 12px -2px rgba(168, 130, 221, 0.15); /* ظل ثانوي مخصص */
+    box-shadow: 0 4px 12px -2px rgba(168, 130, 221, 0.15);
 }
 
 .menu-card.success:hover {
@@ -136,38 +162,41 @@ body {
 
 .menu-card.warning:hover {
     border-color: var(--warning);
-    box-shadow: 0 4px 12px -2px rgba(233, 185, 73, 0.15); /* ظل تحذيري مخصص */
+    box-shadow: 0 4px 12px -2px rgba(233, 185, 73, 0.15);
 }
 
 .menu-card.info:hover {
     border-color: var(--info);
-    box-shadow: 0 4px 12px -2px rgba(100, 195, 213, 0.15); /* ظل معلومات مخصص */
+    box-shadow: 0 4px 12px -2px rgba(100, 195, 213, 0.15);
 }
 
 /* تنسيق غلاف الأيقونة (Icon Wrapper) */
 .icon-wrapper {
-    transition: transform 0.3s ease; /* مؤثر انتقالي لحركة الأيقونة */
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
 }
 
-/* تأثير التحويم على غلاف الأيقونة (تصغير/تكبير) */
+/* تأثير التحويم على غلاف الأيقونة */
 .menu-card:hover .icon-wrapper {
-    transform: scale(1.1); /* تكبير الأيقونة قليلاً */
+    transform: scale(1.1);
 }
 
-/* تنسيق النص المتدرج (Gradient Text) - يستخدم للعنوان الرئيسي */
+/* تنسيق النص المتدرج (Gradient Text) */
 .gradient-text {
-    /* خلفية متدرجة من الأزرق الأساسي إلى البنفسجي الثانوي */
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    /* قص الخلفية لتظهر فقط من خلال النص (خاص بمتصفحات الويب كيت) */
     -webkit-background-clip: text;
-    /* إزالة لون النص ليعرض التدرج (خاص بمتصفحات الويب كيت) */
     -webkit-text-fill-color: transparent;
-    /* قص الخلفية لتظهر فقط من خلال النص (قياسي) */
     background-clip: text;
+    font-weight: 800;
 }
 
-/* تنسيقات إضافية لربط متغيرات CSS بفئات Tailwind لتسهيل القراءة في HTML */
-/* ملاحظة: هذه الطريقة غير قياسية في Tailwind ولكنها مستخدمة لتبسيط الكود الأصلي */
+/* تنسيقات إضافية لربط متغيرات CSS بفئات */
 .text-primary-color { color: var(--primary); }
 .text-secondary-color { color: var(--secondary); }
 .text-success-color { color: var(--success); }
@@ -193,3 +222,36 @@ body {
 
 .font-bold-700 { font-weight: 700; }
 .font-tajawal { font-family: 'Tajawal', Tahoma, Geneva, Verdana, sans-serif; }
+
+/* تحسينات للاستجابة على الشاشات الصغيرة */
+@media (max-width: 768px) {
+    html {
+        font-size: 95%;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+    }
+    
+    .menu-card {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 90%;
+    }
+    
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}

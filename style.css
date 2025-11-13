@@ -813,7 +813,7 @@ footer {
   }
 
   button, .btn {
-    width: 100%;
+   width: auto;
   }
 
   .modal-content {

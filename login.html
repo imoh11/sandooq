@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول - Studio10 للأنظمة الإدارية</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .login-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-header h1 {
+      color: #333;
+      font-size: 24px;
+      margin: 0 0 10px 0;
+      font-weight: 600;
+    }
+
+    .login-header p {
+      color: #999;
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #d0d0d0 0%, #b8b8b8 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      color: #666;
+      font-size: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: 'Tajawal', sans-serif;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #999;
+      box-shadow: 0 0 0 3px rgba(153, 153, 153, 0.1);
+    }
+
+    .form-group input::placeholder {
+      color: #ccc;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .remember-me input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+
+    .remember-me label {
+      margin: 0;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #999 0%, #777 100%);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .login-btn:hover {
+      background: linear-gradient(135deg, #888 0%, #666 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .forgot-password {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .forgot-password a {
+      color: #999;
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.3s ease;
+    }
+
+    .forgot-password a:hover {
+      color: #666;
+    }
+
+    .error-message {
+      background-color: #fee;
+      color: #c33;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      display: none;
+      border-right: 3px solid #c33;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .success-message {
+      background-color: #efe;
+      color: #3c3;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      display: none;
+      border-right: 3px solid #3c3;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    .demo-info {
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 20px;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+    }
+
+    .demo-info strong {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <div class="logo">
+        <i class="fas fa-lock"></i>
+      </div>
+      <h1>Studio10</h1>
+      <p>نظام إدارة الصناديق والأعضاء</p>
+    </div>
+
+    <div class="error-message" id="errorMessage"></div>
+    <div class="success-message" id="successMessage"></div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="username">اسم المستخدم</label>
+        <input type="text" id="username" placeholder="أدخل اسم المستخدم" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">كلمة المرور</label>
+        <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+      </div>
+
+      <div class="remember-me">
+        <label for="rememberMe">تذكرني</label>
+        <input type="checkbox" id="rememberMe">
+      </div>
+
+      <button type="submit" class="login-btn">
+        <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+      </button>
+    </form>
+
+    <div class="forgot-password">
+      <a href="#">هل نسيت كلمة المرور؟</a>
+    </div>
+
+    <div class="demo-info">
+      <strong>بيانات تجريبية:</strong><br>
+      المستخدم: <strong>admin</strong><br>
+      كلمة المرور: <strong>123456</strong>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // التحقق من تسجيل الدخول السابق
+    document.addEventListener('DOMContentLoaded', function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      if (isLoggedIn === 'true') {
+        window.location.href = 'index.html';
+      }
+
+      // استعادة اسم المستخدم إذا تم تفعيل "تذكرني"
+      const savedUsername = localStorage.getItem('savedUsername');
+      if (savedUsername) {
+        document.getElementById('username').value = savedUsername;
+        document.getElementById('rememberMe').checked = true;
+      }
+    });
+
+    function handleLogin(event) {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const rememberMe = document.getElementById('rememberMe').checked;
+
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+
+      // إخفاء الرسائل السابقة
+      errorMessage.classList.remove('show');
+      successMessage.classList.remove('show');
+
+      // التحقق من بيانات المستخدم (بيانات تجريبية)
+      if (username === 'admin' && password === '123456') {
+        // تسجيل الدخول الناجح
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('currentUser', username);
+
+        if (rememberMe) {
+          localStorage.setItem('savedUsername', username);
+        } else {
+          localStorage.removeItem('savedUsername');
+        }
+
+        successMessage.textContent = 'تم تسجيل الدخول بنجاح! جاري التحويل...';
+        successMessage.classList.add('show');
+
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1500);
+      } else {
+        // بيانات خاطئة
+        errorMessage.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+        errorMessage.classList.add('show');
+      }
+    }
+  </script>
+</body>
+</html>

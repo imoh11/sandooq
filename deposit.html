@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio10 - الإيداع</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <i class="fas fa-cogs"></i>
+        Studio10
+      </a>
+      <nav>
+        <a href="index.html">الرئيسية</a>
+        <a href="members.html">الأعضاء</a>
+        <a href="deposit.html">إيداع</a>
+        <a href="withdraw.html">سحب</a>
+        <a href="reports.html">تقارير</a>
+      </nav>
+      <div class="header-actions">
+        <a href="settings.html" title="الإعدادات"><i class="fas fa-cog"></i></a>
+        <a href="users.html" title="المستخدمين"><i class="fas fa-users"></i></a>
+        <button onclick="logout()" title="تسجيل الخروج"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="date-display"></div>
+
+      <section>
+        <div class="flex-between mb-20">
+          <h2></h2>
+        </div>
+        
+        <div class="card mb-20">
+          <div class="card-header">
+            <div class="card-title"><i class="fas fa-money-bill-wave"></i> نموذج الإيداع</div>
+          </div>
+          <div class="card-content">
+            <form id="deposit-form" style="display: grid; gap: 15px;">
+              <div class="form-group">
+                <select id="deposit-member" required>
+                  <option value="">اختر العضو</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input type="number" id="deposit-amount" placeholder="المبلغ" step="0.01" required>
+              </div>
+              <div class="form-group">
+                <textarea id="deposit-description" placeholder="الوصف (اختياري)" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn primary" style="width: 100%;"><i class="fas fa-check"></i> تسجيل الإيداع</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fas fa-list"></i> آخر الإيدات</div>
+          </div>
+          <div id="deposits-table-container"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Studio10 للأنظمة الإدارية. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('deposit-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const memberId = parseInt(document.getElementById('deposit-member').value);
+      const amount = document.getElementById('deposit-amount').value;
+      const description = document.getElementById('deposit-description').value || 'إيداع عام';
+      
+      if (!memberId) {
+        showAlert('يرجى اختيار عضو', 'error');
+        return;
+      }
+      
+      addDeposit(memberId, amount, description);
+      this.reset();
+      renderMembersDropdown('deposit-member');
+      renderDepositsTable('deposits-table-container');
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      renderMembersDropdown('deposit-member');
+      renderDepositsTable('deposits-table-container');
+    });
+
+    function logout() {
+      if (confirm('هل تريد تسجيل الخروج؟')) {
+        showAlert('تم تسجيل الخروج بنجاح', 'success');
+      }
+    }
+
+    // دوال مساعدة (من script.js)
+    function addDeposit(memberId, amount, description) {
+      const deposits = getFromStorage('deposits', []);
+      const newDeposit = {
+        id: Date.now(),
+        memberId: memberId,
+        amount: parseFloat(amount),
+        description: description,
+        date: new Date().toLocaleDateString('ar-SA'),
+        time: new Date().toLocaleTimeString('ar-SA')
+      };
+      deposits.push(newDeposit);
+      saveToStorage('deposits', deposits);
+      
+      const members = getFromStorage('members', []);
+      const memberIndex = members.findIndex(m => m.id === memberId);
+      if (memberIndex !== -1) {
+        members[memberIndex].balance = (members[memberIndex].balance || 0) + parseFloat(amount);
+        saveToStorage('members', members);
+      }
+      
+      showAlert('تم تسجيل الإيداع بنجاح', 'success');
+      return newDeposit;
+    }
+
+    function renderDepositsTable(containerId) {
+      const deposits = getFromStorage('deposits', []);
+      const members = getFromStorage('members', []);
+      const container = document.getElementById(containerId);
+      
+      if (!container) return;
+      
+      if (deposits.length === 0) {
+        container.innerHTML = '<p class="text-center">لا توجد إيدات حالياً</p>';
+        return;
+      }
+      
+      const sorted = [...deposits].reverse();
+      let html = '<table><thead><tr><th>اسم العضو</th><th>المبلغ</th><th>الوصف</th><th>التاريخ</th><th>الوقت</th></tr></thead><tbody>';
+      
+      sorted.forEach(deposit => {
+        const member = members.find(m => m.id === deposit.memberId);
+        html += `
+          <tr>
+            <td>${member ? member.name : 'غير معروف'}</td>
+            <td>${formatNumber(deposit.amount)}</td>
+            <td>${deposit.description}</td>
+            <td>${deposit.date}</td>
+            <td>${deposit.time}</td>
+          </tr>
+        `;
+      });
+      
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    function renderMembersDropdown(selectId) {
+      const members = getFromStorage('members', []);
+      const select = document.getElementById(selectId);
+      
+      if (!select) return;
+      
+      select.innerHTML = '<option value="">اختر العضو</option>';
+      
+      members.forEach(member => {
+        const option = document.createElement('option');
+        option.value = member.id;
+        option.textContent = member.name;
+        select.appendChild(option);
+      });
+    }
+  </script>
+</body>
+</html>

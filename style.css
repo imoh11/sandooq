@@ -820,33 +820,28 @@ footer {
   }
 
   .grid {
-    /* تم التغيير إلى 3 أعمدة بدلاً من 2 لتحسين شكل الأيقونات */
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
 
-  /* **تعديل التنقل ليبقى عرضياً (أفقياً) على شاشات الجوال الصغيرة** */
   nav {
     flex-direction: row;  
     flex-wrap: wrap;  
     gap: 10px;  
     width: 100%;  
-    justify-content: center; /* توسيط التنقل */
+    justify-content: center;
   }
 
-  /* **تعديل الأزرار لتاخذ عرض محتواها فقط** */
   button, .btn {
     width: auto;
   }
 
-  .modal-content {
-    padding: 20px;
+  /* **التعديل النهائي لتوسيط أزرار الأقسام** */
+  div[style*="justify-content: flex-end"] {
+    justify-content: center !important; 
   }
 
-  /* **القاعدة الجديدة لتوسيط الأزرار والعناصر المرنة في المحتوى الرئيسي** */
-  /* نستخدم flex-center و flex لتوسيط محتوياتهما */
-  .flex-center, .flex {
-      justify-content: center;
-      /* هذا يضمن توسيط الأزرار المتجاورة */
+  .modal-content {
+    padding: 20px;
   }
 }

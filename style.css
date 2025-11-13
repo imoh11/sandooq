@@ -761,31 +761,34 @@ footer {
     padding: 15px;
   }
 
-nav {
-    /* نلغي خاصية flex: 1 ليتوقف عن استهلاك كل المساحة */
-    flex: initial; 
-    /* نجعله يأخذ عرضًا كاملاً لكي ينزل لصف جديد تحت السطر الأول */
-    width: 100%; 
-    /* نجعله يبدأ من اليمين تحت السطر الأول */
+  /* **تعديل رأس الصفحة لتحقيق الترتيب المطلوب (الشعار/أيقونات الإجراءات في سطر، والتنقل في سطر آخر)** */
+  header .container {
+    flex-direction: row;  
+    flex-wrap: wrap;  
+    justify-content: space-between;  
+    align-items: center;
+    gap: 15px;  
+  }
+
+  /* دفع أيقونات الإجراءات للظهور في السطر الأول بجانب الشعار */
+  .header-actions {
+      order: 1; 
+  }
+  
+  /* دفع قائمة التنقل للظهور في السطر الثاني */
+  nav {
+    /* إلغاء خاصية flex: 1 لمنع استهلاك كل المساحة الأفقية */
+    flex: initial;  
+    /* دفعه للسطر التالي وأخذ عرض كامل */
+    width: 100%;  
     justify-content: flex-start;
-    
-    /* ملاحظة: إذا كان عدد الروابط كبيراً جداً، قد يتحول التنقل إلى عمودي عند 480px! */
-    /* إذا كانت الشاشة تحت 480px، سيتم تكديس روابط التنقل نفسها عمودياً (حسب الكود الأصلي) */
+    order: 2; 
+    gap: 15px;
   }
 
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 15px;
-  }
-
-header .container {
-    /* أساسي: السماح بالالتفاف (Wrap) والإبقاء على الترتيب الأفقي (Row) */
-    flex-direction: row; 
-    flex-wrap: wrap; 
-    /* هذا يضمن أن الشعار يكون على اليمين والإجراءات تكون على اليسار في السطر الأول */
-    justify-content: space-between; 
-    align-items: center;
-    gap: 15px; 
   }
 
   table {
@@ -816,22 +819,22 @@ header .container {
   }
 
   .grid {
-    grid-template-columns: repeat(4, 1fr);
+    /* تم التغيير إلى 3 أعمدة بدلاً من 2 لتحسين شكل الأيقونات */
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
 
+  /* **تعديل التنقل ليبقى عرضياً (أفقياً) على شاشات الجوال الصغيرة** */
   nav {
-    /* إلغاء التكديس العمودي وإعادة الخاصية للوضع الأفقي */
-    flex-direction: row; 
-    /* السماح للروابط بالالتفاف على سطر جديد إذا لم تتسع على سطر واحد */
-    flex-wrap: wrap; 
-    gap: 10px; 
-    /* قد تحتاج لزيادة عرض الحاوية لضمان استخدام كل المساحة المتاحة تحت الشعار */
-    width: 100%; 
+    flex-direction: row;  /* ضمان أن الروابط أفقية */
+    flex-wrap: wrap;  
+    gap: 10px;  
+    width: 100%;  
   }
 
+  /* **تعديل الأزرار لتاخذ عرض محتواها فقط** */
   button, .btn {
-   width: auto;
+    width: auto;
   }
 
   .modal-content {

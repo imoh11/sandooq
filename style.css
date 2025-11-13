@@ -761,18 +761,27 @@ footer {
     padding: 15px;
   }
 
-  nav {
-    gap: 15px;
-  }
+nav {
+    /* إلغاء خاصية flex: 1 لمنع استهلاك كل المساحة الأفقية */
+    flex: initial; 
+    /* جعل شريط التنقل يأخذ عرضًا كاملاً ليظهر في سطر جديد أسفل الشعار */
+    width: 100%; 
+    justify-content: flex-start; /* محاذاة العناصر إلى اليمين (في سياق RTL) */
+    gap: 15px; /* تقليل التباعد بين الروابط */
+  }}
 
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 15px;
   }
 
-  header .container {
-    flex-direction: column;
+ header .container {
+    /* إلغاء التكديس العمودي (column) والسماح بالالتفاف (wrap) */
+    flex-direction: row; 
+    flex-wrap: wrap;
     gap: 15px;
+    /* للحفاظ على محاذاة الشعار والأيقونات في السطر الأول إذا كانت هناك مساحة */
+    justify-content: space-between; 
   }
 
   table {

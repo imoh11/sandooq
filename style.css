@@ -91,9 +91,12 @@ nav a {
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease; /* تم تعديل transition لتشمل الخلفية */
   padding: 8px 12px;
   border-radius: 4px;
+  
+  /* **الإضافة الجديدة: لون خلفية خفيف** */
+  background-color: var(--primary-gray); 
 }
 
 nav a:hover {

@@ -138,8 +138,9 @@ nav a.active {
 
 /* المحتوى الرئيسي */
 main {
-  min-height: calc(100vh - 200px);
-  margin-bottom: 40px;
+  /* **التعديل الجديد: لنمو المحتوى الرئيسي لملء الفراغ المتاح** */
+  flex-grow: 1; 
+  padding-bottom: 20px;
 }
 
 /* الأقسام */

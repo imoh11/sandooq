@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio10 - الصفحة الرئيسية</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <i class="fas fa-cogs"></i>
+        Studio10
+      </a>
+      <nav>
+        <a href="index.html" class="active">
+          <i class="fas fa-home"></i>
+          <span>الرئيسية</span>
+        </a>
+        <a href="members.html">
+          <i class="fas fa-users"></i>
+          <span>الأعضاء</span>
+        </a>
+        <a href="deposit.html">
+          <i class="fas fa-wallet"></i>
+          <span>إيداع</span>
+        </a>
+        <a href="withdraw.html">
+          <i class="fas fa-university"></i>
+          <span>سحب</span>
+        </a>
+        <a href="reports.html">
+          <i class="fas fa-chart-bar"></i>
+          <span>تقارير</span>
+        </a>
+        <a href="users.html">
+          <i class="fas fa-user-cog"></i>
+          <span>المستخدمين</span>
+        </a>
+        <a href="settings.html">
+          <i class="fas fa-cog"></i>
+          <span>الإعدادات</span>
+        </a>
+      </nav>
+      <div class="header-actions">
+        <button onclick="logout()" title="تسجيل الخروج"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </div>
+</header>
+  <main>
+    <div class="container">
+      <div class="date-display"></div>
+
+      <section>
+        <div class="grid">
+          <a href="members.html" class="grid-item">
+            <div class="grid-item-icon"><i class="fas fa-users"></i></div>
+            <div class="grid-item-label">الأعضاء</div>
+          </a>
+          <a href="deposit.html" class="grid-item">
+            <div class="grid-item-icon"><i class="fas fa-money-bill-wave"></i></div>
+            <div class="grid-item-label">إيداع</div>
+          </a>
+          <a href="withdraw.html" class="grid-item">
+            <div class="grid-item-icon"><i class="fas fa-university"></i></div>
+            <div class="grid-item-label">سحب</div>
+          </a>
+          <a href="reports.html" class="grid-item">
+            <div class="grid-item-icon"><i class="fas fa-chart-bar"></i></div>
+            <div class="grid-item-label">تقارير</div>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Studio10 للأنظمة الإدارية. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // التحقق من تسجيل الدخول
+    document.addEventListener('DOMContentLoaded', function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      if (isLoggedIn !== 'true') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // تحديث التاريخ
+      const dateDisplay = document.querySelector('.date-display');
+      if (dateDisplay) {
+        const today = new Date();
+        dateDisplay.innerHTML = `
+          <div class="date-hijri">${formatHijriDate(today)}</div>
+          <div class="date-gregorian">${formatGregorianDate(today)}</div>
+        `;
+      }
+    });
+
+    function logout() {
+      if (confirm('هل تريد تسجيل الخروج؟')) {
+        localStorage.setItem('isLoggedIn', 'false');
+        localStorage.removeItem('currentUser');
+        showAlert('تم تسجيل الخروج بنجاح', 'success');
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1000);
+      }
+    }
+  </script>
+</body>
+</html>

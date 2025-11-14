@@ -48,8 +48,8 @@ body {
 header {
   background-color: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  padding: 15px 0;
-  margin-bottom: 30px;
+  padding: 12px 0;
+  margin-bottom: 5px;
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
@@ -738,25 +738,36 @@ footer {
 
 /* التاريخ */
 .date-display {
-  text-align: center;
-  padding: 15px;
+  /* لضبط حجم الحاوية ليكون مناسباً للمحتوى فقط */
+  width: fit-content; 
+  /* توسيط الحاوية أفقياً */
+  margin: 0 auto 15px auto; 
+  /* تم التعديل: 
+     - 0: هامش علوي (يأخذ قيمته من padding-top في main.container)
+     - auto: توسيط أفقي
+     - 15px: هامش سفلي (يمنع الالتصاق بالعناصر السفلية)
+  */
+
+  padding: 10px 20px; /* مسافة داخلية جيدة */
   background-color: var(--secondary-gray);
   border-radius: 6px;
-  margin-bottom: 20px;
+  text-align: center; /* توسيط محتوى النص داخل الحاوية */
 }
 
-.date-hijri {
+/* التنسيق الداخلي للتاريخ */
+.date-display .date-hijri {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700; /* جعل الخط أثقل ليكون أوضح */
   color: var(--text-dark);
-  margin-bottom: 5px;
+  margin-bottom: 5px; /* مسافة بين التاريخ الهجري والميلادي */
+  line-height: 1.2;
 }
 
-.date-gregorian {
+.date-display .date-gregorian {
   font-size: 12px;
   color: var(--text-light);
+  line-height: 1.2;
 }
-
 /* الاستجابة للشاشات الصغيرة */
 @media (max-width: 768px) {
   .container {

@@ -202,7 +202,7 @@ section {
 /* الشبكة - لعرض الأيقونات والبطاقات */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+ grid-template-columns: repeat(4, 1fr); /* NEW: 4 أعمدة متساوية */ 
   gap: 25px;
   margin-bottom: 20px;
 }
@@ -852,8 +852,9 @@ footer {
     /* يتم اعتماد margin-top: 10px من النمط العام */
   }
 
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+ .grid {
+    /* التعديل هنا: العودة إلى عمودين على شاشات التابلت */
+    grid-template-columns: repeat(2, 1fr); /* MODIFIED */
     gap: 15px;
   }
 
@@ -911,3 +912,42 @@ footer {
     padding: 20px;
   }
 }
+/* ========================================================== */
+/* NEW: Styling for the three main section buttons (Tabs) */
+/* تستهدف الأزرار داخل الحاوية التي تميز التبويبات الرئيسية */
+.section-tab-buttons .btn {
+  /* اللون الأساسي: الأزرق الداكن (Corporate Blue) */
+  background-color: var(--primary-color); /* #2c3e50 */
+  border-color: var(--primary-color);
+  color: #ffffff;
+  min-width: 100px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.section-tab-buttons .btn:hover {
+  /* تفتيح بسيط عند المرور */
+  background-color: #3b5064;
+  border-color: #3b5064;
+}
+
+.section-tab-buttons .btn.active-tab {
+  /* الحالة النشطة: لون Accent Blue (الأزرق الفاتح) */
+  background-color: var(--accent-color); /* #3498db */
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* لتمييز أزرار الإضافة (مثل إضافة فريق) عن أزرار التبويب، سنعيدها إلى لونها الرمادي الداكن */
+/* تستهدف الأزرار التي تحمل فئة btn primary ولكن ليست داخل section-tab-buttons */
+.btn.primary:not(.section-tab-buttons .btn) {
+  background-color: var(--dark-gray); /* اللون الرمادي الحالي لـ btn primary */
+  border-color: var(--dark-gray);
+  color: #ffffff;
+}
+
+.btn.primary:not(.section-tab-buttons .btn):hover {
+  background-color: var(--accent-gray);
+  border-color: var(--accent-gray);
+}
+/* ========================================================== */

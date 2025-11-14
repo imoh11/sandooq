@@ -806,33 +806,40 @@ footer {
 }
 /* الاستجابة للشاشات الصغيرة */
 @media (max-width: 768px) {
+  /* **التعديل 1: إزالة الهامش الجانبي للحاوية الرئيسية وجعل العرض 100%** */
   .container {
-    width: 95%;
-    padding: 15px;
+    width: 100%; /* ليمتد على كامل العرض */
+    padding: 15px 0; /* إزالة الهامش الجانبي، والإبقاء على الهامش العلوي/السفلي للمحتوى الداخلي */
   }
 
-  /* **إصلاح تنسيق الجوال: إعادة تفعيل الالتفاف لإنشاء سطرين** */
+  /* **التعديل 2: تقليل الهامش السفلي وإزالة الهامش الجانبي لرأس الصفحة** */
+  header {
+    margin-bottom: 0; /* إزالة الهامش الخارجي أسفل الرأس */
+  }
+  header .container {
+    /* 10px علوي، 0 جانبي، 5px سفلي */
+    padding: 10px 0 5px 0; /* تقليل الهامش السفلي وإزالة الجانبي */
+  }
+  
+  /* ... تنسيق header-actions و nav ... */
   header .container {
     flex-direction: row;  
-    flex-wrap: wrap;  /* **إعادة تفعيل الالتفاف** */
+    flex-wrap: wrap; 
     justify-content: space-between;  
     align-items: center;
     gap: 15px;  
   }
 
-  /* دفع أيقونات الإجراءات للظهور في السطر الأول بجانب الشعار */
   .header-actions {
       order: 1; 
   }
   
-  /* **إصلاح تنسيق الجوال: دفع قائمة التنقل للسطر الثاني وتوسيطها وامتدادها على العرض كامل** */
   nav {
     flex: initial;  
-    width: 100%;  /* **تمدد على عرض السطر الثاني بالكامل** */
-    justify-content: center; /* توسيط الروابط في السطر الثاني */
-    order: 2; /* **دفعه إلى السطر الثاني** */
+    width: 100%;  
+    justify-content: center; 
+    order: 2; 
     gap: 25px; 
-    /* هنا لا يتم منع الالتفاف، لكنه سيتم منعها في قيود الـ 480px */
   }
 
   .grid {
@@ -858,6 +865,54 @@ footer {
 
   .member-info {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 10px 0; /* **إلغاء الهامش الجانبي للحاوية على الشاشات الأصغر** */
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  nav {
+    flex-direction: row;  
+    flex-wrap: nowrap;  
+    gap: 8px;  
+    width: 100%;  
+    justify-content: center;
+    overflow-x: auto; 
+    padding-bottom: 5px; 
+  }
+  
+  nav a {
+    padding: 3px 5px; 
+    min-width: fit-content; 
+  }
+
+  nav a i {
+      font-size: 15px; 
+      margin-bottom: 1px; 
+  }
+  
+  nav a span {
+      font-size: 10px; 
+  }
+  
+  button, .btn {
+    width: auto;
+  }
+
+  div[style*="justify-content: flex-end"] {
+    justify-content: center !important; 
+  }
+
+  .modal-content {
+    padding: 20px;
   }
 }
 

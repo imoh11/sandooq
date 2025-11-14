@@ -806,40 +806,55 @@ footer {
 }
 /* الاستجابة للشاشات الصغيرة */
 @media (max-width: 768px) {
-  /* **التعديل 1: إزالة الهامش الجانبي للحاوية الرئيسية وجعل العرض 100%** */
+  /* **التعديل 1: إعادة الهامش الجانبي للحاوية الرئيسية (للمحتوى)** */
   .container {
-    width: 100%; /* ليمتد على كامل العرض */
-    padding: 15px 0; /* إزالة الهامش الجانبي، والإبقاء على الهامش العلوي/السفلي للمحتوى الداخلي */
+    width: 100%;
+    padding: 15px; /* إعادة الهامش الجانبي 15px لجميع محتويات الصفحة */
   }
 
-  /* **التعديل 2: تقليل الهامش السفلي وإزالة الهامش الجانبي لرأس الصفحة** */
+  /* **التعديل 2: تقليل الهامش السفلي وإزالة الهامش الجانبي للرأس ليتم التحكم به في header .container** */
   header {
     margin-bottom: 0; /* إزالة الهامش الخارجي أسفل الرأس */
-  }
-  header .container {
-    /* 10px علوي، 0 جانبي، 5px سفلي */
-    padding: 10px 0 5px 0; /* تقليل الهامش السفلي وإزالة الجانبي */
+    padding: 10px 0 0 0; /* تقليل الـ padding العلوي للرأس */
   }
   
-  /* ... تنسيق header-actions و nav ... */
   header .container {
     flex-direction: row;  
-    flex-wrap: wrap; 
+    flex-wrap: wrap;  
     justify-content: space-between;  
     align-items: center;
     gap: 15px;  
+    
+    /* **إعادة الهامش الجانبي للسطر الأول (الشعار/الخروج) وتقليل الهامش السفلي** */
+    padding: 0 15px 5px 15px; 
   }
 
+  /* دفع أيقونات الإجراءات للظهور في السطر الأول بجانب الشعار */
   .header-actions {
       order: 1; 
   }
   
+  /* **التعديل 3: جعل شريط التنقل (nav) يمتد على كامل عرض الشاشة (full-width) بالرغم من هامش الأب** */
   nav {
     flex: initial;  
-    width: 100%;  
+    /* يمتد على عرض الأب + الهامش الجانبي للأب (15+15) */
+    width: calc(100% + 30px); 
+    /* الهوامش السالبة تلغي هامش الأب وتجعل الخلفية ممتدة */
+    margin-left: -15px;  
+    margin-right: -15px; 
+    
+    /* إضافة هامش داخلي لعدم لصق الأيقونات بحواف الشاشة بعد التمديد */
+    padding-left: 15px; 
+    padding-right: 15px;
+    padding-top: 5px; /* هامش علوي بسيط */
+    padding-bottom: 5px; /* هامش سفلي بسيط */
+    
     justify-content: center; 
     order: 2; 
     gap: 25px; 
+    
+    flex-wrap: nowrap; 
+    overflow-x: auto;
   }
 
   .grid {
@@ -871,19 +886,22 @@ footer {
 @media (max-width: 480px) {
   .container {
     width: 100%;
-    padding: 10px 0; /* **إلغاء الهامش الجانبي للحاوية على الشاشات الأصغر** */
+    padding: 10px; /* هامش 10px على الشاشات الأصغر */
   }
-
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
+  
+  /* **نطبق نفس منطق nav في 480px أيضاً لضمان التمديد على أصغر الشاشات** */
   nav {
+    /* هنا نستخدم 10px لأن الـ padding الخاص بالـ .container الأب أصبح 10px في هذا الاستعلام */
+    width: calc(100% + 20px); 
+    margin-left: -10px;  
+    margin-right: -10px; 
+    padding-left: 10px; 
+    padding-right: 10px;
+
     flex-direction: row;  
     flex-wrap: nowrap;  
     gap: 8px;  
-    width: 100%;  
+    width: calc(100% + 20px);  
     justify-content: center;
     overflow-x: auto; 
     padding-bottom: 5px; 

@@ -856,7 +856,6 @@ footer {
     order: 0; /* لإعادتها للترتيب الطبيعي أو حسب رغبتك في الترتيب (بعد الشعار وقبل الإجراءات) */
     gap: 25px; 
   }
-
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 15px;

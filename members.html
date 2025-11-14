@@ -6,6 +6,7 @@
   <title>Studio10 - الأعضاء</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    /* ... (Existing styles - unchanged) ... */
     .section-buttons {
       display: flex;
       flex-direction: row-reverse;
@@ -31,6 +32,31 @@
     table th {
       text-align: center;
     }
+    
+    /* === NEW: Styling for the three main section buttons (Tabs) === */
+    .section-tab-buttons .btn {
+      /* اللون الأساسي: الأزرق الداكن (Corporate Blue) */
+      background-color: var(--primary-color); /* #2c3e50 */
+      border-color: var(--primary-color);
+      color: #ffffff;
+      min-width: 100px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .section-tab-buttons .btn:hover {
+      /* تفتيح بسيط عند المرور */
+      background-color: #3b5064;
+      border-color: #3b5064;
+    }
+
+    .section-tab-buttons .btn.active-tab {
+      /* الحالة النشطة: لون Accent Blue (الأزرق الفاتح) */
+      background-color: var(--accent-color); /* #3498db */
+      border-color: var(--accent-color);
+      box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+    }
+    /* ========================================================== */
   </style>
 </head>
 <body>
@@ -79,22 +105,20 @@
     <div class="container">
       <div class="date-display"></div>
 
-      <!-- القائمة العلوية للتنقل - مرتبة من اليمين لليسار -->
       <section>
-        <div class="flex-center" style="gap: 15px; margin-bottom: 30px; flex-direction: row-reverse;">
-          <button class="btn primary" onclick="showPage('members-section')">
+        <div class="flex-center section-tab-buttons" style="gap: 15px; margin-bottom: 30px; flex-direction: row-reverse;">
+          <button id="members-btn" class="btn primary" onclick="showPage('members-section', this)">
             <i class="fas fa-users"></i> الأعضاء
           </button>
-          <button class="btn primary" onclick="showPage('boxes-section')">
+          <button id="boxes-btn" class="btn primary" onclick="showPage('boxes-section', this)">
             <i class="fas fa-box"></i> الصندوق
           </button>
-          <button class="btn primary" onclick="showPage('teams-section')">
+          <button id="teams-btn" class="btn primary" onclick="showPage('teams-section', this)">
             <i class="fas fa-sitemap"></i> الفريق
           </button>
         </div>
       </section>
-      <!-- قسم الفريق -->
-    <section id="teams-section" class="page active">
+      <section id="teams-section" class="page active">
     <div style="text-align: right; margin-bottom: 20px;"> 
       <button class="btn primary" onclick="openModal('addTeamModal')">
         <i class="fas fa-plus"></i> إضافة فريق
@@ -103,8 +127,7 @@
     <div id="teams-table-container"></div>
 </section>
 
-      <!-- قسم الصناديق -->
-  <section id="boxes-section" class="page">
+      <section id="boxes-section" class="page">
     <div style="text-align: right; margin-bottom: 20px;">
       <button class="btn primary" onclick="openAddBoxModal()">
         <i class="fas fa-plus"></i> إضافة صندوق
@@ -113,8 +136,7 @@
     <div id="boxes-table-container"></div>
 </section>
 
-      <!-- قسم الأعضاء -->
-  <section id="members-section" class="page">
+      <section id="members-section" class="page">
     <div style="text-align: right; margin-bottom: 20px;">
       <button class="btn primary" onclick="openAddMemberModal()">
         <i class="fas fa-plus"></i> إضافة عضو
@@ -127,8 +149,7 @@
 </section>
     </div>
   </main>
-
-  <!-- نافذة إضافة فريق -->
+  
   <div id="addTeamModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -149,7 +170,6 @@
     </div>
   </div>
 
-  <!-- نافذة تحرير فريق -->
   <div id="editTeamModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -171,7 +191,6 @@
     </div>
   </div>
 
-  <!-- نافذة إضافة صندوق -->
   <div id="addBoxModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -208,7 +227,6 @@
     </div>
   </div>
 
-  <!-- نافذة تحرير صندوق -->
   <div id="editBoxModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -246,7 +264,6 @@
     </div>
   </div>
 
-  <!-- نافذة إضافة عضو -->
   <div id="addMemberModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -296,7 +313,6 @@
     </div>
   </div>
 
-  <!-- نافذة استيراد الأعضاء -->
   <div id="importMembersModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -327,11 +343,19 @@
   <script src="script.js"></script>
   <script>
     // عرض الأقسام المختلفة
-    function showPage(pageId) {
+    function showPage(pageId, clickedButton) {
       const pages = document.querySelectorAll('.page');
       pages.forEach(page => page.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
       
+      // التعديل: إدارة زر التبويب النشط
+      const tabButtons = document.querySelectorAll('.section-tab-buttons .btn');
+      tabButtons.forEach(btn => btn.classList.remove('active-tab'));
+      if (clickedButton) {
+        clickedButton.classList.add('active-tab');
+      }
+      // نهاية التعديل
+
       if (pageId === 'teams-section') {
         renderTeamsTable('teams-table-container');
       } else if (pageId === 'boxes-section') {
@@ -590,6 +614,17 @@
         window.location.href = 'login.html';
         return;
       }
+
+      // التعديل: تفعيل زر التبويب النشط عند التحميل بناءً على القسم النشط افتراضياً (teams-section)
+      const activeSection = document.querySelector('.page.active');
+      if (activeSection) {
+        const activeId = activeSection.id.replace('-section', '-btn');
+        const activeBtn = document.getElementById(activeId);
+        if (activeBtn) {
+          activeBtn.classList.add('active-tab');
+        }
+      }
+      // نهاية التعديل
 
       renderTeamsTable('teams-table-container');
       renderBoxesTable('boxes-table-container');

@@ -1,953 +1,646 @@
-/* استيراد خط تجوال من Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio10 - الأعضاء</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ... (Existing styles - unchanged) ... */
+    .section-buttons {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
 
-/* استيراد Font Awesome للأيقونات */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    .table-actions button {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
 
-:root {
-  --primary-gray: #f5f5f5;
-  --secondary-gray: #e8e8e8;
-  --tertiary-gray: #d0d0d0;
-  --dark-gray: #808080;
-  --text-dark: #333333;
-  --text-light: #666666;
-  --accent-gray: #a9a9a9;
-  --border-color: #d9d9d9;
-  --primary-color: #2c3e50;
-  --accent-color: #3498db; /* اللون الأزرق المستخدم */
-  --error-color: #e74c3c; /* لون أحمر للخروج */
-}
+    table td {
+      text-align: center;
+    }
 
-html {
-  scroll-behavior: smooth;
-}
+    table th {
+      text-align: center;
+    }
+    
+    /* === NEW: Styling for the three main section buttons (Tabs) === */
+    .section-tab-buttons .btn {
+      /* اللون الأساسي: الأزرق الداكن (Corporate Blue) */
+      background-color: var(--primary-color); /* #2c3e50 */
+      border-color: var(--primary-color);
+      color: #ffffff;
+      min-width: 100px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
 
-body {
-  font-family: 'Tajawal', sans-serif;
-  background-color: var(--primary-gray);
-  color: var(--text-dark);
-  font-size: 13px;
-  line-height: 1.6;
-  direction: rtl;
+    .section-tab-buttons .btn:hover {
+      /* تفتيح بسيط عند المرور */
+      background-color: #3b5064;
+      border-color: #3b5064;
+    }
+
+    .section-tab-buttons .btn.active-tab {
+      /* الحالة النشطة: لون Accent Blue (الأزرق الفاتح) */
+      background-color: var(--accent-color); /* #3498db */
+      border-color: var(--accent-color);
+      box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+    }
+    /* ========================================================== */
+  </style>
+</head>
+<body>
+<header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <i class="fas fa-cogs"></i>
+        Studio10
+      </a>
+      <nav>
+        <a href="index.html" class="active">
+          <i class="fas fa-home"></i>
+          <span>الرئيسية</span>
+        </a>
+        <a href="members.html">
+          <i class="fas fa-users"></i>
+          <span>الأعضاء</span>
+        </a>
+        <a href="deposit.html">
+          <i class="fas fa-wallet"></i>
+          <span>إيداع</span>
+        </a>
+        <a href="withdraw.html">
+          <i class="fas fa-university"></i>
+          <span>سحب</span>
+        </a>
+        <a href="reports.html">
+          <i class="fas fa-chart-bar"></i>
+          <span>تقارير</span>
+        </a>
+        <a href="users.html">
+          <i class="fas fa-user-cog"></i>
+          <span>المستخدمين</span>
+        </a>
+        <a href="settings.html">
+          <i class="fas fa-cog"></i>
+          <span>الإعدادات</span>
+        </a>
+      </nav>
+      <div class="header-actions">
+        <button onclick="logout()" title="تسجيل الخروج"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </div>
+</header>
+  <main>
+    <div class="container">
+      <div class="date-display"></div>
+
+      <section>
+        <div class="flex-center section-tab-buttons" style="gap: 15px; margin-bottom: 30px; flex-direction: row-reverse;">
+          <button id="members-btn" class="btn primary" onclick="showPage('members-section', this)">
+            <i class="fas fa-users"></i> الأعضاء
+          </button>
+          <button id="boxes-btn" class="btn primary" onclick="showPage('boxes-section', this)">
+            <i class="fas fa-box"></i> الصندوق
+          </button>
+          <button id="teams-btn" class="btn primary" onclick="showPage('teams-section', this)">
+            <i class="fas fa-sitemap"></i> الفريق
+          </button>
+        </div>
+      </section>
+      <section id="teams-section" class="page active">
+    <div style="text-align: right; margin-bottom: 20px;"> 
+      <button class="btn primary" onclick="openModal('addTeamModal')">
+        <i class="fas fa-plus"></i> إضافة فريق
+      </button>
+    </div>
+    <div id="teams-table-container"></div>
+</section>
+
+      <section id="boxes-section" class="page">
+    <div style="text-align: right; margin-bottom: 20px;">
+      <button class="btn primary" onclick="openAddBoxModal()">
+        <i class="fas fa-plus"></i> إضافة صندوق
+      </button>
+    </div>
+    <div id="boxes-table-container"></div>
+</section>
+
+      <section id="members-section" class="page">
+    <div style="text-align: right; margin-bottom: 20px;">
+      <button class="btn primary" onclick="openAddMemberModal()">
+        <i class="fas fa-plus"></i> إضافة عضو
+      </button>
+      <button class="btn primary" onclick="openModal('importMembersModal')">
+        <i class="fas fa-paste"></i> استيراد أعضاء
+      </button>
+    </div>
+    <div id="members-dropdowns-container"></div>
+</section>
+    </div>
+  </main>
   
-  display: flex; 
-  flex-direction: column; 
-  min-height: 100vh; 
-}
-/* الحاوية الرئيسية - 90% من الصفحة */
-.container {
-  width: 98%; 
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 5px;
-}
-
-/* الرأس */
-header {
-  background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  padding: 0px 0;
-  margin-bottom: 5px;
-  border-bottom: 1px solid var(--border-color);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-header .container {
-  display: flex;
-  /* **التعديل 1: السماح بالالتفاف لإنشاء سطر جديد لـ nav** */
-  flex-wrap: wrap; 
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-}
-
-.logo {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--primary-color);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  /* **التعديل 2: ضمان أن الشعار هو أول عنصر في السطر الأول** */
-  order: 1; /* NEW */
-}
-
-.logo i {
-  font-size: 20px;
-  color: var(--accent-color);
-}
-
-/* **تعديل تنسيق شريط التنقل (nav) ليتمدد بين الشعار والإجراءات (منطق السطر الثاني)** */
-nav {
-  display: flex;
-  gap: 40px; 
-  list-style: none;
-  /* **التعديل 3: إزالة flex: 1 وإضافة width: 100% وإجبارها على النزول للسطر الثاني** */
-  flex: initial; /* لإلغاء التمدد الأفقي الذي كان يسبب مشاكل الترتيب */
-  width: 100%; /* NEW: إجبار nav على أخذ كامل العرض والنزول لسطر جديد */
-  margin-top: -5px;
-  
-  justify-content: center; /* توسيط الأيقونات في المساحة المتاحة */
-  /* **التعديل 4: ضمان أن nav هو العنصر الأخير دائمًا ليظهر في السطر الثاني** */
-  order: 3; /* NEW */
-}
-
-nav a {
-  /* لترتيب الأيقونة والنص عموديًا */
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  text-decoration: none;
-  color: var(--text-dark); 
-  
-  padding: 5px 10px; 
-  border-radius: 4px;
-  transition: all 0.3s;
-  background-color: transparent; 
-  font-weight: 500;
-}
-
-nav a:hover {
-  color: var(--text-dark);
-  background-color: var(--secondary-gray);
-}
-
-nav a.active {
-  color: var(--text-dark);
-  background-color: var(--secondary-gray);
-  font-weight: 600;
-}
-
-/* **تنسيق الأيقونة** */
-nav a i {
-  font-size: 18px; 
-  margin-bottom: 2px; 
-  color: var(--accent-color); 
-}
-
-/* **تنسيق اسم الصفحة (النص)** */
-nav a span {
-  font-size: 11px; 
-  font-weight: 600;
-  color: var(--text-dark);
-}
-
-nav a {
-  color: var(--text-dark);
-}
-
-.header-actions {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-  /* **التعديل 5: ضمان أن الإجراءات تبقى في السطر الأول بعد الشعار** */
-  order: 2; /* NEW */
-}
-
-.header-actions a, .header-actions button {
-  background: none;
-  border: none;
-  color: var(--text-light);
-  cursor: pointer;
-  font-size: 18px;
-  transition: color 0.3s ease;
-  padding: 8px 12px;
-  border-radius: 4px;
-}
-
-/* **تعديلات لون زر تسجيل الخروج** */
-.header-actions button {
-  color: var(--error-color); 
-}
-.header-actions button:hover {
-  color: #c0392b; 
-  background-color: var(--secondary-gray);
-}
-.header-actions a:hover {
-  color: var(--accent-color);
-  background-color: var(--secondary-gray);
-}
-/* نهاية تعديلات لون زر تسجيل الخروج */
-
-
-/* المحتوى الرئيسي */
-main {
-  flex-grow: 1; 
-  padding-bottom: 20px;
-}
-
-/* الأقسام */
-section {
-  margin-bottom: 30px;
-}
-
-.section-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid var(--secondary-gray);
-}
-
-/* الشبكة - لعرض الأيقونات والبطاقات */
-.grid {
-  display: grid;
- grid-template-columns: repeat(4, 1fr); /* NEW: 4 أعمدة متساوية */ 
-  gap: 25px;
-  margin-bottom: 20px;
-}
-
-.grid-item {
-  background-color: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  color: var(--text-dark);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.grid-item:hover {
-  background-color: var(--secondary-gray);
-  border-color: var(--tertiary-gray);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
-}
-
-.grid-item-icon {
-  font-size: 32px;
-  color: var(--accent-color);
-}
-
-.grid-item-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-dark);
-}
-
-/* الأزرار */
-button, .btn {
-  background-color: var(--secondary-gray);
-  color: var(--text-dark);
-  border: 1px solid var(--tertiary-gray);
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
-  font-family: 'Tajawal', sans-serif;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-}
-
-button:hover, .btn:hover {
-  background-color: var(--tertiary-gray);
-  color: var(--text-dark);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-button:active, .btn:active {
-  background-color: var(--accent-gray);
-  color: #ffffff;
-}
-
-button.primary, .btn.primary {
-  background-color: var(--dark-gray);
-  color: #ffffff;
-  border-color: var(--dark-gray);
-}
-
-button.primary:hover, .btn.primary:hover {
-  background-color: var(--accent-gray);
-  border-color: var(--accent-gray);
-}
-
-button.sm {
-  padding: 6px 12px;
-  font-size: 12px;
-}
-
-button.icon-only {
-  padding: 8px;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* الجداول */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  overflow: hidden;
-  margin-top: 15px;
-}
-
-thead {
-  background-color: var(--secondary-gray);
-  border-bottom: 2px solid var(--tertiary-gray);
-}
-
-th {
-  padding: 12px;
-  text-align: right;
-  font-weight: 600;
-  color: var(--text-dark);
-  font-size: 12px;
-}
-
-td {
-  padding: 12px;
-  border-bottom: 1px solid var(--border-color);
-  font-size: 12px;
-  color: var(--text-light);
-}
-
-tbody tr:hover {
-  background-color: var(--primary-gray);
-}
-
-tbody tr:last-child td {
-  border-bottom: none;
-}
-
-/* النماذج */
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: var(--text-dark);
-  font-size: 12px;
-}
-
-input, textarea, select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  font-family: 'Tajawal', sans-serif;
-  font-size: 13px;
-  background-color: #ffffff;
-  color: var(--text-dark);
-  transition: border-color 0.3s ease;
-}
-
-input:focus, textarea:focus, select:focus {
-  outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-}
-
-input::placeholder, textarea::placeholder {
-  color: var(--accent-gray);
-}
-/* تنسيق خاص لحقول الهاتف لضمان أن النص والعنصر النائب يظهران من اليمين لليسار في واجهة RTL */
-input[type="tel"] {
-  direction: rtl;
-  text-align: right; 
-}
-/* النوافذ المنبثقة (Modal) */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  animation: fadeIn 0.3s ease;
-}
-
-.modal.show {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-content {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  max-width: 500px;
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: slideUp 0.3s ease;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.modal-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text-dark);
-}
-
-.modal-close {
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: var(--text-light);
-  cursor: pointer;
-  padding: 0;
-  width: auto;
-  height: auto;
-}
-
-.modal-close:hover {
-  color: var(--text-dark);
-}
-
-.modal-body {
-  margin-bottom: 20px;
-}
-
-.modal-footer {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  padding-top: 15px;
-  border-top: 1px solid var(--border-color);
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-/* تنسيق العنصر النائب في حقول الـ select */
-select:required:invalid {
-  color: var(--accent-gray);
-}
-/* لتغيير لون النص إذا كان الخيار الأول هو الذي يظهر */
-select option:disabled {
-  color: var(--accent-gray); 
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* القوائم المنسدلة */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #ffffff;
-  min-width: 200px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  z-index: 1;
-  right: 0;
-  top: 100%;
-  margin-top: 5px;
-}
-
-.dropdown-content.show {
-  display: block;
-}
-
-.dropdown-content a, .dropdown-content button {
-  color: var(--text-dark);
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  width: 100%;
-  text-align: right;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 13px;
-  transition: background-color 0.2s ease;
-  font-family: 'Tajawal', sans-serif;
-}
-
-.dropdown-content a:hover, .dropdown-content button:hover {
-  background-color: var(--secondary-gray);
-}
-
-.dropdown-content a:first-child {
-  border-radius: 6px 6px 0 0;
-}
-
-.dropdown-content a:last-child {
-  border-radius: 0 0 6px 6px;
-}
-
-/* القوائم المنسدلة للأعضاء */
-.member-dropdown {
-  background-color: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  margin-bottom: 15px;
-  overflow: hidden;
-}
-
-.member-dropdown-header {
-  padding: 15px;
-  background-color: var(--secondary-gray);
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: background-color 0.2s ease;
-}
-
-.member-dropdown-header:hover {
-  background-color: var(--tertiary-gray);
-}
-
-.member-dropdown-header i {
-  transition: transform 0.3s ease;
-}
-
-.member-dropdown-header.active i {
-  transform: rotate(180deg);
-}
-
-.member-dropdown-body {
-  display: none;
-  padding: 15px;
-  background-color: #ffffff;
-}
-
-.member-dropdown-body.show {
-  display: block;
-}
-
-.member-info {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.member-info-item {
-  padding: 10px;
-  background-color: var(--primary-gray);
-  border-radius: 4px;
-}
-
-.member-info-label {
-  font-size: 11px;
-  color: var(--text-light);
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.member-info-value {
-  font-size: 13px;
-  color: var(--text-dark);
-  font-weight: 500;
-}
-
-.payment-status {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.payment-status.completed {
-  background-color: #d4edda;
-  color: #155724;
-}
-
-.payment-status.delayed {
-  background-color: #fff3cd;
-  color: #856404;
-}
-
-.payment-status.unpaid {
-  background-color: #f8d7da;
-  color: #721c24;
-}
-
-/* البطاقات */
-.card {
-  background-color: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--secondary-gray);
-}
-
-.card-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-dark);
-}
-
-.card-content {
-  font-size: 13px;
-  color: var(--text-light);
-  line-height: 1.8;
-}
-
-/* الرسائل والتنبيهات */
-.alert {
-  padding: 12px 16px;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  font-size: 12px;
-  border-left: 4px solid;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.alert.success {
-  background-color: #d4edda;
-  color: #155724;
-  border-color: #4caf50;
-}
-
-.alert.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border-color: #f44336;
-}
-
-.alert.info {
-  background-color: #d1ecf1;
-  color: #0c5460;
-  border-color: #2196f3;
-}
-
-.alert i {
-  font-size: 16px;
-}
-
-/* التذييل */
-footer {
-  background-color: #ffffff;
-  border-top: 1px solid var(--border-color);
-  padding: 20px 0;
-  margin-top: 40px;
-  text-align: center;
-  color: var(--text-light);
-  font-size: 12px;
-}
-
-/* التنقل بين الصفحات */
-.page {
-  display: none;
-}
-
-.page.active {
-  display: block;
-  animation: fadeIn 0.3s ease;
-}
-
-/* الأيقونات */
-.icon {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  margin-left: 5px;
-}
-
-/* الحالات الخاصة */
-.text-center {
-  text-align: center;
-}
-
-.text-right {
-  text-align: right;
-}
-
-.mt-20 {
-  margin-top: 20px;
-}
-
-.mb-20 {
-  margin-bottom: 20px;
-}
-
-.p-20 {
-  padding: 20px;
-}
-
-.flex {
-  display: flex;
-  gap: 10px;
-}
-
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-.flex-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-/* تجميع خانات الاختيار في شبكة */
-.checkbox-group {
-  display: grid; /* تحويل إلى شبكة */
-  /* عرض 3 أعمدة كحد أقصى، كل عمود بحجم متساوٍ (1fr) */
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
-  gap: 15px; /* زيادة التباعد بين العناصر */
-}
-.checkbox-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.checkbox-item input[type="checkbox"] {
-  width: auto;
-  margin: 0;
-}
-
-.checkbox-item label {
-  margin: 0;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-/* التاريخ */
-.date-display {
-  /* لضبط حجم الحاوية ليكون مناسباً للمحتوى فقط */
-  width: fit-content; 
-  /* توسيط الحاوية أفقياً */
-  margin: 0 auto 15px auto; 
-  /* تم التعديل: 
-     - 0: هامش علوي (يأخذ قيمته من padding-top في main.container)
-     - auto: توسيط أفقي
-     - 15px: هامش سفلي (يمنع الالتصاق بالعناصر السفلية)
-  */
-
-  padding: 10px 20px; /* مسافة داخلية جيدة */
-  background-color: var(--secondary-gray);
-  border-radius: 6px;
-  text-align: center; /* توسيط محتوى النص داخل الحاوية */
-}
-
-/* التنسيق الداخلي للتاريخ */
-.date-display .date-hijri {
-  font-size: 14px;
-  font-weight: 700; /* جعل الخط أثقل ليكون أوضح */
-  color: var(--text-dark);
-  margin-bottom: 5px; /* مسافة بين التاريخ الهجري والميلادي */
-  line-height: 1.2;
-}
-
-.date-display .date-gregorian {
-  font-size: 12px;
-  color: var(--text-light);
-  line-height: 1.2;
-}
-/* الاستجابة للشاشات الصغيرة */
-@media (max-width: 768px) {
-  .container {
-    width: 95%;
-    padding: 15px;
-  }
-
-  /* **تأكيد تنسيق الرأس على سطرين** */
-  header .container {
-    flex-direction: row;  
-    flex-wrap: wrap; 
-    justify-content: space-between;  
-    align-items: center;
-    gap: 15px;  
-    padding: 0 15px 5px 15px; /* لضمان تطابق الهامش الجانبي مع الجسم */
-  }
-
-  /* **نستخدم order لتحديد مكان الأزرار** */
-  .logo {
-      order: 1; 
-  }
-
-  /* **دفع أيقونات الإجراءات للظهور في السطر الأول بجانب الشعار** */
-  .header-actions {
-      order: 2; /* يبقى في السطر الأول بعد الشعار */
-  }
-  
-  /* **تأكيد تنسيق التنقل على سطر ثانٍ** */
-  nav {
-    flex: initial;  
-    width: 100%;  
-    justify-content: center; 
-    order: 3; /* **يدفع nav للسطر الثاني** */
-    gap: 25px; 
-    /* يتم اعتماد margin-top: 10px من النمط العام */
-  }
-
- .grid {
-    /* التعديل هنا: العودة إلى عمودين على شاشات التابلت */
-    grid-template-columns: repeat(4, 1fr); /* MODIFIED */
-    gap: 15px;
-  }
-
-  table {
-    font-size: 11px;
-  }
-
-  th, td {
-    padding: 8px;
-  }
-
-  .dropdown-content {
-    min-width: 150px;
-  }
-
-  .modal-content {
-    max-width: 90%;
-  }
-
-  .member-info {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    width: 100%;
-    padding: 10px;
-  }
-
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
-
-  nav {
-    flex-direction: row;  
-    flex-wrap: nowrap; /* منع الالتفاف وتفعيل التمرير الأفقي على الشاشات الصغيرة جداً */  
-    overflow-x: auto;
-    gap: 10px;  
-    width: 100%;  
-    justify-content: flex-start; /* قد يكون flex-start أفضل مع التمرير */
-  }
-
-  button, .btn {
-    width: auto;
-  }
-
-  /* **التعديل النهائي لتوسيط أزرار الأقسام** */
-  div[style*="justify-content: flex-end"] {
-    justify-content: center !important; 
-  }
-
-  .modal-content {
-    padding: 20px;
-  }
-}
-/* ========================================================== */
-/* NEW: Styling for the three main section buttons (Tabs) */
-/* تستهدف الأزرار داخل الحاوية التي تميز التبويبات الرئيسية */
-.section-tab-buttons .btn {
-  /* اللون الأساسي: الأزرق الداكن (Corporate Blue) */
-  background-color: var(--primary-color); /* #2c3e50 */
-  border-color: var(--primary-color);
-  color: #ffffff;
-  min-width: 100px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.section-tab-buttons .btn:hover {
-  /* تفتيح بسيط عند المرور */
-  background-color: #3b5064;
-  border-color: #3b5064;
-}
-
-.section-tab-buttons .btn.active-tab {
-  /* الحالة النشطة: لون Accent Blue (الأزرق الفاتح) */
-  background-color: var(--accent-color); /* #3498db */
-  border-color: var(--accent-color);
-  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
-}
-
-/* لتمييز أزرار الإضافة (مثل إضافة فريق) عن أزرار التبويب، سنعيدها إلى لونها الرمادي الداكن */
-/* تستهدف الأزرار التي تحمل فئة btn primary ولكن ليست داخل section-tab-buttons */
-.btn.primary:not(.section-tab-buttons .btn) {
-  background-color: var(--dark-gray); /* اللون الرمادي الحالي لـ btn primary */
-  border-color: var(--dark-gray);
-  color: #ffffff;
-}
-
-.btn.primary:not(.section-tab-buttons .btn):hover {
-  background-color: var(--accent-gray);
-  border-color: var(--accent-gray);
-}
-/* ========================================================== */
+  <div id="addTeamModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">إضافة فريق جديد</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="addTeamForm">
+          <div class="form-group">
+            <input type="text" id="teamName" placeholder="اسم الفريق" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('addTeamModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitAddTeam()">إضافة</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="editTeamModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">تحرير الفريق</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="editTeamForm">
+          <div class="form-group">
+            <input type="hidden" id="editTeamId">
+            <input type="text" id="editTeamName" placeholder="اسم الفريق" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('editTeamModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitEditTeam()">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="addBoxModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">إضافة صندوق جديد</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="addBoxForm">
+          <div class="form-group">
+            <input type="text" id="boxName" placeholder="اسم الصندوق" required>
+          </div>
+          <div class="form-group">
+            <input type="number" id="boxAmount" placeholder="مبلغ الدفع" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label>الاستحقاق:</label>
+            <select id="boxFrequency" required>
+              <option value="">اختر الاستحقاق</option>
+              <option value="monthly">شهري</option>
+              <option value="quarterly">ربع سنوي</option>
+              <option value="annual">سنوي</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>الفرق المشاركة:</label>
+            <div id="boxTeamsCheckboxes" style="min-height: 50px;"></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('addBoxModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitAddBox()">إضافة</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="editBoxModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">تحرير الصندوق</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="editBoxForm">
+          <div class="form-group">
+            <input type="hidden" id="editBoxId">
+            <input type="text" id="editBoxName" placeholder="اسم الصندوق" required>
+          </div>
+          <div class="form-group">
+            <input type="number" id="editBoxAmount" placeholder="مبلغ الدفع" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label>الاستحقاق:</label>
+            <select id="editBoxFrequency" required>
+              <option value="">اختر الاستحقاق</option>
+              <option value="monthly">شهري</option>
+              <option value="quarterly">ربع سنوي</option>
+              <option value="annual">سنوي</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>الفرق المشاركة:</label>
+            <div id="editBoxTeamsCheckboxes" style="min-height: 50px;"></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('editBoxModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitEditBox()">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="addMemberModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">إضافة عضو جديد</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="addMemberForm">
+          <div class="form-group">
+            <input type="text" id="memberName" placeholder="الاسم" required>
+          </div>
+<div class="form-group" style="margin-bottom: -3px;">
+    <label>الفرق:</label>
+    <div id="memberTeamsCheckboxes" style="min-height: 50px;"></div>
+</div>
+<div class="form-group">
+    <label>الصناديق:</label>
+    <div id="memberBoxesCheckboxes" style="min-height: 50px;"></div>
+</div>          <div class="form-group">
+            <input type="tel" id="memberPhone" placeholder="رقم الجوال" required>
+          </div>
+          <div class="form-group">
+            <input type="date" id="memberBirthDate" placeholder="تاريخ الميلاد">
+          </div>
+          <div class="form-group">
+            <select id="memberFinancialStatus" required>
+              <option value="">اختر الحالة المادية</option>
+              <option value="affluent">ميسور</option>
+              <option value="moderate">متوسط</option>
+              <option value="difficult">معسر</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select id="memberJobStatus" required>
+              <option value="">اختر الحالة الوظيفية</option>
+              <option value="employed">موظف</option>
+              <option value="unemployed">عاطل</option>
+              <option value="retired">متقاعد</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('addMemberModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitAddMember()">إضافة</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="importMembersModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">استيراد أعضاء (دفعة واحدة)</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="importMembersForm">
+          <div class="form-group">
+            <label>الصيغة: الاسم | الفريق | الصندوق | الجوال | الحالة المادية | الحالة الوظيفية</label>
+            <textarea id="membersImportData" placeholder="أحمد | 0501234567 | ميسور | موظف&#10;فاطمة | 0509876543 | متوسط | عاطل&#10;علي | 0505555555 | معسر | متقاعد" rows="8" required style="font-family: monospace; font-size: 12px;"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('importMembersModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitImportMembers()">استيراد</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Studio10 للأنظمة الإدارية. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // عرض الأقسام المختلفة
+    function showPage(pageId, clickedButton) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      
+      // التعديل: إدارة زر التبويب النشط
+      const tabButtons = document.querySelectorAll('.section-tab-buttons .btn');
+      tabButtons.forEach(btn => btn.classList.remove('active-tab'));
+      if (clickedButton) {
+        clickedButton.classList.add('active-tab');
+      }
+      // نهاية التعديل
+
+      if (pageId === 'teams-section') {
+        renderTeamsTable('teams-table-container');
+      } else if (pageId === 'boxes-section') {
+        renderBoxesTable('boxes-table-container');
+      } else if (pageId === 'members-section') {
+        renderMembersDropdowns('members-dropdowns-container');
+      }
+    }
+
+    // إضافة فريق
+    function submitAddTeam() {
+      const name = document.getElementById('teamName').value;
+      if (!name) {
+        showAlert('يرجى إدخال اسم الفريق', 'error');
+        return;
+      }
+      addTeam(name);
+      document.getElementById('addTeamForm').reset();
+      closeModal('addTeamModal');
+      renderTeamsTable('teams-table-container');
+      renderTeamsCheckboxes('boxTeamsCheckboxes');
+      renderTeamsCheckboxes('editBoxTeamsCheckboxes');
+    }
+
+    // تحرير فريق
+    function openEditTeamModal(teamId) {
+      const teams = getFromStorage('teams', []);
+      const team = teams.find(t => t.id === teamId);
+      if (team) {
+        document.getElementById('editTeamId').value = team.id;
+        document.getElementById('editTeamName').value = team.name;
+        openModal('editTeamModal');
+      }
+    }
+
+    function submitEditTeam() {
+      const teamId = parseInt(document.getElementById('editTeamId').value);
+      const name = document.getElementById('editTeamName').value;
+      
+      if (!name) {
+        showAlert('يرجى إدخال اسم الفريق', 'error');
+        return;
+      }
+
+      const teams = getFromStorage('teams', []);
+      const team = teams.find(t => t.id === teamId);
+      if (team) {
+        team.name = name;
+        saveToStorage('teams', teams);
+        showAlert('تم تحديث الفريق بنجاح', 'success');
+        closeModal('editTeamModal');
+        renderTeamsTable('teams-table-container');
+        renderTeamsCheckboxes('boxTeamsCheckboxes');
+        renderTeamsCheckboxes('editBoxTeamsCheckboxes');
+      }
+    }
+
+    // إضافة صندوق
+    function submitAddBox() {
+      const name = document.getElementById('boxName').value;
+      const amount = document.getElementById('boxAmount').value;
+      const frequency = document.getElementById('boxFrequency').value;
+      
+      const teamCheckboxes = document.querySelectorAll('#boxTeamsCheckboxes input[type="checkbox"]:checked');
+      const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
+      
+      if (!name || !amount || !frequency) {
+        showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
+        return;
+      }
+      
+      addBox(name, amount, teams, frequency);
+      document.getElementById('addBoxForm').reset();
+      document.getElementById('boxFrequency').value = '';
+      closeModal('addBoxModal');
+      renderBoxesTable('boxes-table-container');
+      renderTeamsCheckboxes('boxTeamsCheckboxes');
+    }
+
+    // تحرير صندوق
+    function openEditBoxModal(boxId) {
+      const boxes = getFromStorage('boxes', []);
+      const box = boxes.find(b => b.id === boxId);
+      if (box) {
+        document.getElementById('editBoxId').value = box.id;
+        document.getElementById('editBoxName').value = box.name;
+        document.getElementById('editBoxAmount').value = box.amount;
+        document.getElementById('editBoxFrequency').value = box.frequency;
+        
+        renderTeamsCheckboxes('editBoxTeamsCheckboxes');
+        
+        setTimeout(() => {
+          const checkboxes = document.querySelectorAll('#editBoxTeamsCheckboxes input[type="checkbox"]');
+          checkboxes.forEach(cb => {
+            cb.checked = box.teams && box.teams.includes(parseInt(cb.value));
+          });
+        }, 50);
+        
+        openModal('editBoxModal');
+      }
+    }
+
+    function submitEditBox() {
+      const boxId = parseInt(document.getElementById('editBoxId').value);
+      const name = document.getElementById('editBoxName').value;
+      const amount = document.getElementById('editBoxAmount').value;
+      const frequency = document.getElementById('editBoxFrequency').value;
+      
+      const teamCheckboxes = document.querySelectorAll('#editBoxTeamsCheckboxes input[type="checkbox"]:checked');
+      const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
+      
+      if (!name || !amount || !frequency) {
+        showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
+        return;
+      }
+
+      const boxes = getFromStorage('boxes', []);
+      const box = boxes.find(b => b.id === boxId);
+      if (box) {
+        box.name = name;
+        box.amount = parseFloat(amount);
+        box.frequency = frequency;
+        box.teams = teams;
+        saveToStorage('boxes', boxes);
+        showAlert('تم تحديث الصندوق بنجاح', 'success');
+        closeModal('editBoxModal');
+        renderBoxesTable('boxes-table-container');
+        renderTeamsCheckboxes('boxTeamsCheckboxes');
+      }
+    }
+
+    // إضافة عضو
+    function submitAddMember() {
+      const name = document.getElementById('memberName').value;
+      const phone = document.getElementById('memberPhone').value;
+      const birthDate = document.getElementById('memberBirthDate').value;
+      const financialStatus = document.getElementById('memberFinancialStatus').value;
+      const jobStatus = document.getElementById('memberJobStatus').value;
+      
+      const teamCheckboxes = document.querySelectorAll('#memberTeamsCheckboxes input[type="checkbox"]:checked');
+      const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
+      
+      const boxCheckboxes = document.querySelectorAll('#memberBoxesCheckboxes input[type="checkbox"]:checked');
+      const boxes = Array.from(boxCheckboxes).map(cb => parseInt(cb.value));
+      
+      if (!name || !phone || !financialStatus || !jobStatus) {
+        showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
+        return;
+      }
+      
+      addMember(name, teams, boxes, phone, birthDate, financialStatus, jobStatus);
+      document.getElementById('addMemberForm').reset();
+      closeModal('addMemberModal');
+      renderMembersDropdowns('members-dropdowns-container');
+    }
+
+    // استيراد الأعضاء
+    function submitImportMembers() {
+      const data = document.getElementById('membersImportData').value;
+      
+      if (!data.trim()) {
+        showAlert('يرجى لصق بيانات الأعضاء', 'error');
+        return;
+      }
+      
+      const lines = data.split('\n').filter(line => line.trim());
+      let count = 0;
+      let errors = [];
+      
+      lines.forEach((line, index) => {
+        const parts = line.split('|').map(p => p.trim());
+        
+        if (parts.length !== 4) {
+          errors.push(`السطر ${index + 1}: بيانات غير كاملة`);
+          return;
+        }
+        
+        const [name, phone, financial, job] = parts;
+        
+        if (!name || !phone || !financial || !job) {
+          errors.push(`السطر ${index + 1}: بيانات فارغة`);
+          return;
+        }
+        
+        const validFinancial = ['affluent', 'moderate', 'difficult'];
+        const validJob = ['employed', 'unemployed', 'retired'];
+        
+        if (!validFinancial.includes(financial)) {
+          errors.push(`السطر ${index + 1}: حالة مادية غير صحيحة`);
+          return;
+        }
+        
+        if (!validJob.includes(job)) {
+          errors.push(`السطر ${index + 1}: حالة وظيفية غير صحيحة`);
+          return;
+        }
+        
+        addMember(name, [], [], phone, '', financial, job);
+        count++;
+      });
+      
+      if (errors.length > 0) {
+        showAlert('أخطاء: ' + errors.join(', '), 'error');
+        return;
+      }
+      
+      showAlert('تم استيراد ' + count + ' أعضاء بنجاح', 'success');
+      document.getElementById('importMembersForm').reset();
+      closeModal('importMembersModal');
+      renderMembersDropdowns('members-dropdowns-container');
+    }
+
+    // عرض الفرق في checkboxes
+    function renderTeamsCheckboxes(containerId) {
+      const teams = getAllTeams();
+      const container = document.getElementById(containerId);
+      
+      if (!container) return;
+      
+      if (teams.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-light); font-size: 12px;">لا توجد فرق. أضف فريق أولاً</p>';
+        return;
+      }
+      
+      let html = '<div class="checkbox-group">';
+      teams.forEach(team => {
+        html += `
+          <div class="checkbox-item">
+            <input type="checkbox" id="team-${team.id}" value="${team.id}" name="teams">
+            <label for="team-${team.id}">${team.name}</label>
+          </div>
+        `;
+      });
+      html += '</div>';
+      
+      container.innerHTML = html;
+    }
+
+    // فتح نافذة إضافة عضو
+    function openAddMemberModal() {
+      renderTeamsCheckboxes('memberTeamsCheckboxes');
+      renderBoxesCheckboxes('memberBoxesCheckboxes');
+      openModal('addMemberModal');
+    }
+
+    // فتح نافذة إضافة صندوق
+    function openAddBoxModal() {
+      renderTeamsCheckboxes('boxTeamsCheckboxes');
+      openModal('addBoxModal');
+    }
+
+    // تحديث البيانات عند التحميل
+    document.addEventListener('DOMContentLoaded', function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      if (isLoggedIn !== 'true') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // التعديل: تفعيل زر التبويب النشط عند التحميل بناءً على القسم النشط افتراضياً (teams-section)
+      const activeSection = document.querySelector('.page.active');
+      if (activeSection) {
+        const activeId = activeSection.id.replace('-section', '-btn');
+        const activeBtn = document.getElementById(activeId);
+        if (activeBtn) {
+          activeBtn.classList.add('active-tab');
+        }
+      }
+      // نهاية التعديل
+
+      renderTeamsTable('teams-table-container');
+      renderBoxesTable('boxes-table-container');
+      renderMembersDropdowns('members-dropdowns-container');
+    });
+
+    function logout() {
+      if (confirm('هل تريد تسجيل الخروج؟')) {
+        localStorage.setItem('isLoggedIn', 'false');
+        localStorage.removeItem('currentUser');
+        showAlert('تم تسجيل الخروج بنجاح', 'success');
+        setTimeout(function() {
+          window.location.href = 'login.html';
+        }, 1000);
+      }
+    }
+  </script>
+</body>
+</html>

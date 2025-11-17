@@ -21,76 +21,176 @@ html {
 }
 
 /* ========================================================== */
+/* 2. متغيرات CSS (الألوان)                  */
+/* ========================================================== */
+:root {
+  /* تدرجات الرمادي للخلفيات والحدود */
+  --primary-gray: #f5f5f5; /* خلفية رئيسية فاتحة */
+  --secondary-gray: #e8e8e8; /* خلفية ثانوية/بطاقات */
+  --tertiary-gray: #d0d0d0; /* رمادي أعمق */
+  --dark-gray: #808080; /* رمادي داكن للمحايدة */
+  --accent-gray: #a9a9a9; /* رمادي للتمييز/العناصر النائبة */
+  --border-color: #d9d9d9; /* لون خطوط الحدود */
+
+  /* ألوان النص */
+  --text-dark: #333333; /* نص داكن للتباين العالي */
+  --text-light: #666666; /* نص فاتح/توضيحي */
+
+  /* ألوان العلامة التجارية والأكشن */
+  --primary-color: #2c3e50; /* اللون الأساسي الغامق (Corporate Blue) */
+  --accent-color: #3498db; /* لون التمييز (Azure Blue) */
+  --error-color: #e74c3c; /* لون الخطأ/الحذف (Red) */
 }
 
+/* ========================================================== */
+/* 3. الأنماط العامة للجسم                 */
+/* ========================================================== */
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background-color: var(--primary-gray);
+  color: var(--text-dark);
+  font-size: 13px;
+  line-height: 1.6;
+  direction: rtl; /* دعم اللغة العربية */
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* الحاوية الرئيسية لتوسيط المحتوى */
+.container {
+  width: 43%; /* عرض مخصص */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5px;
+}
+
+/* ========================================================== */
+/* 4. الرأس (Header)                    */
+/* ========================================================== */
+
+header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 0;
+  margin-bottom: 5px;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header .container {
+  display: flex;
+  flex-wrap: wrap; /* للسماح بكسر السطر لـ nav */
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+/* الشعار */
+.logo {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  order: 1; /* الترتيب في السطر الأول */
+}
 
 .logo i {
-font-size: 20px;
-color: var(--accent-color);
+  font-size: 20px;
+  color: var(--accent-color);
 }
 
-
+/* شريط التنقل (Navigation) */
 nav {
-display: flex;
-gap: 40px;
-width: 100%;
-justify-content: center;
-margin-top: -5px;
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  flex: initial; /* إلغاء التمدد */
+  width: 100%; /* إجباره على النزول لسطر جديد */
+  margin-top: -5px;
+  justify-content: center; /* توسيط العناصر */
+  order: 3; /* الترتيب في السطر الثاني */
 }
 
-
+/* روابط التنقل (النمط الأساسي) */
 nav a {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-gap: 4px;
-text-decoration: none;
-color: var(--text-dark);
-padding: 10px 10px;
-border-radius: 4px;
-transition: all 0.3s;
-background-color: transparent;
-font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-dark);
+  padding: 10px 10px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  background-color: transparent;
+  font-weight: 500;
 }
 
+nav a:hover, nav a.active {
+  color: var(--text-dark);
+  background-color: var(--secondary-gray);
+}
 
+nav a.active {
+  font-weight: 600;
+}
+
+/* أيقونة رابط التنقل */
 nav a i {
-font-size: 18px;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-color: var(--accent-color);
+  font-size: 16px;
+  margin-bottom: 2px;
+  color: var(--accent-color);
 }
 
-
-nav a:hover,
-nav a.active {
-background-color: var(--secondary-gray);
-font-weight: 600;
+/* نص رابط التنقل */
+nav a span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dark);
 }
 
-
-nav a.active {
-border-bottom: 3px solid var(--accent-color);
+/* أزرار الإجراءات في الرأس (Actions) */
+.header-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  order: 2; /* الترتيب في السطر الأول */
 }
 
+/* تنسيق أزرار/روابط الإجراءات العامة */
+.header-actions a, .header-actions button {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  font-size: 18px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 20px 12px;
+  border-radius: 4px;
+}
 
+.header-actions a:hover {
+  color: var(--accent-color);
+  background-color: var(--secondary-gray);
+}
+
+/* تنسيق زر تسجيل الخروج */
 .header-actions button {
-background: none;
-border: none;
-color: var(--error-color);
-cursor: pointer;
-font-size: 18px;
-padding: 20px 12px;
-border-radius: 4px;
+  color: var(--error-color);
 }
-
 
 .header-actions button:hover {
-color: #c0392b;
-background-color: var(--secondary-gray);
+  color: #c0392b; /* لون أحمر أغمق عند التحويم */
+  background-color: var(--secondary-gray);
 }
+
 /* ========================================================== */
 /* 5. المحتوى الرئيسي                   */
 /* ========================================================== */
@@ -160,66 +260,86 @@ section {
 }
 
 /* ========================================================== */
-/* 5. الأزرار (Buttons) موحدة بالكامل */
+/* 6. الأزرار (Buttons)               */
 /* ========================================================== */
-button,
-.btn {
-background-color: var(--primary-color);
-color: #fff;
-border: 1px solid var(--primary-color);
-padding: 10px 18px;
-border-radius: 6px;
-cursor: pointer;
-font-size: 13px;
-font-weight: 500;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-gap: 8px;
-transition: all 0.3s ease;
+
+button, .btn {
+  background-color: var(--secondary-gray);
+  color: var(--text-dark);
+  border: 1px solid var(--tertiary-gray);
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Tajawal', sans-serif;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
 }
 
-
-button:hover,
-.btn:hover {
-background-color: var(--primary-hover);
-border-color: var(--primary-hover);
+button:hover, .btn:hover {
+  background-color: var(--tertiary-gray);
+  color: var(--text-dark);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-
-button i,
-.btn i {
-font-size: 14px;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-line-height: 0;
+button:active, .btn:active {
+  background-color: var(--accent-gray);
+  color: #ffffff;
 }
 
+/* الزر الأساسي (Primary) - رمادي داكن */
+button.primary, .btn.primary {
+  background-color: var(--dark-gray);
+  color: #ffffff;
+  border-color: var(--dark-gray);
+}
 
-/* تبويبات الأقسام */
+button.primary:hover, .btn.primary:hover {
+  background-color: var(--accent-gray);
+  border-color: var(--accent-gray);
+}
+
+/* حجم صغير */
+button.sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* زر أيقونة فقط */
+button.icon-only {
+  padding: 8px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* أزرار تبويبات الأقسام (Section Tab Buttons) - ذات أولوية أعلى */
 .section-tab-buttons .btn {
-min-width: 110px;
-font-weight: 600;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #ffffff;
+  min-width: 100px;
+  font-weight: 600;
 }
 
+.section-tab-buttons .btn:hover {
+  background-color: #3b5064; /* تفتيح بسيط */
+  border-color: #3b5064;
+}
 
 .section-tab-buttons .btn.active-tab {
-background-color: var(--accent-color);
-border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
 }
 
-
-/* صفوف الأزرار */
-.section-actions,
-.section-buttons,
-.action-row {
-display: flex;
-justify-content: flex-end;
-align-items: center;
-gap: 10px;
-margin-bottom: 15px;
-}
 /* ========================================================== */
 /* 7. الجداول (Tables)                  */
 /* ========================================================== */

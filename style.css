@@ -94,7 +94,7 @@ header {
   margin-bottom: 5px;
   border-bottom: 2px solid var(--accent-color);
   position: sticky;
-  top: 5;
+  top: 0;
   z-index: 100;
 }
 

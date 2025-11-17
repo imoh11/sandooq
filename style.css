@@ -1071,3 +1071,31 @@ nav a.active {
         border-right: 3px solid var(--accent-color); /* شريط أزرق على اليمين */
     }
 }
+/* ========================================================== */
+/* أزرار التبويبات الداخلية في صفحة الأعضاء        */
+/* ========================================================== */
+
+.section-tab-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.section-tab-buttons .btn {
+  flex: 1; /* كل زر يأخذ مساحة متساوية */
+  justify-content: center;
+  padding: 12px 20px;
+}
+
+/* للشاشات الصغيرة */
+@media (max-width: 480px) {
+  .section-tab-buttons {
+    gap: 10px;
+  }
+  
+  .section-tab-buttons .btn {
+    padding: 10px 15px;
+    font-size: 12px;
+  }
+}

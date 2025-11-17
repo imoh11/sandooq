@@ -828,7 +828,7 @@ footer {
     flex-wrap: wrap; 
     justify-content: space-between;  
     align-items: center;
-    gap: 15px;  
+    gap: 10px;  
     padding: 0 15px 5px 15px; /* لضمان تطابق الهامش الجانبي مع الجسم */
   }
 

@@ -1,257 +1,886 @@
-/* ========== STYLE.CSS UPDATED FULL VERSION ========== */
-
 /* ========================================================== */
 /* 1. الإعدادات الأساسية والاستيرادات              */
 /* ========================================================== */
+
+/* استيراد خط تجوال من Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
+
+/* استيراد Font Awesome للأيقونات */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
+/* إعادة تعيين الأنماط الأساسية لجميع العناصر */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* الخصائص الأساسية لعناصر HTML */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; /* تفعيل التمرير السلس */
 }
 
 /* ========================================================== */
-/* 2. متغيرات CSS (الألوان)                  */
-/* ========================================================== */
-:root {
-  --primary-gray: #f5f5f5;
-  --secondary-gray: #e8e8e8;
-  --tertiary-gray: #d0d0d0;
-  --dark-gray: #808080;
-  --accent-gray: #a9a9a9;
-  --border-color: #d9d9d9;
-
-  --text-dark: #333333;
-  --text-light: #666666;
-
-  --primary-color: #2c3e50; /* الأزرق الغامق الموحد */
-  --primary-hover: #3b5064;
-  --accent-color: #3498db;
-  --error-color: #e74c3c;
 }
 
-/* ========================================================== */
-/* 3. الجسم                  */
-/* ========================================================== */
-body {
-  font-family: 'Tajawal', sans-serif;
-  background-color: var(--primary-gray);
-  color: var(--text-dark);
-  font-size: 13px;
-  line-height: 1.6;
-  direction: rtl;
-
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.container {
-  width: 43%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 5px;
-}
-
-/* ========================================================== */
-/* 4. الرأس (Header)                    */
-/* ========================================================== */
-header {
-  background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  padding: 0;
-  margin-bottom: 5px;
-  border-bottom: 1px solid var(--border-color);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-header .container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-}
-
-.logo {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--primary-color);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 
 .logo i {
-  font-size: 20px;
-  color: var(--accent-color);
+font-size: 20px;
+color: var(--accent-color);
 }
+
 
 nav {
-  display: flex;
-  gap: 40px;
-  width: 100%;
-  justify-content: center;
-  margin-top: -5px;
+display: flex;
+gap: 40px;
+width: 100%;
+justify-content: center;
+margin-top: -5px;
 }
+
 
 nav a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  text-decoration: none;
-  color: var(--text-dark);
-  padding: 10px 10px;
-  border-radius: 4px;
-  transition: all 0.3s;
-  background-color: transparent;
-  font-weight: 500;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 4px;
+text-decoration: none;
+color: var(--text-dark);
+padding: 10px 10px;
+border-radius: 4px;
+transition: all 0.3s;
+background-color: transparent;
+font-weight: 500;
 }
 
+
 nav a i {
-  font-size: 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent-color);
+font-size: 18px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+color: var(--accent-color);
 }
+
 
 nav a:hover,
 nav a.active {
-  background-color: var(--secondary-gray);
-  font-weight: 600;
+background-color: var(--secondary-gray);
+font-weight: 600;
 }
+
 
 nav a.active {
-  border-bottom: 3px solid var(--accent-color);
+border-bottom: 3px solid var(--accent-color);
 }
+
 
 .header-actions button {
-  background: none;
-  border: none;
-  color: var(--error-color);
-  cursor: pointer;
-  font-size: 18px;
-  padding: 20px 12px;
-  border-radius: 4px;
+background: none;
+border: none;
+color: var(--error-color);
+cursor: pointer;
+font-size: 18px;
+padding: 20px 12px;
+border-radius: 4px;
 }
 
+
 .header-actions button:hover {
-  color: #c0392b;
+color: #c0392b;
+background-color: var(--secondary-gray);
+}
+/* ========================================================== */
+/* 5. المحتوى الرئيسي                   */
+/* ========================================================== */
+
+/* المحتوى الرئيسي */
+main {
+  flex-grow: 1;
+  padding-bottom: 20px;
+}
+
+/* الأقسام */
+section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--secondary-gray);
+}
+
+/* الشبكة (Grid) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 أعمدة متساوية */
+  gap: 25px;
+  margin-bottom: 20px;
+}
+
+/* عناصر الشبكة (البطاقات المصغرة) */
+.grid-item {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.grid-item:hover {
   background-color: var(--secondary-gray);
+  border-color: var(--tertiary-gray);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.grid-item-icon {
+  font-size: 32px;
+  color: var(--accent-color);
+}
+
+.grid-item-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dark);
 }
 
 /* ========================================================== */
-/* 5. الأزرار (Buttons) موحدة بالكامل               */
+/* 5. الأزرار (Buttons) موحدة بالكامل */
 /* ========================================================== */
 button,
 .btn {
-  background-color: var(--primary-color);
-  color: #fff;
-  border: 1px solid var(--primary-color);
-  padding: 10px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.3s ease;
+background-color: var(--primary-color);
+color: #fff;
+border: 1px solid var(--primary-color);
+padding: 10px 18px;
+border-radius: 6px;
+cursor: pointer;
+font-size: 13px;
+font-weight: 500;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+transition: all 0.3s ease;
 }
+
 
 button:hover,
 .btn:hover {
-  background-color: var(--primary-hover);
-  border-color: var(--primary-hover);
+background-color: var(--primary-hover);
+border-color: var(--primary-hover);
 }
+
 
 button i,
 .btn i {
-  font-size: 14px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 0;
+font-size: 14px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+line-height: 0;
 }
+
 
 /* تبويبات الأقسام */
 .section-tab-buttons .btn {
-  min-width: 110px;
-  font-weight: 600;
+min-width: 110px;
+font-weight: 600;
 }
 
+
 .section-tab-buttons .btn.active-tab {
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
+background-color: var(--accent-color);
+border-color: var(--accent-color);
 }
+
 
 /* صفوف الأزرار */
 .section-actions,
 .section-buttons,
 .action-row {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
+display: flex;
+justify-content: flex-end;
+align-items: center;
+gap: 10px;
+margin-bottom: 15px;
+}
+/* ========================================================== */
+/* 7. الجداول (Tables)                  */
+/* ========================================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+thead {
+  background-color: var(--secondary-gray);
+  border-bottom: 2px solid var(--tertiary-gray);
+}
+
+th {
+  padding: 12px;
+  text-align: right;
+  font-weight: 400;
+  color: var(--text-dark);
+  font-size: 12px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+tbody tr:hover {
+  background-color: var(--primary-gray);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
 }
 
 /* ========================================================== */
-/* 6. الجداول (Tables)                  */
+/* 8. النماذج (Forms)                   */
 /* ========================================================== */
 
-/* (الجداول كما هي – لم تتغير) */
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: var(--text-dark);
+  font-size: 12px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  background-color: #ffffff;
+  color: var(--text-dark);
+  transition: border-color 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--accent-gray);
+}
+
+/* تنسيق خاص لحقول الهاتف لضمان اتجاه النص RTL */
+input[type="tel"] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* تنسيق العنصر النائب في حقول الـ select */
+select:required:invalid {
+  color: var(--accent-gray);
+}
+
+/* لتغيير لون النص إذا كان الخيار الأول هو الذي يظهر */
+select option:disabled {
+  color: var(--accent-gray);
+}
+
+/* تجميع خانات الاختيار في شبكة */
+.checkbox-group {
+  display: grid;
+  /* عرض 3 أعمدة كحد أقصى، كل عمود بحجم متساوٍ */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 15px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+.checkbox-item label {
+  margin: 0;
+  font-size: 13px;
+  cursor: pointer;
+}
 
 /* ========================================================== */
-/* 7. النماذج / المدخلات / المودال … بدون تغيير */
+/* 9. النوافذ المنبثقة (Modal)                */
 /* ========================================================== */
 
-/* (يُترك كما هو لضمان عدم كسر أي وظائف) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 0;
+  width: auto;
+  height: auto;
+}
+
+.modal-close:hover {
+  color: var(--text-dark);
+}
+
+.modal-body {
+  margin-bottom: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color);
+}
 
 /* ========================================================== */
-/* 8. تذييل */
+/* 10. القوائم المنسدلة (Dropdowns)         */
 /* ========================================================== */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 200px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  z-index: 1;
+  right: 0;
+  top: 100%;
+  margin-top: 5px;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-content a, .dropdown-content button {
+  color: var(--text-dark);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  text-align: right;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.2s ease;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.dropdown-content a:hover, .dropdown-content button:hover {
+  background-color: var(--secondary-gray);
+}
+
+.dropdown-content a:first-child {
+  border-radius: 6px 6px 0 0;
+}
+
+.dropdown-content a:last-child {
+  border-radius: 0 0 6px 6px;
+}
+
+/* ========================================================== */
+/* 11. قائمة أعضاء قابلة للطي                  */
+/* ========================================================== */
+
+.member-dropdown {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.member-dropdown-header {
+  padding: 15px;
+  background-color: var(--secondary-gray);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+}
+
+.member-dropdown-header:hover {
+  background-color: var(--tertiary-gray);
+}
+
+.member-dropdown-header i {
+  transition: transform 0.3s ease;
+}
+
+.member-dropdown-header.active i {
+  transform: rotate(180deg);
+}
+
+.member-dropdown-body {
+  display: none;
+  padding: 15px;
+  background-color: #ffffff;
+}
+
+.member-dropdown-body.show {
+  display: block;
+}
+
+.member-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.member-info-item {
+  padding: 10px;
+  background-color: var(--primary-gray);
+  border-radius: 4px;
+}
+
+.member-info-label {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.member-info-value {
+  font-size: 13px;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+/* ========================================================== */
+/* 12. حالة الدفع (Payment Status)              */
+/* ========================================================== */
+
+.payment-status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.payment-status.completed {
+  background-color: #d4edda;
+  color: #155724; /* أخضر */
+}
+
+.payment-status.delayed {
+  background-color: #fff3cd;
+  color: #856404; /* برتقالي/أصفر */
+}
+
+.payment-status.unpaid {
+  background-color: #f8d7da;
+  color: #721c24; /* أحمر */
+}
+
+/* ========================================================== */
+/* 13. البطاقات (Cards)                 */
+/* ========================================================== */
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--secondary-gray);
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.card-content {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.8;
+}
+
+/* ========================================================== */
+/* 14. الرسائل والتنبيهات (Alerts)             */
+/* ========================================================== */
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 12px;
+  border-left: 4px solid;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alert.success {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #4caf50;
+}
+
+.alert.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f44336;
+}
+
+.alert.info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border-color: #2196f3;
+}
+
+.alert i {
+  font-size: 16px;
+}
+
+/* ========================================================== */
+/* 15. التذييل (Footer)                  */
+/* ========================================================== */
+
 footer {
   background-color: #ffffff;
   border-top: 1px solid var(--border-color);
   padding: 20px 0;
-  text-align: center;
-  font-size: 12px;
-  color: var(--text-light);
   margin-top: 40px;
+  text-align: center;
+  color: var(--text-light);
+  font-size: 12px;
 }
 
 /* ========================================================== */
-/* 9. أدوات و Responsive */
+/* 16. عناصر الصفحة والتاريخ                 */
 /* ========================================================== */
-.text-center { text-align: center; }
-.text-right { text-align: right; }
-.flex { display: flex; gap: 10px; }
-.flex-center { display: flex; justify-content: center; align-items: center; gap: 10px; }
+
+/* التنقل بين الصفحات */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+/* تنسيق التاريخ */
+.date-display {
+  width: fit-content;
+  margin: 0 auto 15px auto;
+  padding: 10px 20px;
+  background-color: var(--secondary-gray);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.date-display .date-hijri {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.date-display .date-gregorian {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.2;
+}
+
+/* ========================================================== */
+/* 17. الخدمات المساعدة (Utilities)        */
+/* ========================================================== */
+
+.icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-left: 5px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+.flex {
+  display: flex;
+  gap: 10px;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ========================================================== */
+/* 18. الحركات (Animations)               */
+/* ========================================================== */
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ========================================================== */
+/* 19. استجابة الشاشات (Media Queries)         */
+/* ========================================================== */
 
 @media (max-width: 768px) {
-  .container { width: 95%; }
-  nav { gap: 25px; }
+  .container {
+    width: 95%;
+    padding: 15px;
+  }
+
+  /* تنسيق الرأس على سطرين */
+  header .container {
+    flex-wrap: wrap;
+    padding: 0 15px 5px 15px;
+  }
+
+  .logo {
+    order: 1;
+  }
+
+  .header-actions {
+    order: 2;
+  }
+
+  nav {
+    width: 100%;
+    order: 3; /* دفع شريط التنقل للسطر الثاني */
+    gap: 25px;
+  }
+
+  .grid {
+    /* تم تغييرها إلى عمودين على شاشات التابلت إن كنت تريد ذلك، ولكن الأصل كان 4، لذا سنبقي على 4 */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+
+  table {
+    font-size: 11px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  .dropdown-content {
+    min-width: 150px;
+  }
+
+  .modal-content {
+    max-width: 90%;
+  }
+
+  .member-info {
+    grid-template-columns: 1fr; /* عمود واحد */
+  }
 }
 
 @media (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .grid {
+    /* تم تغييرها إلى عمودين أو 3 هنا لجعل العناصر أكبر، ولكن تم الإبقاء على 4 في الكود الأصلي */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
   nav {
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    flex-wrap: nowrap; /* منع الالتفاف */
+    overflow-x: auto; /* تفعيل التمرير الأفقي */
     gap: 10px;
     justify-content: flex-start;
   }
+
+  /* **تعديل توسيط أزرار الأقسام** */
+  div[style*="justify-content: flex-end"] {
+    justify-content: center !important;
+  }
+
+  .modal-content {
+    padding: 20px;
+  }
+}
+/* ========================================================== */
+/* تحديث نمط الرابط النشط لضمان ظهوره في كل الأحجام */
+/* ========================================================== */
+nav a.active {
+  /* احتفظ بخلفية الرمادي لتمييز المنطقة */
+  background-color: var(--secondary-gray);
+  font-weight: 600;
+  
+  /* إضافة مؤشر لوني واضح (الخط الأزرق الساطع) */
+  position: relative; /* لتكون النقطة المرجعية للعنصر الزائف */
+  
+  /* النمط الأساسي للمؤشر: شريط سفلي */
+  border-bottom: 3px solid var(--accent-color); /* شريط أزرق سفلي */
+  padding-bottom: 7px; /* لزيادة المسافة بين النص والخط */
+}
+
+/* نمط للموبايل لجعله بارزاً أكثر إذا لزم الأمر */
+@media (max-width: 480px) {
+    nav a.active {
+        /* بدلاً من الشريط السفلي، يمكن تجربة شريط جانبي ليكون أكثر وضوحاً */
+        border-bottom: none; 
+        border-right: 3px solid var(--accent-color); /* شريط أزرق على اليمين */
+    }
 }

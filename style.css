@@ -196,7 +196,7 @@ nav a span {
   cursor: pointer;
   font-size: 18px;
   transition: all 0.3s ease;
-  padding: 8px 12px;
+  padding: 0px 0px;
   border-radius: 8px;
 }
 

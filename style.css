@@ -103,7 +103,7 @@ header .container {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 10px 5px 10px;
+  padding: 10px 10px 2px 10px;
 }
 
 /* الشعار */
@@ -975,7 +975,7 @@ footer {
   /* تنسيق الرأس على سطرين */
   header .container {
     flex-wrap: wrap;
-    padding: 0 15px 5px 15px;
+    padding: 0 15px 1px 15px;
   }
 
   .logo {

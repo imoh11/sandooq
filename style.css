@@ -975,7 +975,7 @@ footer {
   /* تنسيق الرأس على سطرين */
   header .container {
     flex-wrap: wrap;
-    padding: 0 15px 1px 15px;
+    padding:10px 15px 5px 15px;
   }
 
   .logo {

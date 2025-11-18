@@ -1,5 +1,5 @@
 /* ========================================================== */
-/* 1. الإعدادات الأساسية والاستيرادات              */
+/* 1. الإعدادات الأساسية والاستيرادات         */
 /* ========================================================== */
 
 /* استيراد خط تجوال من Google Fonts */
@@ -21,47 +21,51 @@ html {
 }
 
 /* ========================================================== */
-/* 2. متغيرات CSS (نظام ألوان بارد موحد)                  */
+/* 2. متغيرات CSS (نظام ألوان بارد وعصري)             */
 /* ========================================================== */
 :root {
-  /* الألوان الأساسية - نظام أزرق/رمادي بارد */
-  --primary-color: #1e3a5f; /* أزرق داكن بارد */
-  --secondary-color: #2d5f8d; /* أزرق متوسط */
-  --accent-color: #4a90c9; /* أزرق فاتح */
-  --accent-hover: #5ca3db; /* أزرق فاتح عند التحويم */
+  /* الألوان الأساسية - نظام أزرق داكن/تركوازي */
+  --primary-color: #2C3E50; /* أزرق صخري داكن (Slate Blue) */
+  --secondary-color: #34495E; /* أزرق صخري متوسط */
+  --accent-color: #1ABC9C; /* تركوازي (Teal) للميزات البارزة */
+  --accent-hover: #48C9B0; /* تركوازي أفتح عند التحويم */
   
   /* خلفيات باردة */
-  --bg-primary: #f0f4f8; /* خلفية رئيسية زرقاء فاتحة جداً */
-  --bg-secondary: #e3eaf2; /* خلفية ثانوية */
-  --bg-tertiary: #d4dfe9; /* خلفية ثالثة */
+  --bg-primary: #ECF0F1; /* خلفية رئيسية رمادية فاتحة جداً */
+  --bg-secondary: #E0E6E9; /* خلفية ثانوية ناعمة */
+  --bg-tertiary: #D5DBDE; /* خلفية ثالثة أغمق قليلاً */
   --bg-white: #ffffff; /* خلفية بيضاء نقية */
   
-  /* حدود باردة */
-  --border-light: #c8d6e5; /* حدود فاتحة */
-  --border-medium: #b0c4d4; /* حدود متوسطة */
-  --border-dark: #8fa5b8; /* حدود داكنة */
+  /* حدود ناعمة (للفصل البصري الخفيف) */
+  --border-light: #BDC3C7; /* حدود رمادية فاتحة جداً */
+  --border-medium: #AAB7B8; /* حدود متوسطة */
   
   /* ألوان النص */
-  --text-primary: #1a2332; /* نص داكن بارد */
-  --text-secondary: #4a5f7f; /* نص ثانوي */
-  --text-muted: #6b7c93; /* نص خفيف */
+  --text-primary: #212F3C; /* نص داكن جداً */
+  --text-secondary: #5D6D7E; /* نص ثانوي رمادي */
+  --text-muted: #8D9EAE; /* نص خفيف */
   
   /* ألوان الحالة */
-  --success-color: #2e7d5f; /* أخضر بارد */
-  --success-bg: #d1f2e8; /* خلفية نجاح */
-  --warning-color: #8b7332; /* برتقالي بارد */
-  --warning-bg: #fff4d9; /* خلفية تحذير */
-  --error-color: #a63d40; /* أحمر بارد */
-  --error-bg: #fde8e9; /* خلفية خطأ */
+  --success-color: #2ECC71; /* أخضر نقي */
+  --success-bg: #E8F8F5; /* خلفية نجاح فاتحة */
+  --warning-color: #F39C12; /* برتقالي ساطع */
+  --warning-bg: #FCF3CF; /* خلفية تحذير فاتحة */
+  --error-color: #E74C3C; /* أحمر حاد */
+  --error-bg: #FDEDEC; /* خلفية خطأ فاتحة */
   
-  /* ظلال باردة */
-  --shadow-sm: 0 1px 3px rgba(30, 58, 95, 0.08);
-  --shadow-md: 0 4px 12px rgba(30, 58, 95, 0.12);
-  --shadow-lg: 0 8px 24px rgba(30, 58, 95, 0.16);
+  /* ظلال ناعمة ومخفية (لإلغاء الحاجة للحدود الصلبة) */
+  --shadow-sm: 0 1px 4px rgba(44, 62, 80, 0.08);
+  --shadow-md: 0 4px 12px rgba(44, 62, 80, 0.12);
+  --shadow-lg: 0 8px 24px rgba(44, 62, 80, 0.16);
+  
+  /* نصف قطر الحدود */
+  --radius-lg: 12px;
+  --radius-md: 8px;
+  --radius-sm: 6px;
 }
 
 /* ========================================================== */
-/* 3. الأنماط العامة للجسم                 */
+/* 3. الأنماط العامة للجسم               */
 /* ========================================================== */
 
 body {
@@ -77,7 +81,7 @@ body {
 }
 
 .container {
-  width: 43%;
+  width: 90%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 5px;
@@ -88,13 +92,13 @@ body {
 /* ========================================================== */
 
 header {
-  background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-secondary) 100%);
-  box-shadow: var(--shadow-md);
+  background-color: var(--bg-white);
+  box-shadow: var(--shadow-sm); 
   padding: 0;
   margin-bottom: 5px;
-  border-bottom: 2px solid var(--accent-color);
+  border-bottom: 3px solid var(--accent-color); /* شريط تمييز تركوازي */
   position: sticky;
-  top: 5;
+  top: 0;
   z-index: 100;
 }
 
@@ -148,7 +152,7 @@ nav a {
   text-decoration: none;
   color: var(--text-secondary);
   padding: 10px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   transition: all 0.3s ease;
   background-color: transparent;
   font-weight: 500;
@@ -161,6 +165,7 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
+/* نمط الرابط النشط */
 nav a.active {
   color: var(--primary-color);
   background-color: var(--bg-secondary);
@@ -197,7 +202,7 @@ nav a span {
   font-size: 18px;
   transition: all 0.3s ease;
   padding: 5px 5px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 .header-actions a:hover {
@@ -211,13 +216,13 @@ nav a span {
 }
 
 .header-actions button:hover {
-  color: #8b2e31;
+  color: #B9443B; /* أحمر أغمق قليلاً */
   background-color: var(--error-bg);
   transform: scale(1.1);
 }
 
 /* ========================================================== */
-/* 5. المحتوى الرئيسي                   */
+/* 5. المحتوى الرئيسي                     */
 /* ========================================================== */
 
 main {
@@ -235,7 +240,7 @@ section {
   color: var(--primary-color);
   margin-bottom: 15px;
   padding-bottom: 10px;
-  border-bottom: 2px solid var(--accent-color);
+  border-bottom: 1px solid var(--border-light); /* حدود ناعمة */
   display: flex;
   align-items: center;
   gap: 10px;
@@ -244,8 +249,8 @@ section {
 .section-title::before {
   content: '';
   width: 4px;
-  height: 24px;
-  background: linear-gradient(180deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+  height: 20px;
+  background: var(--accent-color); /* مؤشر تركوازي واضح */
   border-radius: 2px;
 }
 
@@ -259,9 +264,9 @@ section {
 
 /* عناصر الشبكة (البطاقات المصغرة) */
 .grid-item {
-  background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-secondary) 100%);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
+  background-color: var(--bg-white);
+  border: none;
+  border-radius: var(--radius-lg);
   padding: 20px;
   text-align: center;
   cursor: pointer;
@@ -277,10 +282,10 @@ section {
 }
 
 .grid-item:hover {
-  background: var(--bg-white);
-  border-color: var(--accent-color);
+  background-color: var(--bg-secondary);
   box-shadow: var(--shadow-md);
   transform: translateY(-4px);
+  border: 1px solid var(--accent-color);
 }
 
 .grid-item-icon {
@@ -300,15 +305,15 @@ section {
 }
 
 /* ========================================================== */
-/* 6. الأزرار (Buttons)               */
+/* 6. الأزرار (Buttons)                */
 /* ========================================================== */
 
 button, .btn {
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-  color: var(--text-primary);
-  border: 1px solid var(--border-medium);
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-size: 13px;
   font-weight: 500;
@@ -322,28 +327,29 @@ button, .btn {
 }
 
 button:hover, .btn:hover {
-  background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--border-medium) 100%);
-  color: var(--text-primary);
+  background-color: var(--bg-tertiary);
+  color: var(--primary-color);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+  border-color: var(--border-medium);
 }
 
 button:active, .btn:active {
-  background: var(--secondary-color);
+  background-color: var(--secondary-color);
   color: var(--bg-white);
   transform: translateY(0);
 }
 
 /* الزر الأساسي (Primary) */
 button.primary, .btn.primary {
-  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+  background-color: var(--primary-color);
   color: var(--bg-white);
-  border-color: var(--secondary-color);
+  border-color: var(--primary-color);
 }
 
 button.primary:hover, .btn.primary:hover {
-  background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
-  border-color: var(--accent-color);
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
 }
 
 /* حجم صغير */
@@ -365,7 +371,7 @@ button.icon-only {
 
 /* أزرار تبويبات الأقسام */
 .section-tab-buttons .btn {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background-color: var(--primary-color);
   border-color: var(--primary-color);
   color: var(--bg-white);
   min-width: 100px;
@@ -373,33 +379,34 @@ button.icon-only {
 }
 
 .section-tab-buttons .btn:hover {
-  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+  background-color: var(--secondary-color);
   border-color: var(--secondary-color);
 }
 
 .section-tab-buttons .btn.active-tab {
-  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+  background-color: var(--accent-color);
   border-color: var(--accent-color);
-  box-shadow: 0 4px 12px rgba(74, 144, 201, 0.4);
+  color: var(--primary-color); 
+  box-shadow: 0 4px 12px rgba(26, 188, 156, 0.4);
 }
 
 /* ========================================================== */
-/* 7. الجداول (Tables)                  */
+/* 7. الجداول (Tables)                 */
 /* ========================================================== */
 
 table {
   width: 100%;
   border-collapse: collapse;
   background-color: var(--bg-white);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
+  border: none;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   margin-top: 10px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
 }
 
 thead {
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  background-color: var(--bg-secondary);
   border-bottom: 2px solid var(--accent-color);
 }
 
@@ -431,7 +438,7 @@ tbody tr:last-child td {
 }
 
 /* ========================================================== */
-/* 8. النماذج (Forms)                   */
+/* 8. النماذج (Forms)                  */
 /* ========================================================== */
 
 .form-group {
@@ -450,7 +457,7 @@ input, textarea, select {
   width: 100%;
   padding: 10px;
   border: 1px solid var(--border-light);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-family: 'Tajawal', sans-serif;
   font-size: 13px;
   background-color: var(--bg-white);
@@ -461,7 +468,7 @@ input, textarea, select {
 input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(74, 144, 201, 0.15);
+  box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
   background-color: var(--bg-white);
 }
 
@@ -509,7 +516,7 @@ select option:disabled {
 }
 
 /* ========================================================== */
-/* 9. النوافذ المنبثقة (Modal)                */
+/* 9. النوافذ المنبثقة (Modal)               */
 /* ========================================================== */
 
 .modal {
@@ -520,7 +527,7 @@ select option:disabled {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(30, 58, 95, 0.5);
+  background-color: rgba(44, 62, 80, 0.5); /* أزرق صخري شفاف */
   backdrop-filter: blur(4px);
   animation: fadeIn 0.3s ease;
 }
@@ -532,7 +539,7 @@ select option:disabled {
 }
 
 .modal-content {
-  background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-secondary) 100%);
+  background-color: var(--bg-white);
   padding: 30px;
   border-radius: 16px;
   box-shadow: var(--shadow-lg);
@@ -550,7 +557,7 @@ select option:disabled {
   align-items: center;
   margin-bottom: 20px;
   padding-bottom: 15px;
-  border-bottom: 2px solid var(--accent-color);
+  border-bottom: 1px solid var(--border-medium);
 }
 
 .modal-title {
@@ -600,11 +607,11 @@ select option:disabled {
 .dropdown-content {
   display: none;
   position: absolute;
-  background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-secondary) 100%);
+  background-color: var(--bg-white);
   min-width: 200px;
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-light);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   z-index: 1;
   right: 0;
   top: 100%;
@@ -638,26 +645,26 @@ select option:disabled {
 }
 
 /* ========================================================== */
-/* 11. قائمة أعضاء قابلة للطي                  */
+/* 11. قائمة أعضاء قابلة للطي              */
 /* ========================================================== */
 
 .member-dropdown {
   background-color: var(--bg-white);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
+  border: none;
+  border-radius: var(--radius-lg);
   margin-bottom: 15px;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transition: box-shadow 0.3s ease;
 }
 
 .member-dropdown:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 6px 20px rgba(44, 62, 80, 0.15);
 }
 
 .member-dropdown-header {
   padding: 15px;
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  background-color: var(--bg-secondary);
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -665,10 +672,11 @@ select option:disabled {
   transition: all 0.3s ease;
   color: var(--primary-color);
   font-weight: 600;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .member-dropdown-header:hover {
-  background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--border-medium) 100%);
+  background-color: var(--bg-tertiary);
 }
 
 .member-dropdown-header i {
@@ -700,8 +708,8 @@ select option:disabled {
 
 .member-info-item {
   padding: 10px;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-  border-radius: 8px;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-light);
 }
 
@@ -719,7 +727,7 @@ select option:disabled {
 }
 
 /* ========================================================== */
-/* 12. حالة الدفع (Payment Status)              */
+/* 12. حالة الدفع (Payment Status)             */
 /* ========================================================== */
 
 .payment-status {
@@ -728,34 +736,35 @@ select option:disabled {
   border-radius: 20px;
   font-size: 11px;
   font-weight: 600;
+  border: 1px solid;
 }
 
 .payment-status.completed {
   background-color: var(--success-bg);
   color: var(--success-color);
-  border: 1px solid var(--success-color);
+  border-color: var(--success-color);
 }
 
 .payment-status.delayed {
   background-color: var(--warning-bg);
   color: var(--warning-color);
-  border: 1px solid var(--warning-color);
+  border-color: var(--warning-color);
 }
 
 .payment-status.unpaid {
   background-color: var(--error-bg);
   color: var(--error-color);
-  border: 1px solid var(--error-color);
+  border-color: var(--error-color);
 }
 
 /* ========================================================== */
-/* 13. البطاقات (Cards)                 */
+/* 13. البطاقات (Cards)                */
 /* ========================================================== */
 
 .card {
-  background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-secondary) 100%);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
+  background-color: var(--bg-white);
+  border: none;
+  border-radius: var(--radius-lg);
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: var(--shadow-sm);
@@ -773,7 +782,7 @@ select option:disabled {
   align-items: center;
   margin-bottom: 15px;
   padding-bottom: 10px;
-  border-bottom: 2px solid var(--accent-color);
+  border-bottom: 1px solid var(--border-light);
 }
 
 .card-title {
@@ -794,7 +803,7 @@ select option:disabled {
 
 .alert {
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   margin-bottom: 15px;
   font-size: 12px;
   border-right: 4px solid;
@@ -817,8 +826,8 @@ select option:disabled {
 }
 
 .alert.info {
-  background-color: #d4e8f7;
-  color: #2d5f8d;
+  background-color: #EAF2F8; /* لون أزرق فاتح للمعلومات */
+  color: var(--secondary-color);
   border-color: var(--accent-color);
 }
 
@@ -827,22 +836,22 @@ select option:disabled {
 }
 
 /* ========================================================== */
-/* 15. التذييل (Footer)                  */
+/* 15. التذييل (Footer)                 */
 /* ========================================================== */
 
 footer {
-  background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-secondary) 100%);
-  border-top: 2px solid var(--accent-color);
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-light);
   padding: 10px 0;
   margin-top: 40px;
   text-align: center;
   color: var(--text-secondary);
   font-size: 12px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.05);
 }
 
 /* ========================================================== */
-/* 16. عناصر الصفحة والتاريخ                 */
+/* 16. عناصر الصفحة والتاريخ              */
 /* ========================================================== */
 
 .page {
@@ -858,8 +867,8 @@ footer {
   width: fit-content;
   margin: 0 auto 15px auto;
   padding: 10px 20px;
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-  border-radius: 8px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
   text-align: center;
   border: 1px solid var(--border-light);
   box-shadow: var(--shadow-sm);
@@ -880,7 +889,7 @@ footer {
 }
 
 /* ========================================================== */
-/* 17. الخدمات المساعدة (Utilities)        */
+/* 17. الخدمات المساعدة (Utilities)         */
 /* ========================================================== */
 
 .icon {
@@ -935,7 +944,7 @@ footer {
 }
 
 /* ========================================================== */
-/* 18. الحركات (Animations)               */
+/* 18. الحركات (Animations)                */
 /* ========================================================== */
 
 @keyframes slideUp {
@@ -957,10 +966,6 @@ footer {
     opacity: 1;
   }
 }
-
-/* ========================================================== */
-/* 19. استجابة الشاشات (Media Queries)         */
-/* ========================================================== */
 
 /* ========================================================== */
 /* 19. استجابة الشاشات (Media Queries)         */
@@ -988,12 +993,11 @@ footer {
 
   nav {
     width: 100%;
-    order: 3; /* دفع شريط التنقل للسطر الثاني */
+    order: 3;
     gap: 25px;
   }
 
   .grid {
-    /* تم تغييرها إلى عمودين على شاشات التابلت إن كنت تريد ذلك، ولكن الأصل كان 4، لذا سنبقي على 4 */
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
   }
@@ -1015,7 +1019,7 @@ footer {
   }
 
   .member-info {
-    grid-template-columns: 1fr; /* عمود واحد */
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1026,14 +1030,13 @@ footer {
   }
 
   .grid {
-    /* تم تغييرها إلى عمودين أو 3 هنا لجعل العناصر أكبر، ولكن تم الإبقاء على 4 في الكود الأصلي */
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
 
   nav {
-    flex-wrap: nowrap; /* منع الالتفاف */
-    overflow-x: auto; /* تفعيل التمرير الأفقي */
+    flex-wrap: nowrap;
+    overflow-x: auto;
     gap: 10px;
     justify-content: flex-start;
   }
@@ -1051,28 +1054,20 @@ footer {
 /* تحديث نمط الرابط النشط لضمان ظهوره في كل الأحجام */
 /* ========================================================== */
 nav a.active {
-  /* احتفظ بخلفية الرمادي لتمييز المنطقة */
-  background-color: var(--secondary-gray);
+  background-color: var(--bg-secondary);
   font-weight: 600;
-  
-  /* إضافة مؤشر لوني واضح (الخط الأزرق الساطع) */
-  position: relative; /* لتكون النقطة المرجعية للعنصر الزائف */
-  
-  /* النمط الأساسي للمؤشر: شريط سفلي */
-  border-bottom: 3px solid var(--accent-color); /* شريط أزرق سفلي */
-  padding-bottom: 7px; /* لزيادة المسافة بين النص والخط */
+  border-bottom: 3px solid var(--accent-color);
+  padding-bottom: 7px;
 }
 
-/* نمط للموبايل لجعله بارزاً أكثر إذا لزم الأمر */
+/* نمط للموبايل لضمان الوضوح */
 @media (max-width: 480px) {
     nav a.active {
-        /* بدلاً من الشريط السفلي، يمكن تجربة شريط جانبي ليكون أكثر وضوحاً */
-        border-bottom: none; 
-        border-right: 3px solid var(--accent-color); /* شريط أزرق على اليمين */
+        border-bottom: 3px solid var(--accent-color);
     }
 }
 /* ========================================================== */
-/* أزرار التبويبات الداخلية في صفحة الأعضاء        */
+/* أزرار التبويبات الداخلية في صفحة الأعضاء         */
 /* ========================================================== */
 
 .section-tab-buttons {
@@ -1083,7 +1078,7 @@ nav a.active {
 }
 
 .section-tab-buttons .btn {
-  flex: 1; /* كل زر يأخذ مساحة متساوية */
+  flex: 1;
   justify-content: center;
   padding: 12px 20px;
 }
@@ -1092,9 +1087,12 @@ nav a.active {
 @media (max-width: 480px) {
   .section-tab-buttons {
     gap: 10px;
+    flex-wrap: wrap;
   }
   
   .section-tab-buttons .btn {
+    flex: none;
+    width: calc(50% - 5px);
     padding: 10px 15px;
     font-size: 12px;
   }

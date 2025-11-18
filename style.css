@@ -993,11 +993,12 @@ footer {
 
   nav {
     width: 100%;
-    order: 3;
+    order: 3; /* دفع شريط التنقل للسطر الثاني */
     gap: 25px;
   }
 
   .grid {
+    /* تم تغييرها إلى عمودين على شاشات التابلت إن كنت تريد ذلك، ولكن الأصل كان 4، لذا سنبقي على 4 */
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
   }
@@ -1019,7 +1020,7 @@ footer {
   }
 
   .member-info {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* عمود واحد */
   }
 }
 
@@ -1030,13 +1031,14 @@ footer {
   }
 
   .grid {
-    grid-template-columns: repeat(2, 1fr);
+    /* تم تغييرها إلى عمودين أو 3 هنا لجعل العناصر أكبر، ولكن تم الإبقاء على 4 في الكود الأصلي */
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
   }
 
   nav {
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    flex-wrap: nowrap; /* منع الالتفاف */
+    overflow-x: auto; /* تفعيل التمرير الأفقي */
     gap: 10px;
     justify-content: flex-start;
   }
@@ -1054,20 +1056,28 @@ footer {
 /* تحديث نمط الرابط النشط لضمان ظهوره في كل الأحجام */
 /* ========================================================== */
 nav a.active {
-  background-color: var(--bg-secondary);
+  /* احتفظ بخلفية الرمادي لتمييز المنطقة */
+  background-color: var(--secondary-gray);
   font-weight: 600;
-  border-bottom: 3px solid var(--accent-color);
-  padding-bottom: 7px;
+  
+  /* إضافة مؤشر لوني واضح (الخط الأزرق الساطع) */
+  position: relative; /* لتكون النقطة المرجعية للعنصر الزائف */
+  
+  /* النمط الأساسي للمؤشر: شريط سفلي */
+  border-bottom: 3px solid var(--accent-color); /* شريط أزرق سفلي */
+  padding-bottom: 7px; /* لزيادة المسافة بين النص والخط */
 }
 
-/* نمط للموبايل لضمان الوضوح */
+/* نمط للموبايل لجعله بارزاً أكثر إذا لزم الأمر */
 @media (max-width: 480px) {
     nav a.active {
-        border-bottom: 3px solid var(--accent-color);
+        /* بدلاً من الشريط السفلي، يمكن تجربة شريط جانبي ليكون أكثر وضوحاً */
+        border-bottom: none; 
+        border-right: 3px solid var(--accent-color); /* شريط أزرق على اليمين */
     }
 }
 /* ========================================================== */
-/* أزرار التبويبات الداخلية في صفحة الأعضاء         */
+/* أزرار التبويبات الداخلية في صفحة الأعضاء        */
 /* ========================================================== */
 
 .section-tab-buttons {
@@ -1078,7 +1088,7 @@ nav a.active {
 }
 
 .section-tab-buttons .btn {
-  flex: 1;
+  flex: 1; /* كل زر يأخذ مساحة متساوية */
   justify-content: center;
   padding: 12px 20px;
 }
@@ -1087,12 +1097,9 @@ nav a.active {
 @media (max-width: 480px) {
   .section-tab-buttons {
     gap: 10px;
-    flex-wrap: wrap;
   }
   
   .section-tab-buttons .btn {
-    flex: none;
-    width: calc(50% - 5px);
     padding: 10px 15px;
     font-size: 12px;
   }

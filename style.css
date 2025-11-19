@@ -754,7 +754,7 @@ tbody tr:last-child td {
 .payment-status {
   display: inline-block;
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: var(--radius-sm); /* ⭐️ تم التعديل: تغيير الشكل إلى مربع بحواف ناعمة */
   font-size: 11px;
   font-weight: 600;
   text-align: center;
@@ -906,7 +906,7 @@ tbody tr:last-child td {
 
 .member-dropdown-header i {
   transition: transform 0.3s ease;
-  color: var(--accent-color);
+  color: var(--text-primary); /* ⭐️ تم التعديل: تغيير اللون ليتطابق مع لون نص حقول التصفية */
 }
 
 .member-dropdown-header.active i {

@@ -1104,6 +1104,50 @@ nav a.active {
     font-size: 12px;
   }
 }
+/* ========================================================== */
+/* أنماط حالة الدفع (Payment Status) */
+/* ========================================================== */
+
+.payment-status {
+    /* تنسيق الشارة الأساسي */
+    display: inline-block;
+    padding: 4px 8px; /* لتحديد حجم الشارة */
+    border-radius: 4px; /* لتقويس الحواف */
+    font-size: 13px; /* حجم الخط */
+    font-weight: 600;
+    text-align: center;
+    color: #ffffff !important; /* لون النص أبيض لسهولة القراءة */
+}
+
+/* الألوان الخاصة بكل حالة */
+.payment-status.completed {
+    background-color: var(--accent-color); /* أخضر/تركوازي للمكتمل */
+}
+
+.payment-status.delayed {
+    background-color: #f39c12; /* برتقالي/أصفر للتأخير */
+}
+
+.payment-status.unpaid {
+    background-color: #e74c3c; /* أحمر لـ لم يدفع */
+}
+
+.payment-status.pending {
+    background-color: var(--secondary-color); /* رمادي/أزرق للحالة قيد الانتظار */
+}
+/* ========================================================== */
+/* أنماط حقول التصفية للأعضاء */
+/* ========================================================== */
+
+.filter-controls {
+    display: grid;
+    /* تقسيم المساحة إلى 3 أعمدة متساوية تماماً (Grid) */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px; /* مسافة بين حقول التصفية */
+    margin-top: 20px;
+    margin-bottom: 30px; 
+}
+
 .filter-select {
     /* تطبيق نمط الحقول الأساسية لضمان التناسق */
     padding: 10px 15px;

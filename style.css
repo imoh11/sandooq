@@ -160,14 +160,6 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
-nav a.active {
-  color: var(--primary-color);
-  background-color: var(--bg-secondary);
-  font-weight: 600;
-  border-bottom: 3px solid var(--accent-color);
-  padding-bottom: 7px;
-}
-
 nav a i {
   font-size: 16px;
   margin-bottom: 2px;
@@ -1187,5 +1179,3 @@ footer {
     border-right: 3px solid var(--accent-color);
   }
 }
-
-

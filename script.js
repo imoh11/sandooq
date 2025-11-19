@@ -181,6 +181,24 @@ function updateBoxDueDate(boxId, newDate) {
     }
 }
 
+// ⭐️ تم التعديل: إضافة دالة مركزية لتحديث الصندوق
+function updateBox(boxId, updatedData) {
+    const boxes = getFromStorage('boxes', []);
+    const index = boxes.findIndex(b => b.id === boxId);
+
+    if (index !== -1) {
+        // دمج البيانات القديمة مع الجديدة
+        boxes[index] = { ...boxes[index], ...updatedData };
+
+        // إعادة حساب تاريخ الاستحقاق التالي دائماً عند أي تعديل لضمان صحته
+        boxes[index].nextDueDate = calculateNextDueDate(boxes[index].frequency);
+
+        saveToStorage('boxes', boxes);
+        showAlert('تم تحديث الصندوق بنجاح', 'success');
+        return true;
+    }
+    return false;
+}
 // ==================== إدارة المجموعات ====================
 
 function addGroup(name) {
@@ -399,13 +417,20 @@ function renderTeamsTable(containerId) {
         return;
     }
 
-    let html = '<table><thead><tr><th>اسم الفريق</th><th>تاريخ الإنشاء</th><th>الإجراءات</th></tr></thead><tbody>';
+    // ⭐️ تم التعديل: جلب الأعضاء لحساب العدد
+    const members = getAllMembers();
+
+    // ⭐️ تم التعديل: تغيير عنوان العمود
+    let html = '<table><thead><tr><th>اسم الفريق</th><th>عدد الأعضاء</th><th>الإجراءات</th></tr></thead><tbody>';
 
     teams.forEach(team => {
+        // ⭐️ تم التعديل: حساب عدد الأعضاء في كل فريق
+        const memberCount = members.filter(m => m.teams && m.teams.includes(team.id)).length;
+
         html += `
             <tr>
                 <td>${team.name}</td>
-                <td>${team.createdDate}</td>
+                <td>${memberCount}</td>
                 <td>
                     <div style="display: flex; gap: 8px; justify-content: center;">
                         <button class="btn sm" onclick="openEditTeamModal(${team.id})" title="تحرير"><i class="fas fa-edit"></i></button>
@@ -432,23 +457,24 @@ function renderBoxesTable(containerId) {
         return;
     }
 
-    let html = '<table><thead><tr><th>اسم الصندوق</th><th>المبلغ</th><th>الاستحقاق</th><th>الفرق المشاركة</th><th>الاستحقاق التالي</th><th>الإجراءات</th></tr></thead><tbody>';
+    // ⭐️ تم التعديل: تحديث عناوين الجدول
+    let html = '<table><thead><tr><th>اسم الصندوق</th><th>المبلغ</th><th>عدد الفرق</th><th>الاستحقاق التالي</th><th>الإجراءات</th></tr></thead><tbody>';
 
     boxes.forEach(box => {
-        const frequencyLabel = getFrequencyLabel(box.frequency);
-        const teamsNames = box.teams && box.teams.length > 0
+        // ⭐️ تم التعديل: حساب عدد الفرق وتجهيز أسماء الفرق للـ tooltip
+        const teamCount = box.teams ? box.teams.length : 0;
+        const teamsNamesTooltip = teamCount > 0
             ? box.teams.map(teamId => {
                 const team = teams.find(t => t.id === teamId);
                 return team ? team.name : 'غير معروف';
             }).join(', ')
-            : 'لا توجد فرق';
+            : 'لا توجد فرق مشاركة';
 
         html += `
             <tr>
                 <td>${box.name}</td>
                 <td>${formatNumber(box.amount)}</td>
-                <td>${frequencyLabel}</td>
-                <td>${teamsNames}</td>
+                <td title="${teamsNamesTooltip}">${teamCount}</td>
                 <td>${box.nextDueDate}</td>
                 <td>
                     <div style="display: flex; gap: 8px; justify-content: center;">

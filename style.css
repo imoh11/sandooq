@@ -1274,7 +1274,7 @@ footer {
   nav {
     flex-wrap: nowrap;
     overflow-x: auto;
-    gap: 10px;
+    gap: 11px;
     justify-content: flex-start;
   }
 

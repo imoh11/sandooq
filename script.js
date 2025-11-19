@@ -11,19 +11,18 @@ function toISODateString(date) {
 
 function toLocaleDateStringAR(dateString) {
     if (!dateString) return '';
-    const d = new Date(dateString);
-    // يعرض التاريخ بالتنسيق العربي
-    return d.toLocaleDateString('ar-SA');
+    const date = new Date(dateString);
+    // ⭐️ تم التعديل: عرض التاريخ بتنسيق ميلادي رقمي
+    // نستخدم 'en-CA' لأنه يعطي تنسيق YYYY-MM-DD وهو الأقرب للرقمي
+    return date.toLocaleDateString('en-CA');
 }
 
 // تنسيق التاريخ الميلادي
 function formatGregorianDate(date) {
-    return new Date(date).toLocaleDateString('ar-SA', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
+    // ⭐️ تم التعديل: عرض التاريخ بتنسيق ميلادي رقمي
+    // نستخدم 'en-CA' لأنه يعطي تنسيق YYYY-MM-DD
+    const d = new Date(date);
+    return d.toLocaleDateString('en-CA');
 }
 
 // ==================== التخزين المحلي ====================
@@ -88,7 +87,7 @@ function addTeam(name) {
     const newTeam = {
         id: Date.now(),
         name: name,
-        createdDate: new Date().toLocaleDateString('ar-SA'),
+        createdDate: toISODateString(new Date()), // ⭐️ تم التعديل: تخزين التاريخ بالتنسيق القياسي
         members: []
     };
     teams.push(newTeam);
@@ -119,7 +118,7 @@ function addBox(name, amount, teams, frequency) {
         teams: teams,
         frequency: frequency,
         nextDueDate: calculateNextDueDate(frequency) || null, // ⭐️ يخزن بتنسيق YYYY-MM-DD أو null
-        createdDate: new Date().toLocaleDateString('ar-SA')
+        createdDate: toISODateString(new Date()) // ⭐️ تم التعديل: تخزين التاريخ بالتنسيق القياسي
     };
     boxes.push(newBox);
     saveToStorage('boxes', boxes);
@@ -246,7 +245,7 @@ function addMember(name, teams, boxes, phone, birthDate, financialStatus, jobSta
         financialStatus: financialStatus,
         jobStatus: jobStatus,
         teams: teams || [], // الآن ستأخذ القيمة الصحيحة
-        joinDate: new Date().toLocaleDateString('ar-SA'),
+        joinDate: toISODateString(new Date()), // ⭐️ تم التعديل: تخزين التاريخ بالتنسيق القياسي
         paymentHistory: []
     };
     members.push(newMember);
@@ -575,7 +574,7 @@ function renderMembersDropdowns(containerId, membersArray = null) {
                         </div>
                         <div class="member-info-item">
                             <div class="member-info-label">تاريخ الانضمام</div>
-                            <div class="member-info-value">${member.joinDate}</div>
+                            <div class="member-info-value">${toLocaleDateStringAR(member.joinDate)}</div>
                         </div>
                     </div>
                     <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 15px;">
@@ -804,13 +803,13 @@ function populateMemberFilters() {
 // ==================== دوال مساعدة ====================
 
 function formatNumber(num) {
-    if (num === null || num === undefined || isNaN(num)) return '0.00';
-    // ⭐️ تم التعديل: عرض الأرقام بدون فاصلة الآلاف
-    return parseFloat(num).toFixed(2);
+    if (num === null || num === undefined || isNaN(num)) return '0';
+    // ⭐️ تم التعديل: عرض الأرقام كأعداد صحيحة بدون فواصل عشرية
+    return Math.round(parseFloat(num)).toString();
 }
 
 function formatDate(date) {
-    return new Date(date).toLocaleDateString('ar-SA');
+    return new Date(date).toLocaleDateString('en-CA'); // ⭐️ تم التعديل: عرض التاريخ بالتنسيق الرقمي
 }
 
 // ==================== دوال مساعدة لرقم الهاتف ====================

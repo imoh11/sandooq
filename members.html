@@ -2,63 +2,9 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Studio10 - الأعضاء</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* ... (Existing styles - unchanged) ... */
-    .section-buttons {
-      display: flex;
-      flex-direction: row-reverse;
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-
-    .table-actions {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-    }
-
-    .table-actions button {
-      padding: 6px 10px;
-      font-size: 12px;
-    }
-
-    table td {
-      text-align: center;
-    }
-
-    table th {
-      text-align: center;
-    }
-    
-    /* === NEW: Styling for the three main section buttons (Tabs) === */
-    .section-tab-buttons .btn {
-      /* اللون الأساسي: الأزرق الداكن (Corporate Blue) */
-      background-color: var(--primary-color); /* #2c3e50 */
-      border-color: var(--primary-color);
-      color: #ffffff;
-      min-width: 100px;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-
-    .section-tab-buttons .btn:hover {
-      /* تفتيح بسيط عند المرور */
-      background-color: #3b5064;
-      border-color: #3b5064;
-    }
-
-    .section-tab-buttons .btn.active-tab {
-      /* الحالة النشطة: لون Accent Blue (الأزرق الفاتح) */
-      background-color: var(--accent-color); /* #3498db */
-      border-color: var(--accent-color);
-      box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
-    }
-    /* ========================================================== */
-  </style>
 </head>
 <body>
 <header>
@@ -68,11 +14,11 @@
         Studio10
       </a>
       <nav>
-        <a href="index.html" class="active">
+        <a href="index.html">
           <i class="fas fa-home"></i>
           <span>الرئيسية</span>
         </a>
-        <a href="members.html">
+        <a href="members.html" class="active">
           <i class="fas fa-users"></i>
           <span>الأعضاء</span>
         </a>
@@ -105,10 +51,9 @@
   <main>
     <div class="container">
 
-
       <section>
         <div class="flex-center section-tab-buttons" style="gap: 15px; margin-bottom: 30px; flex-direction: row-reverse;">
-          <button id="members-btn" class="btn primary" onclick="showPage('members-section', this)">
+          <button id="members-btn" class="btn primary active-tab" onclick="showPage('members-section', this)">
             <i class="fas fa-users"></i> الأعضاء
           </button>
           <button id="boxes-btn" class="btn primary" onclick="showPage('boxes-section', this)">
@@ -119,58 +64,55 @@
           </button>
         </div>
       </section>
-      <section id="teams-section" class="page active">
-    <div style="text-align: right; margin-bottom: 20px;"> 
-      <button class="btn primary" onclick="openModal('addTeamModal')">
-        <i class="fas fa-plus"></i>  
-      </button>
-    </div>
-    <div id="teams-table-container"></div>
-</section>
+
+      <section id="teams-section" class="page">
+        <div style="text-align: right; margin-bottom: 20px;">
+          <button class="btn primary" onclick="openModal('addTeamModal')">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <div id="teams-table-container"></div>
+      </section>
 
       <section id="boxes-section" class="page">
-    <div style="text-align: right; margin-bottom: 20px;">
-      <button class="btn primary" onclick="openAddBoxModal()">
-        <i class="fas fa-plus"></i>  
-      </button>
-    </div>
-    <div id="boxes-table-container"></div>
-</section>
+        <div style="text-align: right; margin-bottom: 20px;">
+          <button class="btn primary" onclick="openAddBoxModal()">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <div id="boxes-table-container"></div>
+      </section>
 
-      <section id="members-section" class="page">
-    <div style="text-align: right; margin-bottom: 20px;">
-      <button class="btn primary" onclick="openAddMemberModal()">
-        <i class="fas fa-plus"></i>  
-      </button>
-      <button class="btn primary" onclick="openModal('importMembersModal')">
-        <i class="fas fa-paste"></i>  
-      </button>
-    </div>
-<div class="filter-controls">
-    <select id="filterByTeam" class="filter-select">
-        <option value="">الفريق</option>
-    </select>
-
-    <select id="filterByBox" class="filter-select">
-        <option value="">الصندوق</option>
-    </select>
-
-    <select id="filterByStatus" class="filter-select">
-        <option value="">حالة الدفع</option>
-        <option value="completed">مكتمل</option>
-        <option value="delayed">متأخر</option>
-        <option value="unpaid">لم يدفع</option>
-        <option value="pending">قيد الانتظار</option>
-    </select>
-</div>
-
-<div id="members-dropdowns-container">
-    </div>
-    <div id="members-dropdowns-container"></div>
-</section>
+      <section id="members-section" class="page active">
+        <div style="text-align: right; margin-bottom: 20px;">
+          <button class="btn primary" onclick="openAddMemberModal()">
+            <i class="fas fa-plus"></i>
+          </button>
+          <button class="btn primary" onclick="openModal('importMembersModal')">
+            <i class="fas fa-paste"></i>
+          </button>
+        </div>
+        <div class="filter-controls">
+            <select id="filterByTeam" class="filter-select">
+                <option value="">الفريق</option>
+            </select>
+            <select id="filterByBox" class="filter-select">
+                <option value="">الصندوق</option>
+            </select>
+            <select id="filterByStatus" class="filter-select">
+                <option value="">حالة الدفع</option>
+                <option value="completed">مكتمل</option>
+                <option value="delayed">متأخر</option>
+                <option value="unpaid">لم يدفع</option>
+                <option value="pending">قيد الانتظار</option>
+            </select>
+        </div>
+        <div id="members-dropdowns-container"></div>
+      </section>
     </div>
   </main>
-  
+
+  <!-- Modals (Teams, Boxes, Members) -->
   <div id="addTeamModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -192,218 +134,221 @@
   </div>
 
   <div id="editTeamModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">تحرير الفريق</h3>
-        <button class="modal-close">&times;</button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">تحرير الفريق</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="editTeamForm">
+            <div class="form-group">
+              <input type="hidden" id="editTeamId">
+              <input type="text" id="editTeamName" placeholder="اسم الفريق" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" onclick="closeModal('editTeamModal')">إلغاء</button>
+          <button class="btn primary" onclick="submitEditTeam()">حفظ</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <form id="editTeamForm">
-          <div class="form-group">
-            <input type="hidden" id="editTeamId">
-            <input type="text" id="editTeamName" placeholder="اسم الفريق" required>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" onclick="closeModal('editTeamModal')">إلغاء</button>
-        <button class="btn primary" onclick="submitEditTeam()">حفظ</button>
-      </div>
-    </div>
   </div>
 
   <div id="addBoxModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">إضافة صندوق جديد</h3>
-        <button class="modal-close">&times;</button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">إضافة صندوق جديد</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="addBoxForm">
+            <div class="form-group">
+              <input type="text" id="boxName" placeholder="اسم الصندوق" required>
+            </div>
+            <div class="form-group">
+              <input type="number" id="boxAmount" placeholder="مبلغ الدفع" step="0.01" required>
+            </div>
+            <div class="form-group">
+              <label>الاستحقاق:</label>
+              <select id="boxFrequency" required>
+                <option value="" disabled selected>اختر الاستحقاق</option>
+                <option value="monthly">شهري</option>
+                <option value="quarterly">ربع سنوي</option>
+                <option value="annual">سنوي</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>الفرق المشاركة:</label>
+              <div id="boxTeamsCheckboxes" style="min-height: 50px;"></div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" onclick="closeModal('addBoxModal')">إلغاء</button>
+          <button class="btn primary" onclick="submitAddBox()">إضافة</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <form id="addBoxForm">
-          <div class="form-group">
-            <input type="text" id="boxName" placeholder="اسم الصندوق" required>
-          </div>
-          <div class="form-group">
-            <input type="number" id="boxAmount" placeholder="مبلغ الدفع" step="0.01" required>
-          </div>
-          <div class="form-group">
-            <label>الاستحقاق:</label>
-            <select id="boxFrequency" required>
-              <option value="">اختر الاستحقاق</option>
-              <option value="monthly">شهري</option>
-              <option value="quarterly">ربع سنوي</option>
-              <option value="annual">سنوي</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>الفرق المشاركة:</label>
-            <div id="boxTeamsCheckboxes" style="min-height: 50px;"></div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" onclick="closeModal('addBoxModal')">إلغاء</button>
-        <button class="btn primary" onclick="submitAddBox()">إضافة</button>
-      </div>
-    </div>
   </div>
 
   <div id="editBoxModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">تحرير الصندوق</h3>
-        <button class="modal-close">&times;</button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">تحرير الصندوق</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="editBoxForm">
+            <div class="form-group">
+              <input type="hidden" id="editBoxId">
+              <input type="text" id="editBoxName" placeholder="اسم الصندوق" required>
+            </div>
+            <div class="form-group">
+              <input type="number" id="editBoxAmount" placeholder="مبلغ الدفع" step="0.01" required>
+            </div>
+            <div class="form-group">
+              <label>الاستحقاق:</label>
+              <select id="editBoxFrequency" required>
+                <option value="">اختر الاستحقاق</option>
+                <option value="monthly">شهري</option>
+                <option value="quarterly">ربع سنوي</option>
+                <option value="annual">سنوي</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>الفرق المشاركة:</label>
+              <div id="editBoxTeamsCheckboxes" style="min-height: 50px;"></div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" onclick="closeModal('editBoxModal')">إلغاء</button>
+          <button class="btn primary" onclick="submitEditBox()">حفظ</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <form id="editBoxForm">
-          <div class="form-group">
-            <input type="hidden" id="editBoxId">
-            <input type="text" id="editBoxName" placeholder="اسم الصندوق" required>
-          </div>
-          <div class="form-group">
-            <input type="number" id="editBoxAmount" placeholder="مبلغ الدفع" step="0.01" required>
-          </div>
-          <div class="form-group">
-            <label>الاستحقاق:</label>
-            <select id="editBoxFrequency" required>
-              <option value="">اختر الاستحقاق</option>
-              <option value="monthly">شهري</option>
-              <option value="quarterly">ربع سنوي</option>
-              <option value="annual">سنوي</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>الفرق المشاركة:</label>
-            <div id="editBoxTeamsCheckboxes" style="min-height: 50px;"></div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" onclick="closeModal('editBoxModal')">إلغاء</button>
-        <button class="btn primary" onclick="submitEditBox()">حفظ</button>
-      </div>
-    </div>
   </div>
 
   <div id="addMemberModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">إضافة عضو جديد</h3>
-        <button class="modal-close">&times;</button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">إضافة عضو جديد</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="addMemberForm">
+            <div class="form-group">
+              <input type="text" id="memberName" placeholder="الاسم" required>
+            </div>
+            <div class="form-group" style="margin-bottom: -3px;">
+                <label>الفرق:</label>
+                <div id="memberTeamsCheckboxes" style="min-height: 50px;"></div>
+            </div>
+            <div class="form-group">
+                <label>الصناديق:</label>
+                <div id="memberBoxesCheckboxes" style="min-height: 50px;"></div>
+            </div>
+            <div class="form-group">
+              <input type="tel" id="memberPhone" placeholder="رقم الجوال" required>
+            </div>
+            <div class="form-group">
+              <input type="date" id="memberBirthDate" placeholder="تاريخ الميلاد">
+            </div>
+            <div class="form-group">
+              <select id="memberFinancialStatus" required>
+                <option value="" disabled selected>اختر الحالة المادية</option>
+                <option value="affluent">ميسور</option>
+                <option value="moderate">متوسط</option>
+                <option value="difficult">معسر</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <select id="memberJobStatus" required>
+                <option value="" disabled selected>اختر الحالة الوظيفية</option>
+                <option value="employed">موظف</option>
+                <option value="unemployed">عاطل</option>
+                <option value="retired">متقاعد</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" onclick="closeModal('addMemberModal')">إلغاء</button>
+          <button class="btn primary" onclick="submitAddMember()">إضافة</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <form id="addMemberForm">
-          <div class="form-group">
-            <input type="text" id="memberName" placeholder="الاسم" required>
-          </div>
-<div class="form-group" style="margin-bottom: -3px;">
-    <label>الفرق:</label>
-    <div id="memberTeamsCheckboxes" style="min-height: 50px;"></div>
-</div>
-<div class="form-group">
-    <label>الصناديق:</label>
-    <div id="memberBoxesCheckboxes" style="min-height: 50px;"></div>
-</div>          <div class="form-group">
-            <input type="tel" id="memberPhone" placeholder="رقم الجوال" required>
-          </div>
-          <div class="form-group">
-            <input type="date" id="memberBirthDate" placeholder="تاريخ الميلاد">
-          </div>
-          <div class="form-group">
-            <select id="memberFinancialStatus" required>
-              <option value="">اختر الحالة المادية</option>
-              <option value="affluent">ميسور</option>
-              <option value="moderate">متوسط</option>
-              <option value="difficult">معسر</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <select id="memberJobStatus" required>
-              <option value="">اختر الحالة الوظيفية</option>
-              <option value="employed">موظف</option>
-              <option value="unemployed">عاطل</option>
-              <option value="retired">متقاعد</option>
-            </select>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" onclick="closeModal('addMemberModal')">إلغاء</button>
-        <button class="btn primary" onclick="submitAddMember()">إضافة</button>
-      </div>
-    </div>
   </div>
 
   <div id="importMembersModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">استيراد أعضاء (دفعة واحدة)</h3>
-        <button class="modal-close">&times;</button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">استيراد أعضاء (دفعة واحدة)</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="importMembersForm">
+            <div class="form-group">
+              <label>البيانات (بالصيغة: الاسم | الهاتف | الحالة المادية | الحالة الوظيفية)</label>
+              <textarea id="membersImportData" placeholder="أحمد | 0501234567 | ميسور | موظف&#10;فاطمة | 0509876543 | متوسط | عاطل&#10;علي | 0505555555 | معسر | متقاعد" rows="8" required style="font-family: monospace; font-size: 12px;"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" onclick="closeModal('importMembersModal')">إلغاء</button>
+          <button class="btn primary" onclick="submitImportMembers()">استيراد</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <form id="importMembersForm">
-          <div class="form-group">
-            <label>البيانات (بالصيغة: الاسم | الهاتف | الحالة المادية | الحالة الوظيفية)</label>
-            <textarea id="membersImportData" placeholder="أحمد | 0501234567 | ميسور | موظف&#10;فاطمة | 0509876543 | متوسط | عاطل&#10;علي | 0505555555 | معسر | متقاعد" rows="8" required style="font-family: monospace; font-size: 12px;"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" onclick="closeModal('importMembersModal')">إلغاء</button>
-        <button class="btn primary" onclick="submitImportMembers()">استيراد</button>
-      </div>
-    </div>
   </div>
-<div id="editMemberModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">تحرير بيانات العضو</h3>
-        <button class="modal-close">&times;</button>
+
+  <div id="editMemberModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">تحرير بيانات العضو</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="editMemberForm">
+            <input type="hidden" id="editMemberId">
+            <div class="form-group">
+              <input type="text" id="editMemberName" placeholder="الاسم" required>
+            </div>
+            <div class="form-group" style="margin-bottom: -3px;">
+                <label>الفرق:</label>
+                <div id="editMemberTeamsCheckboxes" style="min-height: 50px;"></div>
+            </div>
+            <div class="form-group">
+                <label>الصناديق:</label>
+                <div id="editMemberBoxesCheckboxes" style="min-height: 50px;"></div>
+            </div>
+            <div class="form-group">
+              <input type="tel" id="editMemberPhone" placeholder="رقم الجوال" required>
+            </div>
+            <div class="form-group">
+              <input type="date" id="editMemberBirthDate" placeholder="تاريخ الميلاد">
+            </div>
+            <div class="form-group">
+              <select id="editMemberFinancialStatus" required>
+                <option value="">اختر الحالة المادية</option>
+                <option value="affluent">ميسور</option>
+                <option value="moderate">متوسط</option>
+                <option value="difficult">معسر</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <select id="editMemberJobStatus" required>
+                <option value="">اختر الحالة الوظيفية</option>
+                <option value="employed">موظف</option>
+                <option value="unemployed">عاطل</option>
+                <option value="retired">متقاعد</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" onclick="closeModal('editMemberModal')">إلغاء</button>
+          <button class="btn primary" onclick="submitEditMember()">حفظ</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <form id="editMemberForm">
-          <input type="hidden" id="editMemberId">
-          <div class="form-group">
-            <input type="text" id="editMemberName" placeholder="الاسم" required>
-          </div>
-          <div class="form-group" style="margin-bottom: -3px;">
-              <label>الفرق:</label>
-              <div id="editMemberTeamsCheckboxes" style="min-height: 50px;"></div>
-          </div>
-          <div class="form-group">
-              <label>الصناديق:</label>
-              <div id="editMemberBoxesCheckboxes" style="min-height: 50px;"></div>
-          </div>
-          <div class="form-group">
-            <input type="tel" id="editMemberPhone" placeholder="رقم الجوال" required>
-          </div>
-          <div class="form-group">
-            <input type="date" id="editMemberBirthDate" placeholder="تاريخ الميلاد">
-          </div>
-          <div class="form-group">
-            <select id="editMemberFinancialStatus" required>
-              <option value="">اختر الحالة المادية</option>
-              <option value="affluent">ميسور</option>
-              <option value="moderate">متوسط</option>
-              <option value="difficult">معسر</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <select id="editMemberJobStatus" required>
-              <option value="">اختر الحالة الوظيفية</option>
-              <option value="employed">موظف</option>
-              <option value="unemployed">عاطل</option>
-              <option value="retired">متقاعد</option>
-            </select>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" onclick="closeModal('editMemberModal')">إلغاء</button>
-        <button class="btn primary" onclick="submitEditMember()">حفظ</button>
-      </div>
-    </div>
   </div>
+
   <footer>
     <div class="container">
       <p>&copy; 2024 Studio10 للأنظمة الإدارية. جميع الحقوق محفوظة.</p>
@@ -414,34 +359,23 @@
   <script>
     // عرض الأقسام المختلفة
     function showPage(pageId, clickedButton) {
-      const pages = document.querySelectorAll('.page');
-      pages.forEach(page => page.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
-      
-      // التعديل: إدارة زر التبويب النشط
-      const tabButtons = document.querySelectorAll('.section-tab-buttons .btn');
-      tabButtons.forEach(btn => btn.classList.remove('active-tab'));
+
+      document.querySelectorAll('.section-tab-buttons .btn').forEach(btn => btn.classList.remove('active-tab'));
       if (clickedButton) {
         clickedButton.classList.add('active-tab');
       }
-      // نهاية التعديل
 
-      if (pageId === 'teams-section') {
-        renderTeamsTable('teams-table-container');
-      } else if (pageId === 'boxes-section') {
-        renderBoxesTable('boxes-table-container');
-      } else if (pageId === 'members-section') {
-        renderMembersDropdowns('members-dropdowns-container');
-      }
+      if (pageId === 'teams-section') renderTeamsTable('teams-table-container');
+      else if (pageId === 'boxes-section') renderBoxesTable('boxes-table-container');
+      else if (pageId === 'members-section') renderMembersDropdowns('members-dropdowns-container');
     }
 
     // إضافة فريق
     function submitAddTeam() {
       const name = document.getElementById('teamName').value;
-      if (!name) {
-        showAlert('يرجى إدخال اسم الفريق', 'error');
-        return;
-      }
+      if (!name) return showAlert('يرجى إدخال اسم الفريق', 'error');
       addTeam(name);
       document.getElementById('addTeamForm').reset();
       closeModal('addTeamModal');
@@ -452,8 +386,7 @@
 
     // تحرير فريق
     function openEditTeamModal(teamId) {
-      const teams = getFromStorage('teams', []);
-      const team = teams.find(t => t.id === teamId);
+      const team = getFromStorage('teams', []).find(t => t.id === teamId);
       if (team) {
         document.getElementById('editTeamId').value = team.id;
         document.getElementById('editTeamName').value = team.name;
@@ -464,11 +397,7 @@
     function submitEditTeam() {
       const teamId = parseInt(document.getElementById('editTeamId').value);
       const name = document.getElementById('editTeamName').value;
-      
-      if (!name) {
-        showAlert('يرجى إدخال اسم الفريق', 'error');
-        return;
-      }
+      if (!name) return showAlert('يرجى إدخال اسم الفريق', 'error');
 
       const teams = getFromStorage('teams', []);
       const team = teams.find(t => t.id === teamId);
@@ -488,42 +417,30 @@
       const name = document.getElementById('boxName').value;
       const amount = document.getElementById('boxAmount').value;
       const frequency = document.getElementById('boxFrequency').value;
-      
-      const teamCheckboxes = document.querySelectorAll('#boxTeamsCheckboxes input[type="checkbox"]:checked');
-      const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
-      
-      if (!name || !amount || !frequency) {
-        showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
-        return;
-      }
-      
+      const teams = Array.from(document.querySelectorAll('#boxTeamsCheckboxes input:checked')).map(cb => parseInt(cb.value));
+
+      if (!name || !amount || !frequency) return showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
+
       addBox(name, amount, teams, frequency);
       document.getElementById('addBoxForm').reset();
-      document.getElementById('boxFrequency').value = '';
       closeModal('addBoxModal');
       renderBoxesTable('boxes-table-container');
-      renderTeamsCheckboxes('boxTeamsCheckboxes');
     }
 
     // تحرير صندوق
     function openEditBoxModal(boxId) {
-      const boxes = getFromStorage('boxes', []);
-      const box = boxes.find(b => b.id === boxId);
+      const box = getFromStorage('boxes', []).find(b => b.id === boxId);
       if (box) {
         document.getElementById('editBoxId').value = box.id;
         document.getElementById('editBoxName').value = box.name;
         document.getElementById('editBoxAmount').value = box.amount;
         document.getElementById('editBoxFrequency').value = box.frequency;
-        
         renderTeamsCheckboxes('editBoxTeamsCheckboxes');
-        
         setTimeout(() => {
-          const checkboxes = document.querySelectorAll('#editBoxTeamsCheckboxes input[type="checkbox"]');
-          checkboxes.forEach(cb => {
+          document.querySelectorAll('#editBoxTeamsCheckboxes input').forEach(cb => {
             cb.checked = box.teams && box.teams.includes(parseInt(cb.value));
           });
         }, 50);
-        
         openModal('editBoxModal');
       }
     }
@@ -533,14 +450,9 @@
       const name = document.getElementById('editBoxName').value;
       const amount = document.getElementById('editBoxAmount').value;
       const frequency = document.getElementById('editBoxFrequency').value;
-      
-      const teamCheckboxes = document.querySelectorAll('#editBoxTeamsCheckboxes input[type="checkbox"]:checked');
-      const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
-      
-      if (!name || !amount || !frequency) {
-        showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
-        return;
-      }
+      const teams = Array.from(document.querySelectorAll('#editBoxTeamsCheckboxes input:checked')).map(cb => parseInt(cb.value));
+
+      if (!name || !amount || !frequency) return showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
 
       const boxes = getFromStorage('boxes', []);
       const box = boxes.find(b => b.id === boxId);
@@ -553,7 +465,6 @@
         showAlert('تم تحديث الصندوق بنجاح', 'success');
         closeModal('editBoxModal');
         renderBoxesTable('boxes-table-container');
-        renderTeamsCheckboxes('boxTeamsCheckboxes');
       }
     }
 
@@ -564,18 +475,11 @@
       const birthDate = document.getElementById('memberBirthDate').value;
       const financialStatus = document.getElementById('memberFinancialStatus').value;
       const jobStatus = document.getElementById('memberJobStatus').value;
-      
-      const teamCheckboxes = document.querySelectorAll('#memberTeamsCheckboxes input[type="checkbox"]:checked');
-      const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
-      
-      const boxCheckboxes = document.querySelectorAll('#memberBoxesCheckboxes input[type="checkbox"]:checked');
-      const boxes = Array.from(boxCheckboxes).map(cb => parseInt(cb.value));
-      
-      if (!name || !phone || !financialStatus || !jobStatus) {
-        showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
-        return;
-      }
-      
+      const teams = Array.from(document.querySelectorAll('#memberTeamsCheckboxes input:checked')).map(cb => parseInt(cb.value));
+      const boxes = Array.from(document.querySelectorAll('#memberBoxesCheckboxes input:checked')).map(cb => parseInt(cb.value));
+
+      if (!name || !phone || !financialStatus || !jobStatus) return showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
+
       addMember(name, teams, boxes, phone, birthDate, financialStatus, jobStatus);
       document.getElementById('addMemberForm').reset();
       closeModal('addMemberModal');
@@ -585,83 +489,27 @@
     // استيراد الأعضاء
     function submitImportMembers() {
       const data = document.getElementById('membersImportData').value;
-      
-      if (!data.trim()) {
-        showAlert('يرجى لصق بيانات الأعضاء', 'error');
-        return;
-      }
-      
+      if (!data.trim()) return showAlert('يرجى لصق بيانات الأعضاء', 'error');
+
       const lines = data.split('\n').filter(line => line.trim());
       let count = 0;
       let errors = [];
-      
+
       lines.forEach((line, index) => {
         const parts = line.split('|').map(p => p.trim());
-        
-        if (parts.length !== 4) {
-          errors.push(`السطر ${index + 1}: بيانات غير كاملة`);
-          return;
-        }
-        
+        if (parts.length !== 4) return errors.push(`السطر ${index + 1}: بيانات غير كاملة`);
         const [name, phone, financial, job] = parts;
-        
-        if (!name || !phone || !financial || !job) {
-          errors.push(`السطر ${index + 1}: بيانات فارغة`);
-          return;
-        }
-        
-        const validFinancial = ['affluent', 'moderate', 'difficult'];
-        const validJob = ['employed', 'unemployed', 'retired'];
-        
-        if (!validFinancial.includes(financial)) {
-          errors.push(`السطر ${index + 1}: حالة مادية غير صحيحة`);
-          return;
-        }
-        
-        if (!validJob.includes(job)) {
-          errors.push(`السطر ${index + 1}: حالة وظيفية غير صحيحة`);
-          return;
-        }
-        
+        if (!name || !phone || !financial || !job) return errors.push(`السطر ${index + 1}: بيانات فارغة`);
         addMember(name, [], [], phone, '', financial, job);
         count++;
       });
-      
-      if (errors.length > 0) {
-        showAlert('أخطاء: ' + errors.join(', '), 'error');
-        return;
-      }
-      
-      showAlert('تم استيراد ' + count + ' أعضاء بنجاح', 'success');
+
+      if (errors.length > 0) return showAlert('أخطاء: ' + errors.join(', '), 'error');
+
+      showAlert(`تم استيراد ${count} أعضاء بنجاح`, 'success');
       document.getElementById('importMembersForm').reset();
       closeModal('importMembersModal');
       renderMembersDropdowns('members-dropdowns-container');
-    }
-
-    // عرض الفرق في checkboxes
-    function renderTeamsCheckboxes(containerId) {
-      const teams = getAllTeams();
-      const container = document.getElementById(containerId);
-      
-      if (!container) return;
-      
-      if (teams.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-light); font-size: 12px;">لا توجد فرق. أضف فريق أولاً</p>';
-        return;
-      }
-      
-      let html = '<div class="checkbox-group">';
-      teams.forEach(team => {
-        html += `
-          <div class="checkbox-item">
-            <input type="checkbox" id="team-${team.id}" value="${team.id}" name="teams">
-            <label for="team-${team.id}">${team.name}</label>
-          </div>
-        `;
-      });
-      html += '</div>';
-      
-      container.innerHTML = html;
     }
 
     // فتح نافذة إضافة عضو
@@ -677,116 +525,75 @@
       openModal('addBoxModal');
     }
 
-    // تحديث البيانات عند التحميل
-    document.addEventListener('DOMContentLoaded', function() {
-      const isLoggedIn = localStorage.getItem('isLoggedIn');
-      if (isLoggedIn !== 'true') {
-        window.location.href = 'login.html';
-        return;
+    // تحرير العضو
+    function editMember(memberId) {
+      const member = getFromStorage('members', []).find(m => m.id === memberId);
+      if (member) {
+        document.getElementById('editMemberId').value = member.id;
+        document.getElementById('editMemberName').value = member.name;
+        document.getElementById('editMemberPhone').value = member.phone;
+        document.getElementById('editMemberBirthDate').value = member.birthDate;
+        document.getElementById('editMemberFinancialStatus').value = member.financialStatus;
+        document.getElementById('editMemberJobStatus').value = member.jobStatus;
+
+        renderTeamsCheckboxes('editMemberTeamsCheckboxes');
+        renderBoxesCheckboxes('editMemberBoxesCheckboxes');
+
+        setTimeout(() => {
+          document.querySelectorAll('#editMemberTeamsCheckboxes input').forEach(cb => {
+            cb.checked = member.teams && member.teams.includes(parseInt(cb.value));
+          });
+          document.querySelectorAll('#editMemberBoxesCheckboxes input').forEach(cb => {
+            cb.checked = member.boxes && member.boxes.includes(parseInt(cb.value));
+          });
+        }, 50);
+
+        openModal('editMemberModal');
+      }
+    }
+
+    function submitEditMember() {
+      const memberId = parseInt(document.getElementById('editMemberId').value);
+      const updatedData = {
+        name: document.getElementById('editMemberName').value,
+        phone: document.getElementById('editMemberPhone').value,
+        birthDate: document.getElementById('editMemberBirthDate').value,
+        financialStatus: document.getElementById('editMemberFinancialStatus').value,
+        jobStatus: document.getElementById('editMemberJobStatus').value,
+        teams: Array.from(document.querySelectorAll('#editMemberTeamsCheckboxes input:checked')).map(cb => parseInt(cb.value)),
+        boxes: Array.from(document.querySelectorAll('#editMemberBoxesCheckboxes input:checked')).map(cb => parseInt(cb.value))
+      };
+
+      if (!updatedData.name || !updatedData.phone || !updatedData.financialStatus || !updatedData.jobStatus) {
+        return showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
       }
 
-      // التعديل: تفعيل زر التبويب النشط عند التحميل بناءً على القسم النشط افتراضياً (teams-section)
-      const activeSection = document.querySelector('.page.active');
-      if (activeSection) {
-        const activeId = activeSection.id.replace('-section', '-btn');
-        const activeBtn = document.getElementById(activeId);
-        if (activeBtn) {
-          activeBtn.classList.add('active-tab');
-        }
-      }
-      // نهاية التعديل
-
-      renderTeamsTable('teams-table-container');
-      renderBoxesTable('boxes-table-container');
+      updateMember(memberId, updatedData);
+      closeModal('editMemberModal');
       renderMembersDropdowns('members-dropdowns-container');
-    });
-// مكان الإضافة: في ملف members.html، داخل وسم <script>، بعد آخر دالة موجودة.
+    }
 
-// 1. فتح نافذة تحرير العضو وتعبئة البيانات
-function editMember(memberId) {
-  const members = getFromStorage('members', []);
-  const member = members.find(m => m.id === memberId);
-  
-  if (member) {
-    // 1. تعبئة الحقول النصية والقيم المختارة
-    document.getElementById('editMemberId').value = member.id;
-    document.getElementById('editMemberName').value = member.name;
-    document.getElementById('editMemberPhone').value = member.phone;
-    document.getElementById('editMemberBirthDate').value = member.birthDate;
-    document.getElementById('editMemberFinancialStatus').value = member.financialStatus;
-    document.getElementById('editMemberJobStatus').value = member.jobStatus;
-
-    // 2. عرض خيارات الفرق والصناديق وتحديد الخيارات الحالية
-    renderTeamsCheckboxes('editMemberTeamsCheckboxes');
-    renderBoxesCheckboxes('editMemberBoxesCheckboxes');
-
-    // تأخير بسيط لضمان عرض Checkboxes قبل محاولة تحديدها
-    setTimeout(() => {
-      // تحديد الفرق المشارك بها العضو حاليًا
-      const teamCheckboxes = document.querySelectorAll('#editMemberTeamsCheckboxes input[type="checkbox"]');
-      teamCheckboxes.forEach(cb => {
-        cb.checked = member.teams && member.teams.includes(parseInt(cb.value));
-      });
-      
-      // تحديد الصناديق المشترك بها العضو حاليًا
-      const boxCheckboxes = document.querySelectorAll('#editMemberBoxesCheckboxes input[type="checkbox"]');
-      boxCheckboxes.forEach(cb => {
-        cb.checked = member.boxes && member.boxes.includes(parseInt(cb.value));
-      });
-    }, 50);
-
-    // 3. فتح النافذة المنبثقة
-    openModal('editMemberModal');
-  }
-}
-
-// 2. إرسال التعديلات وحفظها
-function submitEditMember() {
-  const memberId = parseInt(document.getElementById('editMemberId').value);
-  const name = document.getElementById('editMemberName').value;
-  const phone = document.getElementById('editMemberPhone').value;
-  const birthDate = document.getElementById('editMemberBirthDate').value;
-  const financialStatus = document.getElementById('editMemberFinancialStatus').value;
-  const jobStatus = document.getElementById('editMemberJobStatus').value;
-  
-  // جمع مُعرّفات الفرق والصناديق المحددة
-  const teamCheckboxes = document.querySelectorAll('#editMemberTeamsCheckboxes input[type="checkbox"]:checked');
-  const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
-  
-  const boxCheckboxes = document.querySelectorAll('#editMemberBoxesCheckboxes input[type="checkbox"]:checked');
-  const boxes = Array.from(boxCheckboxes).map(cb => parseInt(cb.value));
-  
-  if (!name || !phone || !financialStatus || !jobStatus) {
-    showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
-    return;
-  }
-  
-  const updatedData = {
-    name,
-    phone,
-    birthDate,
-    financialStatus,
-    jobStatus,
-    teams,
-    boxes
-  };
-  
-  // استدعاء دالة التحديث الموجودة في script.js
-  updateMember(memberId, updatedData);
-  
-  closeModal('editMemberModal');
-  renderMembersDropdowns('members-dropdowns-container');
-}
     function logout() {
       if (confirm('هل تريد تسجيل الخروج؟')) {
         localStorage.setItem('isLoggedIn', 'false');
         localStorage.removeItem('currentUser');
         showAlert('تم تسجيل الخروج بنجاح', 'success');
-        setTimeout(function() {
-          window.location.href = 'login.html';
-        }, 1000);
+        setTimeout(() => window.location.href = 'login.html', 1000);
       }
     }
+
+    // تحديث البيانات عند التحميل
+    document.addEventListener('DOMContentLoaded', function() {
+      if (localStorage.getItem('isLoggedIn') !== 'true') {
+        window.location.href = 'login.html';
+        return;
+      }
+      showPage('members-section', document.getElementById('members-btn'));
+      populateMemberFilters();
+      renderTeamsTable('teams-table-container');
+      renderBoxesTable('boxes-table-container');
+      renderMembersDropdowns('members-dropdowns-container');
+    });
   </script>
 </body>
 </html>

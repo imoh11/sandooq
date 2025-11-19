@@ -1031,7 +1031,8 @@ tbody tr:last-child td {
 .modal-footer {
   display: flex;
   gap: 10px;
-  justify-content: flex-start; /* ⭐️ تم التعديل: لجعل زر الإضافة على اليمين */
+  justify-content: flex-end; /* ⭐️ تم الإرجاع: المحاذاة لليسار */
+  flex-direction: row-reverse; /* ⭐️ تم التعديل: لعكس ترتيب الأزرار */
   padding-top: 15px;
   border-top: 1px solid var(--border-light);
 }

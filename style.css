@@ -1,59 +1,55 @@
 /* ========================================================== */
-/* 1. الإعدادات الأساسية والاستيرادات         */
+/* 1. الإعدادات الأساسية والاستيرادات                        */
 /* ========================================================== */
 
-/* استيراد خط تجوال من Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
-
-/* استيراد Font Awesome للأيقونات */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
-/* إعادة تعيين الأنماط الأساسية لجميع العناصر */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* الخصائص الأساسية لعناصر HTML */
 html {
   scroll-behavior: smooth;
 }
 
 /* ========================================================== */
-/* 2. متغيرات CSS (نظام ألوان بارد وعصري)             */
+/* 2. متغيرات CSS (نظام ألوان بارد وعصري)                    */
 /* ========================================================== */
+
 :root {
-  /* الألوان الأساسية - نظام أزرق داكن/تركوازي */
-  --primary-color: #2C3E50; /* أزرق صخري داكن (Slate Blue) */
-  --secondary-color: #34495E; /* أزرق صخري متوسط */
-  --accent-color: #1ABC9C; /* تركوازي (Teal) للميزات البارزة */
-  --accent-hover: #48C9B0; /* تركوازي أفتح عند التحويم */
+  /* الألوان الأساسية */
+  --primary-color: #2C3E50;
+  --secondary-color: #34495E;
+  --accent-color: #1ABC9C;
+  --accent-hover: #48C9B0;
   
-  /* خلفيات باردة */
-  --bg-primary: #ECF0F1; /* خلفية رئيسية رمادية فاتحة جداً */
-  --bg-secondary: #E0E6E9; /* خلفية ثانوية ناعمة */
-  --bg-tertiary: #D5DBDE; /* خلفية ثالثة أغمق قليلاً */
-  --bg-white: #ffffff; /* خلفية بيضاء نقية */
+  /* خلفيات */
+  --bg-primary: #ECF0F1;
+  --bg-secondary: #E0E6E9;
+  --bg-tertiary: #D5DBDE;
+  --bg-white: #ffffff;
   
-  /* حدود ناعمة (للفصل البصري الخفيف) */
-  --border-light: #BDC3C7; /* حدود رمادية فاتحة جداً */
-  --border-medium: #AAB7B8; /* حدود متوسطة */
+  /* حدود */
+  --border-light: #BDC3C7;
+  --border-medium: #AAB7B8;
   
   /* ألوان النص */
-  --text-primary: #212F3C; /* نص داكن جداً */
-  --text-secondary: #5D6D7E; /* نص ثانوي رمادي */
-  --text-muted: #8D9EAE; /* نص خفيف */
+  --text-primary: #212F3C;
+  --text-secondary: #5D6D7E;
+  --text-muted: #8D9EAE;
   
   /* ألوان الحالة */
-  --success-color: #2ECC71; /* أخضر نقي */
-  --success-bg: #E8F8F5; /* خلفية نجاح فاتحة */
-  --warning-color: #F39C12; /* برتقالي ساطع */
-  --warning-bg: #FCF3CF; /* خلفية تحذير فاتحة */
-  --error-color: #E74C3C; /* أحمر حاد */
-  --error-bg: #FDEDEC; /* خلفية خطأ فاتحة */
+  --success-color: #2ECC71;
+  --success-bg: #E8F8F5;
+  --warning-color: #F39C12;
+  --warning-bg: #FCF3CF;
+  --error-color: #E74C3C;
+  --error-bg: #FDEDEC;
   
-  /* ظلال ناعمة ومخفية (لإلغاء الحاجة للحدود الصلبة) */
+  /* ظلال */
   --shadow-sm: 0 1px 4px rgba(44, 62, 80, 0.08);
   --shadow-md: 0 4px 12px rgba(44, 62, 80, 0.12);
   --shadow-lg: 0 8px 24px rgba(44, 62, 80, 0.16);
@@ -65,7 +61,7 @@ html {
 }
 
 /* ========================================================== */
-/* 3. الأنماط العامة للجسم               */
+/* 3. الأنماط العامة للجسم                                   */
 /* ========================================================== */
 
 body {
@@ -88,7 +84,7 @@ body {
 }
 
 /* ========================================================== */
-/* 4. الرأس (Header)                    */
+/* 4. الرأس (Header)                                          */
 /* ========================================================== */
 
 header {
@@ -96,7 +92,7 @@ header {
   box-shadow: var(--shadow-sm); 
   padding: 0;
   margin-bottom: 5px;
-  border-bottom: 3px solid var(--accent-color); /* شريط تمييز تركوازي */
+  border-bottom: 3px solid var(--accent-color);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -132,7 +128,7 @@ header .container {
   color: var(--accent-color);
 }
 
-/* شريط التنقل (Navigation) */
+/* شريط التنقل */
 nav {
   display: flex;
   gap: 40px;
@@ -144,7 +140,6 @@ nav {
   order: 3;
 }
 
-/* روابط التنقل */
 nav a {
   display: flex;
   flex-direction: column;
@@ -165,7 +160,6 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
-/* نمط الرابط النشط */
 nav a.active {
   color: var(--primary-color);
   background-color: var(--bg-secondary);
@@ -216,13 +210,13 @@ nav a span {
 }
 
 .header-actions button:hover {
-  color: #B9443B; /* أحمر أغمق قليلاً */
+  color: #B9443B;
   background-color: var(--error-bg);
   transform: scale(1.1);
 }
 
 /* ========================================================== */
-/* 5. المحتوى الرئيسي                     */
+/* 5. المحتوى الرئيسي                                        */
 /* ========================================================== */
 
 main {
@@ -240,7 +234,7 @@ section {
   color: var(--primary-color);
   margin-bottom: 15px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-light); /* حدود ناعمة */
+  border-bottom: 1px solid var(--border-light);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -250,7 +244,7 @@ section {
   content: '';
   width: 4px;
   height: 20px;
-  background: var(--accent-color); /* مؤشر تركوازي واضح */
+  background: var(--accent-color);
   border-radius: 2px;
 }
 
@@ -262,7 +256,7 @@ section {
   margin-bottom: 20px;
 }
 
-/* عناصر الشبكة (البطاقات المصغرة) */
+/* عناصر الشبكة */
 .grid-item {
   background-color: var(--bg-white);
   border: none;
@@ -305,7 +299,41 @@ section {
 }
 
 /* ========================================================== */
-/* 6. الأزرار (Buttons)                */
+/* 6. أزرار التبويبات الداخلية                               */
+/* ========================================================== */
+
+.section-tab-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.section-tab-buttons .btn {
+  flex: 1;
+  justify-content: center;
+  padding: 12px 20px;
+  min-width: 100px;
+  font-weight: 600;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--bg-white);
+}
+
+.section-tab-buttons .btn:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.section-tab-buttons .btn.active-tab {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--primary-color); 
+  box-shadow: 0 4px 12px rgba(26, 188, 156, 0.4);
+}
+
+/* ========================================================== */
+/* 7. الأزرار (Buttons)                                      */
 /* ========================================================== */
 
 button, .btn {
@@ -340,7 +368,7 @@ button:active, .btn:active {
   transform: translateY(0);
 }
 
-/* الزر الأساسي (Primary) */
+/* الزر الأساسي */
 button.primary, .btn.primary {
   background-color: var(--primary-color);
   color: var(--bg-white);
@@ -369,76 +397,8 @@ button.icon-only {
   justify-content: center;
 }
 
-/* أزرار تبويبات الأقسام */
-.section-tab-buttons .btn {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  color: var(--bg-white);
-  min-width: 100px;
-  font-weight: 600;
-}
-
-.section-tab-buttons .btn:hover {
-  background-color: var(--secondary-color);
-  border-color: var(--secondary-color);
-}
-
-.section-tab-buttons .btn.active-tab {
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
-  color: var(--primary-color); 
-  box-shadow: 0 4px 12px rgba(26, 188, 156, 0.4);
-}
-
 /* ========================================================== */
-/* 7. الجداول (Tables)                 */
-/* ========================================================== */
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: var(--bg-white);
-  border: none;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  margin-top: 10px;
-  box-shadow: var(--shadow-md);
-}
-
-thead {
-  background-color: var(--bg-secondary);
-  border-bottom: 2px solid var(--accent-color);
-}
-
-th {
-  padding: 12px;
-  text-align: right;
-  font-weight: 600;
-  color: var(--primary-color);
-  font-size: 12px;
-}
-
-td {
-  padding: 12px;
-  border-bottom: 1px solid var(--border-light);
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-
-tbody tr {
-  transition: background-color 0.2s ease;
-}
-
-tbody tr:hover {
-  background-color: var(--bg-secondary);
-}
-
-tbody tr:last-child td {
-  border-bottom: none;
-}
-
-/* ========================================================== */
-/* 8. النماذج (Forms)                  */
+/* 8. النماذج (Forms)                                        */
 /* ========================================================== */
 
 .form-group {
@@ -489,7 +449,90 @@ select option:disabled {
   color: var(--text-muted);
 }
 
-/* تجميع خانات الاختيار في شبكة */
+/* ========================================================== */
+/* 9. حقول التصفية المطوية                                   */
+/* ========================================================== */
+
+.filter-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 15px;
+  margin-top: 20px;
+  margin-bottom: 30px; 
+}
+
+.filter-select {
+  padding: 12px 15px;
+  border: none;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  height: 45px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
+  background-color: var(--bg-white);
+}
+
+/* ========================================================== */
+/* 10. حقل التاريخ المخصص                                    */
+/* ========================================================== */
+
+input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-white);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: 'Tajawal', sans-serif;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  direction: rtl;
+  text-align: right;
+  transition: all 0.3s ease;
+  height: 40px;
+}
+
+input[type="date"]::-webkit-datetime-edit {
+  direction: rtl;
+  text-align: right;
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+  direction: rtl;
+  text-align: right;
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  direction: rtl;
+  text-align: right;
+}
+
+input[type="date"]:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
+  background-color: var(--bg-white);
+}
+
+/* ========================================================== */
+/* 11. تجميع خانات الاختيار                                  */
+/* ========================================================== */
+
 .checkbox-group {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -516,7 +559,257 @@ select option:disabled {
 }
 
 /* ========================================================== */
-/* 9. النوافذ المنبثقة (Modal)               */
+/* 12. الجداول (Tables)                                      */
+/* ========================================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-white);
+  border: none;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: 10px;
+  box-shadow: var(--shadow-md);
+}
+
+thead {
+  background-color: var(--bg-secondary);
+  border-bottom: 2px solid var(--accent-color);
+}
+
+th {
+  padding: 12px;
+  text-align: right;
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 12px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+  background-color: var(--bg-secondary);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ========================================================== */
+/* 13. حالة الدفع (Payment Status)                           */
+/* ========================================================== */
+
+.payment-status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  color: #ffffff !important;
+  min-width: 80px;
+}
+
+.payment-status.completed {
+  background-color: var(--success-color);
+}
+
+.payment-status.delayed {
+  background-color: var(--warning-color);
+}
+
+.payment-status.unpaid {
+  background-color: var(--error-color);
+}
+
+.payment-status.pending {
+  background-color: var(--secondary-color);
+}
+
+/* ========================================================== */
+/* 14. البطاقات (Cards)                                      */
+/* ========================================================== */
+
+.card {
+  background-color: var(--bg-white);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.card-content {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* ========================================================== */
+/* 15. القوائم المنسدلة (Dropdowns)                          */
+/* ========================================================== */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--bg-white);
+  min-width: 200px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  z-index: 1;
+  right: 0;
+  top: 100%;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.dropdown-content.show {
+  display: block;
+  animation: slideUp 0.3s ease;
+}
+
+.dropdown-content a, .dropdown-content button {
+  color: var(--text-primary);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  text-align: right;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.dropdown-content a:hover, .dropdown-content button:hover {
+  background-color: var(--bg-secondary);
+  color: var(--accent-color);
+}
+
+/* ========================================================== */
+/* 16. قائمة أعضاء قابلة للطي                                */
+/* ========================================================== */
+
+.member-dropdown {
+  background-color: var(--bg-white);
+  border: none;
+  border-radius: var(--radius-lg);
+  margin-bottom: 15px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: box-shadow 0.3s ease;
+}
+
+.member-dropdown:hover {
+  box-shadow: 0 6px 20px rgba(44, 62, 80, 0.15);
+}
+
+.member-dropdown-header {
+  padding: 15px;
+  background-color: var(--bg-secondary);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  color: var(--primary-color);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-light);
+  height: 50px;
+}
+
+.member-dropdown-header:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.member-dropdown-header i {
+  transition: transform 0.3s ease;
+  color: var(--accent-color);
+}
+
+.member-dropdown-header.active i {
+  transform: rotate(180deg);
+}
+
+.member-dropdown-body {
+  display: none;
+  padding: 15px;
+  background-color: var(--bg-white);
+}
+
+.member-dropdown-body.show {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+.member-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.member-info-item {
+  padding: 10px;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.member-info-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.member-info-value {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ========================================================== */
+/* 17. النوافذ المنبثقة (Modal)                              */
 /* ========================================================== */
 
 .modal {
@@ -527,7 +820,7 @@ select option:disabled {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(44, 62, 80, 0.5); /* أزرق صخري شفاف */
+  background-color: rgba(44, 62, 80, 0.5);
   backdrop-filter: blur(4px);
   animation: fadeIn 0.3s ease;
 }
@@ -596,209 +889,7 @@ select option:disabled {
 }
 
 /* ========================================================== */
-/* 10. القوائم المنسدلة (Dropdowns)         */
-/* ========================================================== */
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: var(--bg-white);
-  min-width: 200px;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  z-index: 1;
-  right: 0;
-  top: 100%;
-  margin-top: 5px;
-  overflow: hidden;
-}
-
-.dropdown-content.show {
-  display: block;
-  animation: slideUp 0.3s ease;
-}
-
-.dropdown-content a, .dropdown-content button {
-  color: var(--text-primary);
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  width: 100%;
-  text-align: right;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 13px;
-  transition: all 0.2s ease;
-  font-family: 'Tajawal', sans-serif;
-}
-
-.dropdown-content a:hover, .dropdown-content button:hover {
-  background-color: var(--bg-secondary);
-  color: var(--accent-color);
-}
-
-/* ========================================================== */
-/* 11. قائمة أعضاء قابلة للطي              */
-/* ========================================================== */
-
-.member-dropdown {
-  background-color: var(--bg-white);
-  border: none;
-  border-radius: var(--radius-lg);
-  margin-bottom: 15px;
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transition: box-shadow 0.3s ease;
-}
-
-.member-dropdown:hover {
-  box-shadow: 0 6px 20px rgba(44, 62, 80, 0.15);
-}
-
-.member-dropdown-header {
-  padding: 15px;
-  background-color: var(--bg-secondary);
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.3s ease;
-  color: var(--primary-color);
-  font-weight: 600;
-  border-bottom: 1px solid var(--border-light);
-}
-
-.member-dropdown-header:hover {
-  background-color: var(--bg-tertiary);
-}
-
-.member-dropdown-header i {
-  transition: transform 0.3s ease;
-  color: var(--accent-color);
-}
-
-.member-dropdown-header.active i {
-  transform: rotate(180deg);
-}
-
-.member-dropdown-body {
-  display: none;
-  padding: 15px;
-  background-color: var(--bg-white);
-}
-
-.member-dropdown-body.show {
-  display: block;
-  animation: fadeIn 0.3s ease;
-}
-
-.member-info {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.member-info-item {
-  padding: 10px;
-  background-color: var(--bg-primary);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-light);
-}
-
-.member-info-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.member-info-value {
-  font-size: 13px;
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-/* ========================================================== */
-/* 12. حالة الدفع (Payment Status)             */
-/* ========================================================== */
-
-.payment-status {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  border: 1px solid;
-}
-
-.payment-status.completed {
-  background-color: var(--success-bg);
-  color: var(--success-color);
-  border-color: var(--success-color);
-}
-
-.payment-status.delayed {
-  background-color: var(--warning-bg);
-  color: var(--warning-color);
-  border-color: var(--warning-color);
-}
-
-.payment-status.unpaid {
-  background-color: var(--error-bg);
-  color: var(--error-color);
-  border-color: var(--error-color);
-}
-
-/* ========================================================== */
-/* 13. البطاقات (Cards)                */
-/* ========================================================== */
-
-.card {
-  background-color: var(--bg-white);
-  border: none;
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border-light);
-}
-
-.card-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--primary-color);
-}
-
-.card-content {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.8;
-}
-
-/* ========================================================== */
-/* 14. الرسائل والتنبيهات (Alerts)             */
+/* 18. الرسائل والتنبيهات (Alerts)                           */
 /* ========================================================== */
 
 .alert {
@@ -826,7 +917,7 @@ select option:disabled {
 }
 
 .alert.info {
-  background-color: #EAF2F8; /* لون أزرق فاتح للمعلومات */
+  background-color: #EAF2F8;
   color: var(--secondary-color);
   border-color: var(--accent-color);
 }
@@ -836,22 +927,7 @@ select option:disabled {
 }
 
 /* ========================================================== */
-/* 15. التذييل (Footer)                 */
-/* ========================================================== */
-
-footer {
-  background-color: var(--bg-secondary);
-  border-top: 1px solid var(--border-light);
-  padding: 10px 0;
-  margin-top: 40px;
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 12px;
-  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.05);
-}
-
-/* ========================================================== */
-/* 16. عناصر الصفحة والتاريخ              */
+/* 19. عناصر الصفحة والتاريخ                                 */
 /* ========================================================== */
 
 .page {
@@ -889,7 +965,22 @@ footer {
 }
 
 /* ========================================================== */
-/* 17. الخدمات المساعدة (Utilities)         */
+/* 20. التذييل (Footer)                                      */
+/* ========================================================== */
+
+footer {
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-light);
+  padding: 10px 0;
+  margin-top: 40px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 12px;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* ========================================================== */
+/* 21. الخدمات المساعدة (Utilities)                          */
 /* ========================================================== */
 
 .icon {
@@ -944,7 +1035,7 @@ footer {
 }
 
 /* ========================================================== */
-/* 18. الحركات (Animations)                */
+/* 22. الحركات (Animations)                                  */
 /* ========================================================== */
 
 @keyframes slideUp {
@@ -968,7 +1059,7 @@ footer {
 }
 
 /* ========================================================== */
-/* 19. استجابة الشاشات (Media Queries)         */
+/* 23. استجابة الشاشات (Media Queries)                       */
 /* ========================================================== */
 
 @media (max-width: 768px) {
@@ -977,10 +1068,9 @@ footer {
     padding: 15px;
   }
 
-  /* تنسيق الرأس على سطرين */
   header .container {
     flex-wrap: wrap;
-    padding:10px 15px 0px 15px;
+    padding: 10px 15px 0px 15px;
   }
 
   .logo {
@@ -993,12 +1083,11 @@ footer {
 
   nav {
     width: 100%;
-    order: 3; /* دفع شريط التنقل للسطر الثاني */
+    order: 3;
     gap: 25px;
   }
 
   .grid {
-    /* تم تغييرها إلى عمودين على شاشات التابلت إن كنت تريد ذلك، ولكن الأصل كان 4، لذا سنبقي على 4 */
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
   }
@@ -1020,7 +1109,12 @@ footer {
   }
 
   .member-info {
-    grid-template-columns: 1fr; /* عمود واحد */
+    grid-template-columns: 1fr;
+  }
+
+  .filter-controls {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 }
 
@@ -1031,19 +1125,17 @@ footer {
   }
 
   .grid {
-    /* تم تغييرها إلى عمودين أو 3 هنا لجعل العناصر أكبر، ولكن تم الإبقاء على 4 في الكود الأصلي */
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
 
   nav {
-    flex-wrap: nowrap; /* منع الالتفاف */
-    overflow-x: auto; /* تفعيل التمرير الأفقي */
+    flex-wrap: nowrap;
+    overflow-x: auto;
     gap: 10px;
     justify-content: flex-start;
   }
 
-  /* **تعديل توسيط أزرار الأقسام** */
   div[style*="justify-content: flex-end"] {
     justify-content: center !important;
   }
@@ -1051,50 +1143,7 @@ footer {
   .modal-content {
     padding: 20px;
   }
-}
-/* ========================================================== */
-/* تحديث نمط الرابط النشط لضمان ظهوره في كل الأحجام */
-/* ========================================================== */
-nav a.active {
-  /* احتفظ بخلفية الرمادي لتمييز المنطقة */
-  background-color: var(--secondary-gray);
-  font-weight: 600;
-  
-  /* إضافة مؤشر لوني واضح (الخط الأزرق الساطع) */
-  position: relative; /* لتكون النقطة المرجعية للعنصر الزائف */
-  
-  /* النمط الأساسي للمؤشر: شريط سفلي */
-  border-bottom: 3px solid var(--accent-color); /* شريط أزرق سفلي */
-  padding-bottom: 7px; /* لزيادة المسافة بين النص والخط */
-}
 
-/* نمط للموبايل لجعله بارزاً أكثر إذا لزم الأمر */
-@media (max-width: 480px) {
-    nav a.active {
-        /* بدلاً من الشريط السفلي، يمكن تجربة شريط جانبي ليكون أكثر وضوحاً */
-        border-bottom: none; 
-        border-right: 3px solid var(--accent-color); /* شريط أزرق على اليمين */
-    }
-}
-/* ========================================================== */
-/* أزرار التبويبات الداخلية في صفحة الأعضاء        */
-/* ========================================================== */
-
-.section-tab-buttons {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-.section-tab-buttons .btn {
-  flex: 1; /* كل زر يأخذ مساحة متساوية */
-  justify-content: center;
-  padding: 12px 20px;
-}
-
-/* للشاشات الصغيرة */
-@media (max-width: 480px) {
   .section-tab-buttons {
     gap: 10px;
   }
@@ -1103,135 +1152,9 @@ nav a.active {
     padding: 10px 15px;
     font-size: 12px;
   }
-}
-/* ========================================================== */
-/* أنماط حالة الدفع (Payment Status) */
-/* ========================================================== */
 
-.payment-status {
-    /* تنسيق الشارة الأساسي */
-    display: inline-block;
-    padding: 4px 8px; /* لتحديد حجم الشارة */
-    border-radius: 4px; /* لتقويس الحواف */
-    font-size: 13px; /* حجم الخط */
-    font-weight: 600;
-    text-align: center;
-    color: #ffffff !important; /* لون النص أبيض لسهولة القراءة */
-}
-
-/* الألوان الخاصة بكل حالة */
-.payment-status.completed {
-    background-color: var(--accent-color); /* أخضر/تركوازي للمكتمل */
-}
-
-.payment-status.delayed {
-    background-color: #f39c12; /* برتقالي/أصفر للتأخير */
-}
-
-.payment-status.unpaid {
-    background-color: #e74c3c; /* أحمر لـ لم يدفع */
-}
-
-.payment-status.pending {
-    background-color: var(--secondary-color); /* رمادي/أزرق للحالة قيد الانتظار */
-}
-/* ========================================================== */
-/* أنماط حقول التصفية للأعضاء (تم تحديث الخلفية والحدود) */
-/* ========================================================== */
-
-.filter-controls {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 15px;
-    margin-top: 20px;
-    margin-bottom: 30px; 
-}
-
-.filter-select {
-    padding: 10px 15px;
-    
-    /* ⭐️ التعديل المطلوب: إزالة الحدود تماماً ⭐️ */
-    border: none; 
-    
-    border-radius: var(--radius-md);
-
-    /* الخلفية الرمادية الناعمة */
-    background-color: var(--bg-secondary); 
-    
-    color: var(--text-primary); 
-    font-size: 14px;
-    width: 100%; 
-    cursor: pointer;
-    transition: all 0.3s ease;
-    
-    /* إضافة ظل ناعم جداً لتعويض الحدود المفقودة وللتمييز */
-    box-shadow: var(--shadow-sm); 
-}
-
-/* نمط التركيز (Focus) - يصبح أبيض مع حدود التركيز */
-.filter-select:focus {
-    outline: none;
-    border: 1px solid var(--accent-color); /* يمكن إضافة حدود عند التركيز */
-    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
-    background-color: var(--bg-white); 
-}
-
-/* نمط خاص لأجهزة الموبايل */
-@media (max-width: 200px) { 
-    .filter-controls {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-}
-/* ========================================================== */
-/* الحل النهائي لمشكلة حقل التاريخ (input[type="date"]) */
-/* يحل مشكلة الزحف ويضمن التناسق في الحجم والمظهر */
-/* ========================================================== */
-
-input[type="date"] {
-    /* ⭐️⭐️ لضمان التناسق في الحجم والمظهر مع بقية الحقول ⭐️⭐️ */
-    width: 100%;
-    padding: 10px; /* القيمة الصحيحة من حقول الإدخال القياسية لديك */
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-md);
-    background-color: var(--bg-white);
-    color: var(--text-primary);
-    font-size: 13px;
-    font-family: 'Tajawal', sans-serif;
-    
-    /* 1. إزالة التنسيق الأصلي للمتصفح (حل مشكلة الزحف) */
-    -webkit-appearance: none; 
-    -moz-appearance: none;
-    appearance: none;
-    
-    /* 2. إجبار الاتجاه والمحاذاة لليمين لمنع الزحف */
-    direction: rtl; 
-    text-align: right;
-    
-    /* 3. لضمان عمل التحولات بسلاسة */
-    transition: all 0.3s ease;
-}
-
-/* الأنماط الإضافية الخاصة بعناصر Shadow DOM الداخلية (ابقِ عليها كما هي) */
-input[type="date"]::-webkit-datetime-edit {
-    direction: rtl;
-    text-align: right;
-}
-input[type="date"]::-webkit-datetime-edit-text {
-    direction: rtl;
-    text-align: right;
-}
-input[type="date"]::-webkit-datetime-edit-month-field,
-input[type="date"]::-webkit-datetime-edit-day-field,
-input[type="date"]::-webkit-datetime-edit-year-field {
-    direction: rtl;
-    text-align: right;
-}
-
-/* نمط التركيز (Focus) ليتطابق مع بقية الحقول */
-input[type="date"]:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
-    background-color: var(--bg-white);
+  nav a.active {
+    border-bottom: none;
+    border-right: 3px solid var(--accent-color);
+  }
 }

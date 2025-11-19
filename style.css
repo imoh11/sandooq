@@ -645,56 +645,49 @@ select option:disabled {
 }
 
 /* ========================================================== */
-/* 11. قائمة أعضاء قابلة للطي (تم تعديل الارتفاع وحجم الخط) */
+/* 11. قائمة أعضاء قابلة للطي              */
 /* ========================================================== */
 
 .member-dropdown {
-    background-color: var(--bg-white);
-    border: none;
-    border-radius: var(--radius-lg);
-    margin-bottom: 15px;
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    transition: box-shadow 0.3s ease;
+  background-color: var(--bg-white);
+  border: none;
+  border-radius: var(--radius-lg);
+  margin-bottom: 15px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: box-shadow 0.3s ease;
 }
 
 .member-dropdown:hover {
-    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.15);
+  box-shadow: 0 6px 20px rgba(44, 62, 80, 0.15);
 }
 
 .member-dropdown-header {
-    /* ⭐️⭐️ تم تقليل الـ padding العمودي من 15px إلى 10px لتقليل الارتفاع ⭐️⭐️ */
-    padding: 10px 15px; 
-    background-color: var(--bg-secondary);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-    color: var(--primary-color);
-    font-weight: 600;
-    border-bottom: 1px solid var(--border-light);
+  padding: 15px;
+  background-color: var(--bg-secondary);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  color: var(--primary-color);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .member-dropdown-header:hover {
-    background-color: var(--bg-tertiary);
-}
-
-/* ⭐️⭐️ تحديد حجم خط اسم العضو ليتطابق مع حقول التصفية (14px) ⭐️⭐️ */
-.member-dropdown-header strong {
-    font-size: 14px;
+  background-color: var(--bg-tertiary);
 }
 
 .member-dropdown-header i {
-    transition: transform 0.3s ease;
-    color: var(--accent-color);
+  transition: transform 0.3s ease;
+  color: var(--accent-color);
 }
 
 .member-dropdown-header.active i {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
-/* ... باقي الأنماط في هذا القسم ... */
 .member-dropdown-body {
   display: none;
   padding: 15px;

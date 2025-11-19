@@ -215,18 +215,19 @@ function importGroupsFromText(text) {
 // ==================== إدارة الأعضاء ====================
 
 // الكود المُصحَّح (تم إضافة 'teams')
-function addMember(name, groups, boxes, phone, birthDate, financialStatus, jobStatus, teams) {
+// ✅ الكود المُعدل والمُقترح في script.js
+function addMember(name, teams, boxes, phone, birthDate, financialStatus, jobStatus) {
     const members = getFromStorage('members', []);
     const newMember = {
         id: Date.now(),
         name: name,
-        groups: groups || [],
+        groups: [], // بما أنها لم تعد تُستخدم، يمكن تركها فارغة
         boxes: boxes || [],
         phone: phone,
         birthDate: birthDate,
         financialStatus: financialStatus,
         jobStatus: jobStatus,
-        teams: teams || [], // ⭐️ تم إضافة هذا السطر
+        teams: teams || [], // الآن ستأخذ القيمة الصحيحة
         joinDate: new Date().toLocaleDateString('ar-SA'),
         paymentHistory: []
     };

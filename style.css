@@ -1170,31 +1170,35 @@ nav a.active {
 }
 
 /* ========================================================== */
-/* حل مشكلة زحف حقل التاريخ (input[type="date"]) في أجهزة الموبايل RTL */
+/* الحل النهائي لمشكلة حقل التاريخ (input[type="date"]) */
+/* يحل مشكلة الزحف ويضمن التناسق في الحجم والمظهر */
 /* ========================================================== */
 
 input[type="date"] {
-    /* ⭐️⭐️ التعديل الذي يحل مشكلة الحجم ⭐️⭐️ */
-    padding: 10px 15px; /* قيمة يجب أن تتطابق مع حقول الإدخال العادية لديك */
+    /* ⭐️⭐️ لضمان التناسق في الحجم والمظهر مع بقية الحقول ⭐️⭐️ */
+    width: 100%;
+    padding: 10px; /* القيمة الصحيحة من حقول الإدخال القياسية لديك */
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-white);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-family: 'Tajawal', sans-serif;
     
-    /* الخصائص الأخرى التي تم إضافتها سابقاً */
-    direction: rtl; 
-    text-align: right;
-    
-    /* لإزالة التنسيق الافتراضي للمتصفح (وهو سبب المشكلة) */
+    /* 1. إزالة التنسيق الأصلي للمتصفح (حل مشكلة الزحف) */
     -webkit-appearance: none; 
     -moz-appearance: none;
     appearance: none;
     
-    /* خصائص إضافية للتناسق البصري مع حقولك الأخرى */
-    border: 1px solid var(--border-color); /* يفترض أن يكون هذا هو نمط حقولك */
-    border-radius: var(--border-radius); /* للحواف المستديرة */
-    background-color: var(--bg-primary); 
-    color: var(--text-color);
-    width: 100%; /* لضمان عرض الحقل بالكامل */
+    /* 2. إجبار الاتجاه والمحاذاة لليمين لمنع الزحف */
+    direction: rtl; 
+    text-align: right;
+    
+    /* 3. لضمان عمل التحولات بسلاسة */
+    transition: all 0.3s ease;
 }
 
-/* الأنماط الخاصة بعناصر Shadow DOM الداخلية (ابقِ عليها كما هي) */
+/* الأنماط الإضافية الخاصة بعناصر Shadow DOM الداخلية (ابقِ عليها كما هي) */
 input[type="date"]::-webkit-datetime-edit {
     direction: rtl;
     text-align: right;
@@ -1208,4 +1212,12 @@ input[type="date"]::-webkit-datetime-edit-day-field,
 input[type="date"]::-webkit-datetime-edit-year-field {
     direction: rtl;
     text-align: right;
+}
+
+/* نمط التركيز (Focus) ليتطابق مع بقية الحقول */
+input[type="date"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
+    background-color: var(--bg-white);
 }

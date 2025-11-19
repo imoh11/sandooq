@@ -456,8 +456,9 @@ select option:disabled {
   padding: 12px 15px;
   border: 1px solid var(--border-light); /* ⭐️ تم التعديل: إضافة حدود */
   border-radius: var(--radius-md);
-  background-color: var(--bg-white); /* ⭐️ تم التعديل: تغيير الخلفية للأبيض */
+  background-color: var(--bg-secondary); /* ⭐️ تم التعديل: تغيير الخلفية للرمادي */
   color: var(--text-primary);
+  text-align: center; /* ⭐️ تم التعديل: توسيط النص */
   font-size: 12px;
   font-weight: 500;
   width: 100%;
@@ -1104,6 +1105,7 @@ tbody tr:last-child td {
   font-size: 11px;
   color: var(--text-secondary);
   line-height: 1.2;
+  font-weight: 700; /* ⭐️ تم التعديل: جعل الخط أثقل */
 }
 
 /* ========================================================== */

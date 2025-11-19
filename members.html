@@ -334,7 +334,56 @@
       </div>
     </div>
   </div>
-
+<div id="editMemberModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">تحرير بيانات العضو</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="editMemberForm">
+          <input type="hidden" id="editMemberId">
+          <div class="form-group">
+            <input type="text" id="editMemberName" placeholder="الاسم" required>
+          </div>
+          <div class="form-group" style="margin-bottom: -3px;">
+              <label>الفرق:</label>
+              <div id="editMemberTeamsCheckboxes" style="min-height: 50px;"></div>
+          </div>
+          <div class="form-group">
+              <label>الصناديق:</label>
+              <div id="editMemberBoxesCheckboxes" style="min-height: 50px;"></div>
+          </div>
+          <div class="form-group">
+            <input type="tel" id="editMemberPhone" placeholder="رقم الجوال" required>
+          </div>
+          <div class="form-group">
+            <input type="date" id="editMemberBirthDate" placeholder="تاريخ الميلاد">
+          </div>
+          <div class="form-group">
+            <select id="editMemberFinancialStatus" required>
+              <option value="">اختر الحالة المادية</option>
+              <option value="affluent">ميسور</option>
+              <option value="moderate">متوسط</option>
+              <option value="difficult">معسر</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select id="editMemberJobStatus" required>
+              <option value="">اختر الحالة الوظيفية</option>
+              <option value="employed">موظف</option>
+              <option value="unemployed">عاطل</option>
+              <option value="retired">متقاعد</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('editMemberModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitEditMember()">حفظ</button>
+      </div>
+    </div>
+  </div>
   <footer>
     <div class="container">
       <p>&copy; 2024 Studio10 للأنظمة الإدارية. جميع الحقوق محفوظة.</p>
@@ -631,7 +680,83 @@
       renderBoxesTable('boxes-table-container');
       renderMembersDropdowns('members-dropdowns-container');
     });
+// مكان الإضافة: في ملف members.html، داخل وسم <script>، بعد آخر دالة موجودة.
 
+// 1. فتح نافذة تحرير العضو وتعبئة البيانات
+function editMember(memberId) {
+  const members = getFromStorage('members', []);
+  const member = members.find(m => m.id === memberId);
+  
+  if (member) {
+    // 1. تعبئة الحقول النصية والقيم المختارة
+    document.getElementById('editMemberId').value = member.id;
+    document.getElementById('editMemberName').value = member.name;
+    document.getElementById('editMemberPhone').value = member.phone;
+    document.getElementById('editMemberBirthDate').value = member.birthDate;
+    document.getElementById('editMemberFinancialStatus').value = member.financialStatus;
+    document.getElementById('editMemberJobStatus').value = member.jobStatus;
+
+    // 2. عرض خيارات الفرق والصناديق وتحديد الخيارات الحالية
+    renderTeamsCheckboxes('editMemberTeamsCheckboxes');
+    renderBoxesCheckboxes('editMemberBoxesCheckboxes');
+
+    // تأخير بسيط لضمان عرض Checkboxes قبل محاولة تحديدها
+    setTimeout(() => {
+      // تحديد الفرق المشارك بها العضو حاليًا
+      const teamCheckboxes = document.querySelectorAll('#editMemberTeamsCheckboxes input[type="checkbox"]');
+      teamCheckboxes.forEach(cb => {
+        cb.checked = member.teams && member.teams.includes(parseInt(cb.value));
+      });
+      
+      // تحديد الصناديق المشترك بها العضو حاليًا
+      const boxCheckboxes = document.querySelectorAll('#editMemberBoxesCheckboxes input[type="checkbox"]');
+      boxCheckboxes.forEach(cb => {
+        cb.checked = member.boxes && member.boxes.includes(parseInt(cb.value));
+      });
+    }, 50);
+
+    // 3. فتح النافذة المنبثقة
+    openModal('editMemberModal');
+  }
+}
+
+// 2. إرسال التعديلات وحفظها
+function submitEditMember() {
+  const memberId = parseInt(document.getElementById('editMemberId').value);
+  const name = document.getElementById('editMemberName').value;
+  const phone = document.getElementById('editMemberPhone').value;
+  const birthDate = document.getElementById('editMemberBirthDate').value;
+  const financialStatus = document.getElementById('editMemberFinancialStatus').value;
+  const jobStatus = document.getElementById('editMemberJobStatus').value;
+  
+  // جمع مُعرّفات الفرق والصناديق المحددة
+  const teamCheckboxes = document.querySelectorAll('#editMemberTeamsCheckboxes input[type="checkbox"]:checked');
+  const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
+  
+  const boxCheckboxes = document.querySelectorAll('#editMemberBoxesCheckboxes input[type="checkbox"]:checked');
+  const boxes = Array.from(boxCheckboxes).map(cb => parseInt(cb.value));
+  
+  if (!name || !phone || !financialStatus || !jobStatus) {
+    showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
+    return;
+  }
+  
+  const updatedData = {
+    name,
+    phone,
+    birthDate,
+    financialStatus,
+    jobStatus,
+    teams,
+    boxes
+  };
+  
+  // استدعاء دالة التحديث الموجودة في script.js
+  updateMember(memberId, updatedData);
+  
+  closeModal('editMemberModal');
+  renderMembersDropdowns('members-dropdowns-container');
+}
     function logout() {
       if (confirm('هل تريد تسجيل الخروج؟')) {
         localStorage.setItem('isLoggedIn', 'false');

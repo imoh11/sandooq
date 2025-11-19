@@ -1158,3 +1158,11 @@ footer {
     border-right: 3px solid var(--accent-color);
   }
 }
+@media (max-width: 600px) {
+    .filter-controls {
+        /* في الشاشات الصغيرة، نعود إلى عمود واحد */
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+

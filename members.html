@@ -280,6 +280,10 @@
             </select>
           </div>
           <div class="form-group">
+            <label>تاريخ الاستحقاق التالي (يدوي):</label>
+            <input type="date" id="editBoxNextDueDate"> <!-- ⭐️ حقل جديد لتعديل التاريخ يدوياً -->
+          </div>
+          <div class="form-group">
             <label>الفرق المشاركة:</label>
             <div id="editBoxTeamsCheckboxes" style="min-height: 50px;"></div>
           </div>
@@ -520,7 +524,8 @@
         document.getElementById('editBoxId').value = box.id;
         document.getElementById('editBoxName').value = box.name;
         document.getElementById('editBoxAmount').value = box.amount;
-        document.getElementById('editBoxFrequency').value = box.frequency;
+        document.getElementById('editBoxFrequency').value = box.frequency; // ⭐️ تعبئة نوع الاستحقاق
+        document.getElementById('editBoxNextDueDate').value = box.nextDueDate || ''; // ⭐️ تعبئة التاريخ اليدوي (أو فارغ إذا كان null)
         
         renderTeamsCheckboxes('editBoxTeamsCheckboxes');
         
@@ -540,6 +545,7 @@
       const name = document.getElementById('editBoxName').value;
       const amount = document.getElementById('editBoxAmount').value;
       const frequency = document.getElementById('editBoxFrequency').value;
+      const nextDueDate = document.getElementById('editBoxNextDueDate').value; // ⭐️ جلب التاريخ اليدوي
       
       const teamCheckboxes = document.querySelectorAll('#editBoxTeamsCheckboxes input[type="checkbox"]:checked');
       const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
@@ -554,7 +560,8 @@
         name: name,
         amount: parseFloat(amount),
         frequency: frequency,
-        teams: teams
+        teams: teams,
+        nextDueDate: nextDueDate // ⭐️ تمرير التاريخ اليدوي إلى دالة التحديث
       };
 
       updateBox(boxId, updatedData);
@@ -708,6 +715,16 @@
       renderMembersDropdowns('members-dropdowns-container');
     });
 // مكان الإضافة: في ملف members.html، داخل وسم <script>، بعد آخر دالة موجودة.
+
+// ⭐️ تم التعديل: إضافة مستمع أحداث لتحديث التاريخ تلقائياً عند تغيير الاستحقاق
+document.getElementById('editBoxFrequency').addEventListener('change', function() {
+  const frequency = this.value;
+  if (frequency) {
+    // استدعاء دالة الحساب من script.js
+    const nextDueDate = calculateNextDueDate(frequency);
+    document.getElementById('editBoxNextDueDate').value = nextDueDate;
+  }
+});
 
 // 1. فتح نافذة تحرير العضو وتعبئة البيانات
 function editMember(memberId) {

@@ -1104,3 +1104,23 @@ nav a.active {
     font-size: 12px;
   }
 }
+.filter-select {
+    /* تطبيق نمط الحقول الأساسية لضمان التناسق */
+    padding: 10px 15px;
+    border: 1px solid var(--border-color); 
+    border-radius: var(--border-radius);
+    background-color: var(--bg-primary); 
+    color: var(--text-color);
+    font-size: 16px;
+    width: 100%; 
+    cursor: pointer;
+}
+
+/* نمط خاص لأجهزة الموبايل */
+@media (max-width: 600px) {
+    .filter-controls {
+        /* في الشاشات الصغيرة، نعود إلى عمود واحد */
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}

@@ -161,7 +161,7 @@ nav a:hover {
 }
 
 nav a i {
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 2px;
   color: var(--accent-color);
 }
@@ -449,15 +449,14 @@ select option:disabled {
   display: grid;
   grid-template-columns: repeat(3, 1fr); 
   gap: 15px;
-  margin-top: 20px;
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
 }
 
 .filter-select {
   padding: 12px 15px;
-  border: none;
+  border: 1px solid var(--border-light); /* ⭐️ تم التعديل: إضافة حدود */
   border-radius: var(--radius-md);
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-white); /* ⭐️ تم التعديل: تغيير الخلفية للأبيض */
   color: var(--text-primary);
   font-size: 12px;
   font-weight: 500;
@@ -877,7 +876,8 @@ tbody tr:last-child td {
   border-radius: var(--radius-lg);
   margin-bottom: 15px;
   overflow: hidden;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm); /* ⭐️ تم التعديل: توحيد الظل */
+  border: 1px solid var(--border-light); /* ⭐️ تم التعديل: إضافة حدود متناسقة */
   transition: box-shadow 0.3s ease;
 }
 
@@ -945,7 +945,7 @@ tbody tr:last-child td {
 }
 
 .member-info-value {
-  font-size: 12px;
+  font-size: 11px; /* ⭐️ تم التعديل: تصغير الخط للتناسق */
   color: var(--text-primary) !important; /* ⭐️ أضف !important هنا */
   font-weight: 500;
 }

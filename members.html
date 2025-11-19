@@ -133,7 +133,7 @@
       </button>
     </div>
     <div id="teams-table-container"></div>
-</section>
+</section> <!-- ⭐️ تم التعديل: سيتم استبدال محتوى هذا الـ div ببطاقات الفرق -->
 
       <section id="boxes-section" class="page">
     <div style="text-align: right; margin-bottom: 20px;">
@@ -141,7 +141,7 @@
         <i class="fas fa-plus"></i>  
       </button>
     </div>
-    <div id="boxes-table-container"></div>
+    <div id="boxes-table-container"></div> <!-- ⭐️ تم التعديل: سيتم استبدال محتوى هذا الـ div ببطاقات الصناديق -->
 </section>
 
       <section id="members-section" class="page">
@@ -172,8 +172,7 @@
 </div>
 
 <div id="members-dropdowns-container">
-    </div>
-    <div id="members-dropdowns-container"></div>
+</div>
 </section>
     </div>
   </main>
@@ -711,10 +710,10 @@
       // نهاية التعديل
 
       renderTeamsTable('teams-table-container');
-      renderBoxesTable('boxes-table-container');
+      renderBoxesTable('boxes-table-container'); // ⭐️ تم التعديل: استدعاء دالة عرض البطاقات
       renderMembersDropdowns('members-dropdowns-container');
     });
-// مكان الإضافة: في ملف members.html، داخل وسم <script>، بعد آخر دالة موجودة.
+// ⭐️ مكان الإضافة: في ملف members.html، داخل وسم <script>، بعد آخر دالة موجودة.
 
 // ⭐️ تم التعديل: إضافة مستمع أحداث لتحديث التاريخ تلقائياً عند تغيير الاستحقاق
 document.getElementById('editBoxFrequency').addEventListener('change', function() {

@@ -1141,43 +1141,44 @@ nav a.active {
 
 .filter-controls {
     display: grid;
-    /* تقسيم المساحة إلى 3 أعمدة متساوية تماماً (Grid) */
     grid-template-columns: repeat(3, 1fr); 
-    gap: 15px; /* مسافة بين حقول التصفية */
+    gap: 15px;
     margin-top: 20px;
     margin-bottom: 30px; 
 }
 
 .filter-select {
-    /* تطبيق نمط الحقول الأساسية لضمان التناسق */
     padding: 10px 15px;
-    /* تصحيح المتغيرات: استخدام --border-light و --radius-md */
-    border: 1px solid var(--border-light); 
+    
+    /* ⭐️ التعديل المطلوب: إزالة الحدود تماماً ⭐️ */
+    border: none; 
+    
     border-radius: var(--radius-md);
 
-    /* ⭐️ التعديل المطلوب: تم تغيير الخلفية لدرجة رمادية أغمق قليلاً ⭐️ */
+    /* الخلفية الرمادية الناعمة */
     background-color: var(--bg-secondary); 
     
-    /* تصحيح المتغير: استخدام --text-primary */
     color: var(--text-primary); 
     font-size: 14px;
     width: 100%; 
     cursor: pointer;
-    transition: all 0.3s ease; /* لإضافة نعومة عند التفاعل */
+    transition: all 0.3s ease;
+    
+    /* إضافة ظل ناعم جداً لتعويض الحدود المفقودة وللتمييز */
+    box-shadow: var(--shadow-sm); 
 }
 
-/* إضافة نمط التركيز (Focus) ليتطابق مع حقول الإدخال */
+/* نمط التركيز (Focus) - يصبح أبيض مع حدود التركيز */
 .filter-select:focus {
     outline: none;
-    border-color: var(--accent-color);
+    border: 1px solid var(--accent-color); /* يمكن إضافة حدود عند التركيز */
     box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
-    background-color: var(--bg-white); /* يصبح أبيض نقي عند التركيز */
+    background-color: var(--bg-white); 
 }
 
 /* نمط خاص لأجهزة الموبايل */
-@media (max-width: 200px) { /* تم تعديل القيمة من 200px إلى 600px */
+@media (max-width: 600px) { 
     .filter-controls {
-        /* في الشاشات الصغيرة، نعود إلى عمود واحد */
         grid-template-columns: 1fr;
         gap: 10px;
     }

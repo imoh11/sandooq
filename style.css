@@ -833,7 +833,7 @@ tbody tr:last-child td {
 
 .member-info-value {
   font-size: 13px;
-  color: var(--text-primary);
+  color: var(--text-primary) !important; /* ⭐️ أضف !important هنا */
   font-weight: 500;
 }
 

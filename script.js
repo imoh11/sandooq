@@ -751,7 +751,7 @@ function populateMemberFilters() {
     if (!teamSelect || !boxSelect || !statusSelect) return;
 
     // 1. ملء تصفية الفرق
-    teamSelect.innerHTML = '<option value="">تصفية حسب الفريق (الكل)</option>';
+    teamSelect.innerHTML = '<option value="">الفريق</option>';
     teams.forEach(team => {
         const option = document.createElement('option');
         option.value = team.id;
@@ -760,7 +760,7 @@ function populateMemberFilters() {
     });
 
     // 2. ملء تصفية الصناديق
-    boxSelect.innerHTML = '<option value="">تصفية حسب الصندوق (الكل)</option>';
+    boxSelect.innerHTML = '<option value="">الصندوق</option>';
     boxes.forEach(box => {
         const option = document.createElement('option');
         option.value = box.id;

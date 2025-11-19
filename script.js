@@ -214,7 +214,8 @@ function importGroupsFromText(text) {
 
 // ==================== إدارة الأعضاء ====================
 
-function addMember(name, groups, boxes, phone, birthDate, financialStatus, jobStatus) {
+// الكود المُصحَّح (تم إضافة 'teams')
+function addMember(name, groups, boxes, phone, birthDate, financialStatus, jobStatus, teams) { 
   const members = getFromStorage('members', []);
   const newMember = {
     id: Date.now(),
@@ -225,6 +226,7 @@ function addMember(name, groups, boxes, phone, birthDate, financialStatus, jobSt
     birthDate: birthDate,
     financialStatus: financialStatus,
     jobStatus: jobStatus,
+    teams: teams || [], // ⭐️ تم إضافة هذا السطر
     joinDate: new Date().toLocaleDateString('ar-SA'),
     paymentHistory: []
   };
@@ -233,7 +235,6 @@ function addMember(name, groups, boxes, phone, birthDate, financialStatus, jobSt
   showAlert('تم إضافة العضو بنجاح', 'success');
   return newMember;
 }
-
 function getAllMembers() {
   return getFromStorage('members', []);
 }
@@ -355,12 +356,31 @@ function closeModal(modalId) {
   }
 }
 
-function toggleMemberDropdown(element) {
-  const body = element.nextElementSibling;
-  element.classList.toggle('active');
-  body.classList.toggle('show');
-}
+// ==================== واجهة المستخدم (التعديل هنا) ====================
 
+function toggleMemberDropdown(element) {
+  // 1. الحصول على العنصر الأب الحالي (العضو)
+  const parentDropdown = element.closest('.member-dropdown');
+  const body = element.nextElementSibling;
+  
+  // 2. إغلاق جميع القوائم المنسدلة الأخرى المفتوحة
+  document.querySelectorAll('.member-dropdown').forEach(dropdown => {
+    // التأكد من أننا لا نغلق القائمة التي تم النقر عليها حالياً
+    if (dropdown !== parentDropdown) {
+      const otherHeader = dropdown.querySelector('.member-dropdown-header');
+      const otherBody = dropdown.querySelector('.member-dropdown-body');
+  
+      if (otherHeader && otherHeader.classList.contains('active')) {
+        otherHeader.classList.remove('active');
+        otherBody.classList.remove('show');
+      }
+    }
+  });
+  
+  // 3. تبديل حالة القائمة المنسدلة التي تم النقر عليها
+  element.classList.toggle('active');
+  body.classList.toggle('show');
+}
 // ==================== عرض البيانات ====================
 
 function renderTeamsTable(containerId) {
@@ -458,6 +478,19 @@ function renderMembersDropdowns(containerId) {
     const paymentStatuses = getMemberPaymentStatus(member.id);
     
     let paymentStatusHtml = '';
+
+const allStatuses = Object.values(paymentStatuses);
+    let overallStatus = 'completed'; // الافتراضي هو مكتمل
+
+    if (allStatuses.some(s => s === 'delayed')) {
+        overallStatus = 'delayed';
+    } else if (allStatuses.some(s => s === 'unpaid')) {
+        overallStatus = 'unpaid';
+    } else if (allStatuses.some(s => s === 'pending')) {
+        overallStatus = 'pending';
+    }
+
+    const overallStatusClass = overallStatus === 'completed' ? 'completed' : overallStatus === 'delayed' ? 'delayed' : overallStatus === 'unpaid' ? 'unpaid' : 'pending';
     member.boxes.forEach(boxId => {
       const box = boxes.find(b => b.id === boxId);
       const status = paymentStatuses[boxId];
@@ -476,55 +509,57 @@ function renderMembersDropdowns(containerId) {
       }
     });
     
-    html += `
-      <div class="member-dropdown">
+html += `
+    <div class="member-dropdown">
         <div class="member-dropdown-header" onclick="toggleMemberDropdown(this)">
-          <div>
-            <strong>${member.name}</strong>
-            <span style="color: var(--text-light); margin-right: 10px;">${member.phone}</span>
-          </div>
-          <i class="fas fa-chevron-down"></i>
+            
+            <div class="flex-between" style="flex-grow: 1; margin-left: 15px;">
+                <strong>${member.name}</strong>
+                <span class="payment-status ${overallStatusClass}">${getStatusLabel(overallStatus)}</span>
+            </div>
+            
+            <i class="fas fa-chevron-down"></i>
         </div>
         <div class="member-dropdown-body">
-          <div class="member-info">
-            <div class="member-info-item">
-              <div class="member-info-label">الفرق</div>
-              <div class="member-info-value">${member.teams && member.teams.length > 0 ? member.teams.map(teamId => { const team = teams.find(t => t.id === teamId); return team ? team.name : 'غير معروف'; }).join(', ') : 'لم يتم تحديث'}</div>
+            <div class="member-info">
+                <div class="member-info-item">
+                    <div class="member-info-label">الفرق</div>
+                    <div class="member-info-value">${member.teams && member.teams.length > 0 ? member.teams.map(teamId => { const team = teams.find(t => t.id === teamId); return team ? team.name : 'غير معروف'; }).join(', ') : 'لم يتم تحديث'}</div>
+                </div>
+                <div class="member-info-item">
+                    <div class="member-info-label">الهاتف</div>
+                    <div class="member-info-value">${member.phone}</div>
+                </div>
+                <div class="member-info-item">
+                    <div class="member-info-label">تاريخ الميلاد</div>
+                    <div class="member-info-value">${member.birthDate || 'لم يتم تحديد'}</div>
+                </div>
+                <div class="member-info-item">
+                    <div class="member-info-label">الحالة المادية</div>
+                    <div class="member-info-value">${getFinancialStatusLabel(member.financialStatus)}</div>
+                </div>
+                <div class="member-info-item">
+                    <div class="member-info-label">الحالة الوظيفية</div>
+                    <div class="member-info-value">${getJobStatusLabel(member.jobStatus)}</div>
+                </div>
+                <div class="member-info-item">
+                    <div class="member-info-label">تاريخ الانضمام</div>
+                    <div class="member-info-value">${member.joinDate}</div>
+                </div>
             </div>
-            <div class="member-info-item">
-              <div class="member-info-label">الهاتف</div>
-              <div class="member-info-value">${member.phone}</div>
+            <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 15px;">
+                <div class="member-info-label" style="margin-bottom: 10px;">حالة الدفع</div>
+                <div class="member-info" style="grid-template-columns: 1fr;">
+                    ${paymentStatusHtml}
+                </div>
             </div>
-            <div class="member-info-item">
-              <div class="member-info-label">تاريخ الميلاد</div>
-              <div class="member-info-value">${member.birthDate || 'لم يتم تحديد'}</div>
+            <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 15px; display: flex; gap: 10px;">
+                <button class="btn sm" onclick="editMember(${member.id})"><i class="fas fa-edit"></i> تحرير</button>
+                <button class="btn sm" onclick="deleteMember(${member.id}); renderMembersDropdowns('members-dropdowns-container');"><i class="fas fa-trash"></i> حذف</button>
             </div>
-            <div class="member-info-item">
-              <div class="member-info-label">الحالة المادية</div>
-              <div class="member-info-value">${getFinancialStatusLabel(member.financialStatus)}</div>
-            </div>
-            <div class="member-info-item">
-              <div class="member-info-label">الحالة الوظيفية</div>
-              <div class="member-info-value">${getJobStatusLabel(member.jobStatus)}</div>
-            </div>
-            <div class="member-info-item">
-              <div class="member-info-label">تاريخ الانضمام</div>
-              <div class="member-info-value">${member.joinDate}</div>
-            </div>
-          </div>
-          <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 15px;">
-            <div class="member-info-label" style="margin-bottom: 10px;">حالة الدفع</div>
-            <div class="member-info" style="grid-template-columns: 1fr;">
-              ${paymentStatusHtml}
-            </div>
-          </div>
-          <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 15px; display: flex; gap: 10px;">
-            <button class="btn sm" onclick="editMember(${member.id})"><i class="fas fa-edit"></i> تحرير</button>
-            <button class="btn sm" onclick="deleteMember(${member.id}); renderMembersDropdowns('members-dropdowns-container');"><i class="fas fa-trash"></i> حذف</button>
-          </div>
         </div>
-      </div>
-    `;
+    </div>
+`;
   });
   
   container.innerHTML = html;
@@ -710,10 +745,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// دالة للتعديل على العضو (يمكن تطويرها لاحقاً)
-function editMember(memberId) {
-  showAlert('سيتم تطوير هذه الميزة قريباً', 'info');
-}
+
 // ==================== دوال مساعدة لرقم الهاتف ====================
 
 function cleanAndFormatPhone(phone) {

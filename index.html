@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Studio10 - الصفحة الرئيسية</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="apple-touch-icon" href="/favicon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -98,10 +96,10 @@
       const dateDisplay = document.querySelector('.date-display');
       if (dateDisplay) {
         const today = new Date();
-        dateDisplay.innerHTML = `
-          <div class="date-hijri">${formatHijriDate(today)}</div>
-          <div class="date-gregorian">${formatGregorianDate(today)}</div>
-        `;
+        const dayName = today.toLocaleDateString('ar-SA', { weekday: 'long' });
+        const hijriDate = formatHijriDate(today);
+        const gregorianDate = formatGregorianDate(today);
+        dateDisplay.innerHTML = `<div class="date-gregorian">${dayName} | ${hijriDate} هـ | ${gregorianDate} م</div>`;
       }
     });
 

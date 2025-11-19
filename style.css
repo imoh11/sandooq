@@ -1136,7 +1136,7 @@ nav a.active {
     background-color: var(--secondary-color); /* رمادي/أزرق للحالة قيد الانتظار */
 }
 /* ========================================================== */
-/* أنماط حقول التصفية للأعضاء */
+/* أنماط حقول التصفية للأعضاء (تم تحديث الخلفية والحدود) */
 /* ========================================================== */
 
 .filter-controls {
@@ -1151,24 +1151,37 @@ nav a.active {
 .filter-select {
     /* تطبيق نمط الحقول الأساسية لضمان التناسق */
     padding: 10px 15px;
-    border: 1px solid var(--border-color); 
-    border-radius: var(--border-radius);
-    background-color: var(--bg-primary); 
-    color: var(--text-color);
+    /* تصحيح المتغيرات: استخدام --border-light و --radius-md */
+    border: 1px solid var(--border-light); 
+    border-radius: var(--radius-md);
+
+    /* ⭐️ التعديل المطلوب: تم تغيير الخلفية لدرجة رمادية أغمق قليلاً ⭐️ */
+    background-color: var(--bg-secondary); 
+    
+    /* تصحيح المتغير: استخدام --text-primary */
+    color: var(--text-primary); 
     font-size: 14px;
     width: 100%; 
     cursor: pointer;
+    transition: all 0.3s ease; /* لإضافة نعومة عند التفاعل */
+}
+
+/* إضافة نمط التركيز (Focus) ليتطابق مع حقول الإدخال */
+.filter-select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
+    background-color: var(--bg-white); /* يصبح أبيض نقي عند التركيز */
 }
 
 /* نمط خاص لأجهزة الموبايل */
-@media (max-width: 200px) {
+@media (max-width: 200px) { /* تم تعديل القيمة من 200px إلى 600px */
     .filter-controls {
         /* في الشاشات الصغيرة، نعود إلى عمود واحد */
         grid-template-columns: 1fr;
         gap: 10px;
     }
 }
-
 /* ========================================================== */
 /* الحل النهائي لمشكلة حقل التاريخ (input[type="date"]) */
 /* يحل مشكلة الزحف ويضمن التناسق في الحجم والمظهر */

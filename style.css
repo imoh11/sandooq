@@ -1168,3 +1168,46 @@ nav a.active {
         gap: 10px;
     }
 }
+
+/* ========================================================== */
+/* حل مشكلة زحف حقل التاريخ (input[type="date"]) في أجهزة الموبايل RTL */
+/* ========================================================== */
+
+input[type="date"] {
+    /* 1. إجبار الاتجاه والمحاذاة لليمين لمنع الزحف */
+    direction: rtl; 
+    text-align: right;
+    
+    /* 2. إزالة التنسيق الأصلي للمتصفح لمنح سيطرة أكبر على التخطيط 
+       (قد يزيل أيقونة التقويم الافتراضية) */
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* 3. استهداف مكونات التاريخ الداخلية (الشهر، اليوم، السنة) لفرض RTL عليها أيضاً */
+/* هذه المحددات خاصة بمتصفحات Chromium/Android */
+input[type="date"]::-webkit-datetime-edit {
+    direction: rtl;
+    text-align: right;
+}
+input[type="date"]::-webkit-datetime-edit-text {
+    direction: rtl;
+    text-align: right;
+}
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+    direction: rtl;
+    text-align: right;
+}
+
+/* 4. إذا كنت تريد إضافة أيقونة تقويم يدوياً بعد استخدام appearance: none 
+   (تجاهل هذا القسم إذا كنت لا تحتاج لأيقونة) */
+/*
+input[type="date"] {
+    background: url('مسار/أيقونة-التقويم.svg') no-repeat left 10px center;
+    background-size: 20px;
+    padding-left: 35px;
+}
+*/

@@ -458,7 +458,7 @@ function renderBoxesTable(containerId) {
     }
 
     // ⭐️ تم التعديل: تحديث عناوين الجدول
-    let html = '<table><thead><tr><th>اسم الصندوق</th><th>المبلغ</th><th>عدد الفرق</th><th>الاستحقاق التالي</th><th>الإجراءات</th></tr></thead><tbody>';
+    let html = '<table><thead><tr><th>الصندوق</th><th>المبلغ</th><th>الفرق</th><th>الاستحقاق</th><th>الإجراءات</th></tr></thead><tbody>';
 
     boxes.forEach(box => {
         // ⭐️ تم التعديل: حساب عدد الفرق وتجهيز أسماء الفرق للـ tooltip

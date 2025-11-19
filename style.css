@@ -1155,7 +1155,7 @@ nav a.active {
     border-radius: var(--border-radius);
     background-color: var(--bg-primary); 
     color: var(--text-color);
-    font-size: 16px;
+    font-size: 14px;
     width: 100%; 
     cursor: pointer;
 }

@@ -1,29 +1,19 @@
 // ==================== التحويل بين التواريخ ====================
 
 // تحويل التاريخ الميلادي إلى هجري
-function convertToHijri(date) {
+// ⭐️ دوال مساعدة لتوحيد تنسيق التاريخ
+function toISODateString(date) {
+    if (!date) return '';
     const d = new Date(date);
-    const jd = Math.floor((d / 86400000) - (d.getTimezoneOffset() / 1440) + 2440587.5);
-    let l, n, j;
-    l = jd + 68569;
-    n = Math.floor((4 * l) / 146097);
-    l = l - Math.floor((146097 * n + 3) / 4);
-    const i = Math.floor((4000 * (l + 1)) / 1461001);
-    l = l - Math.floor((1461 * i) / 4) + 31;
-    const j2 = Math.floor((80 * l) / 2447);
-    const day = l - Math.floor((2447 * j2) / 80);
-    l = Math.floor(j2 / 11);
-    const month = j2 + 2 - (12 * l);
-    const year = (100 * (n - 49)) + i + l;
-    return { year, month, day };
+    // يضمن أن التاريخ بتنسيق YYYY-MM-DD المطلوب لحقل input type="date"
+    return d.toISOString().split('T')[0];
 }
 
-// تنسيق التاريخ الهجري
-function formatHijriDate(date) {
-    const hijri = convertToHijri(date);
-    const monthsHijri = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الثاني', 'جمادى الأولى', 'جمادى الآخرة',
-        'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
-    return `${hijri.day} ${monthsHijri[hijri.month - 1]} ${hijri.year}`;
+function toLocaleDateStringAR(dateString) {
+    if (!dateString) return '';
+    const d = new Date(dateString);
+    // يعرض التاريخ بالتنسيق العربي
+    return d.toLocaleDateString('ar-SA');
 }
 
 // تنسيق التاريخ الميلادي
@@ -128,7 +118,7 @@ function addBox(name, amount, teams, frequency) {
         amount: parseFloat(amount),
         teams: teams,
         frequency: frequency,
-        nextDueDate: calculateNextDueDate(frequency),
+        nextDueDate: calculateNextDueDate(frequency) || null, // ⭐️ يخزن بتنسيق YYYY-MM-DD أو null
         createdDate: new Date().toLocaleDateString('ar-SA')
     };
     boxes.push(newBox);
@@ -149,7 +139,7 @@ function calculateNextDueDate(frequency) {
         nextDate.setFullYear(nextDate.getFullYear() + 1);
     }
 
-    return nextDate.toLocaleDateString('ar-SA');
+    return toISODateString(nextDate); // ⭐️ تم الإصلاح: إرجاع التاريخ بالتنسيق القياسي
 }
 
 function getFrequencyLabel(frequency) {
@@ -187,11 +177,21 @@ function updateBox(boxId, updatedData) {
     const index = boxes.findIndex(b => b.id === boxId);
 
     if (index !== -1) {
+        const oldBox = { ...boxes[index] }; // نسخة من البيانات القديمة للمقارنة
         // دمج البيانات القديمة مع الجديدة
         boxes[index] = { ...boxes[index], ...updatedData };
 
-        // إعادة حساب تاريخ الاستحقاق التالي دائماً عند أي تعديل لضمان صحته
-        boxes[index].nextDueDate = calculateNextDueDate(boxes[index].frequency);
+        // ⭐️ منطق تحديث تاريخ الاستحقاق التالي
+        if (updatedData.hasOwnProperty('nextDueDate')) {
+            // إذا تم توفير تاريخ يدوي (حتى لو كان فارغاً)، استخدمه
+            boxes[index].nextDueDate = updatedData.nextDueDate === '' ? null : updatedData.nextDueDate;
+        } else if (updatedData.frequency && updatedData.frequency !== oldBox.frequency) {
+            // إذا تغير نوع الاستحقاق ولم يتم توفير تاريخ يدوي، أعد الحساب تلقائياً
+            boxes[index].nextDueDate = calculateNextDueDate(boxes[index].frequency) || null;
+        } else if (!boxes[index].nextDueDate) {
+            // إذا كان nextDueDate مفقوداً لأي سبب، أعد الحساب تلقائياً
+            boxes[index].nextDueDate = calculateNextDueDate(boxes[index].frequency) || null;
+        }
 
         saveToStorage('boxes', boxes);
         showAlert('تم تحديث الصندوق بنجاح', 'success');
@@ -475,7 +475,7 @@ function renderBoxesTable(containerId) {
                 <td>${box.name}</td>
                 <td>${formatNumber(box.amount)}</td>
                 <td title="${teamsNamesTooltip}">${teamCount}</td>
-                <td>${box.nextDueDate}</td>
+                <td>${box.nextDueDate ? toLocaleDateStringAR(box.nextDueDate) : 'غير محدد'}</td> <!-- ⭐️ عرض التاريخ بالتنسيق العربي -->
                 <td>
                     <div style="display: flex; gap: 8px; justify-content: center;">
                         <button class="btn sm" onclick="openEditBoxModal(${box.id})" title="تحرير"><i class="fas fa-edit"></i></button>
@@ -805,7 +805,8 @@ function populateMemberFilters() {
 
 function formatNumber(num) {
     if (num === null || num === undefined || isNaN(num)) return '0.00';
-    return parseFloat(num).toLocaleString('ar-SA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    // ⭐️ تم التعديل: عرض الأرقام بدون فاصلة الآلاف
+    return parseFloat(num).toFixed(2);
 }
 
 function formatDate(date) {
@@ -865,10 +866,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dateDisplay = document.querySelector('.date-display');
     if (dateDisplay) {
         const today = new Date();
-        dateDisplay.innerHTML = `
-            <div class="date-hijri">${formatHijriDate(today)}</div>
-            <div class="date-gregorian">${formatGregorianDate(today)}</div>
-        `;
+        dateDisplay.innerHTML = `<div class="date-gregorian">${formatGregorianDate(today)}</div>`;
     }
 
     // تحديث الملاحات النشطة

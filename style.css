@@ -1177,7 +1177,7 @@ nav a.active {
 }
 
 /* نمط خاص لأجهزة الموبايل */
-@media (max-width: 600px) { 
+@media (max-width: 200px) { 
     .filter-controls {
         grid-template-columns: 1fr;
         gap: 10px;

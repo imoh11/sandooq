@@ -1,32 +1,54 @@
-// ==================== التحويل بين التواريخ ====================
+// ==================== دوال مساعدة لتنسيق التاريخ ====================
 
-// تحويل التاريخ الميلادي إلى هجري
-// ⭐️ دوال مساعدة لتوحيد تنسيق التاريخ
+/**
+ * تحويل التاريخ إلى تنسيق ISO (YYYY-MM-DD)
+ * @param {Date|string} date - التاريخ المراد تحويله
+ * @returns {string} التاريخ بتنسيق YYYY-MM-DD
+ */
 function toISODateString(date) {
     if (!date) return '';
     const d = new Date(date);
-    // يضمن أن التاريخ بتنسيق YYYY-MM-DD المطلوب لحقل input type="date"
     return d.toISOString().split('T')[0];
 }
 
+/**
+ * تحويل التاريخ إلى تنسيق عرض محلي
+ * @param {string} dateString - التاريخ بصيغة string
+ * @returns {string} التاريخ بتنسيق YYYY-MM-DD
+ */
 function toLocaleDateStringAR(dateString) {
     if (!dateString) return '';
     const date = new Date(dateString);
-    // ⭐️ تم التعديل: عرض التاريخ بتنسيق ميلادي رقمي
-    // نستخدم 'en-CA' لأنه يعطي تنسيق YYYY-MM-DD وهو الأقرب للرقمي
     return date.toLocaleDateString('en-CA');
 }
 
-// تنسيق التاريخ الميلادي
+/**
+ * تنسيق التاريخ الميلادي للعرض
+ * @param {Date} date - التاريخ المراد تنسيقه
+ * @returns {string} التاريخ بتنسيق YYYY-MM-DD
+ */
 function formatGregorianDate(date) {
-    // ⭐️ تم التعديل: عرض التاريخ بتنسيق ميلادي رقمي
-    // نستخدم 'en-CA' لأنه يعطي تنسيق YYYY-MM-DD
     const d = new Date(date);
     return d.toLocaleDateString('en-CA');
 }
 
-// ==================== التخزين المحلي ====================
+/**
+ * تنسيق التاريخ للعرض
+ * @param {Date|string} date - التاريخ المراد تنسيقه
+ * @returns {string} التاريخ بتنسيق YYYY-MM-DD
+ */
+function formatDate(date) {
+    return new Date(date).toLocaleDateString('en-CA');
+}
 
+// ==================== دوال التخزين المحلي ====================
+
+/**
+ * قراءة البيانات من التخزين المحلي
+ * @param {string} key - مفتاح البيانات
+ * @param {*} defaultValue - القيمة الافتراضية إذا لم توجد البيانات
+ * @returns {*} البيانات المخزنة أو القيمة الافتراضية
+ */
 function getFromStorage(key, defaultValue = null) {
     try {
         const data = localStorage.getItem(key);
@@ -37,6 +59,12 @@ function getFromStorage(key, defaultValue = null) {
     }
 }
 
+/**
+ * حفظ البيانات في التخزين المحلي
+ * @param {string} key - مفتاح البيانات
+ * @param {*} value - القيمة المراد حفظها
+ * @returns {boolean} true إذا نجح الحفظ
+ */
 function saveToStorage(key, value) {
     try {
         localStorage.setItem(key, JSON.stringify(value));
@@ -47,6 +75,11 @@ function saveToStorage(key, value) {
     }
 }
 
+/**
+ * حذف البيانات من التخزين المحلي
+ * @param {string} key - مفتاح البيانات
+ * @returns {boolean} true إذا نجح الحذف
+ */
 function removeFromStorage(key) {
     try {
         localStorage.removeItem(key);
@@ -57,8 +90,11 @@ function removeFromStorage(key) {
     }
 }
 
-// ==================== البيانات الأولية ====================
+// ==================== تهيئة البيانات الأولية ====================
 
+/**
+ * تهيئة البيانات الأولية في التخزين المحلي
+ */
 function initializeData() {
     if (!getFromStorage('members')) {
         saveToStorage('members', []);
@@ -82,12 +118,17 @@ function initializeData() {
 
 // ==================== إدارة الفرق ====================
 
+/**
+ * إضافة فريق جديد
+ * @param {string} name - اسم الفريق
+ * @returns {object} الفريق المضاف
+ */
 function addTeam(name) {
     const teams = getFromStorage('teams', []);
     const newTeam = {
         id: Date.now(),
         name: name,
-        createdDate: toISODateString(new Date()), // ⭐️ تم التعديل: تخزين التاريخ بالتنسيق القياسي
+        createdDate: toISODateString(new Date()),
         members: []
     };
     teams.push(newTeam);
@@ -96,10 +137,18 @@ function addTeam(name) {
     return newTeam;
 }
 
+/**
+ * الحصول على جميع الفرق
+ * @returns {Array} قائمة الفرق
+ */
 function getAllTeams() {
     return getFromStorage('teams', []);
 }
 
+/**
+ * حذف فريق
+ * @param {number} teamId - معرف الفريق
+ */
 function deleteTeam(teamId) {
     const teams = getFromStorage('teams', []);
     const filtered = teams.filter(t => t.id !== teamId);
@@ -109,6 +158,39 @@ function deleteTeam(teamId) {
 
 // ==================== إدارة الصناديق ====================
 
+/**
+ * حساب إجمالي المبالغ المحصلة لصندوق معين
+ * @param {number} boxId - معرف الصندوق
+ * @returns {number} المبلغ الإجمالي المحصل
+ */
+function calculateBoxCollectedAmount(boxId) {
+    const deposits = getFromStorage('deposits', []);
+    return deposits.filter(d => d.boxId === boxId).reduce((sum, d) => sum + parseFloat(d.amount), 0);
+}
+
+/**
+ * حساب المبلغ المتوقع لصندوق معين (دورة واحدة)
+ * @param {number} boxId - معرف الصندوق
+ * @returns {number} المبلغ المتوقع
+ */
+function calculateBoxPotentialAmount(boxId) {
+    const box = getAllBoxes().find(b => b.id === boxId);
+    if (!box) return 0;
+
+    const members = getAllMembers();
+    const membersInBox = members.filter(m => m.boxes && m.boxes.includes(boxId));
+
+    return box.amount * membersInBox.length;
+}
+
+/**
+ * إضافة صندوق جديد
+ * @param {string} name - اسم الصندوق
+ * @param {number} amount - مبلغ الدفعة
+ * @param {Array} teams - الفرق المشاركة
+ * @param {string} frequency - تكرار الاستحقاق
+ * @returns {object} الصندوق المضاف
+ */
 function addBox(name, amount, teams, frequency) {
     const boxes = getFromStorage('boxes', []);
     const newBox = {
@@ -117,8 +199,8 @@ function addBox(name, amount, teams, frequency) {
         amount: parseFloat(amount),
         teams: teams,
         frequency: frequency,
-        nextDueDate: calculateNextDueDate(frequency) || null, // ⭐️ يخزن بتنسيق YYYY-MM-DD أو null
-        createdDate: toISODateString(new Date()) // ⭐️ تم التعديل: تخزين التاريخ بالتنسيق القياسي
+        nextDueDate: calculateNextDueDate(frequency) || null,
+        createdDate: toISODateString(new Date())
     };
     boxes.push(newBox);
     saveToStorage('boxes', boxes);
@@ -126,6 +208,11 @@ function addBox(name, amount, teams, frequency) {
     return newBox;
 }
 
+/**
+ * حساب تاريخ الاستحقاق التالي بناءً على التكرار
+ * @param {string} frequency - نوع التكرار (monthly, quarterly, annual)
+ * @returns {string} تاريخ الاستحقاق التالي بتنسيق YYYY-MM-DD
+ */
 function calculateNextDueDate(frequency) {
     const today = new Date();
     let nextDate = new Date(today);
@@ -138,9 +225,14 @@ function calculateNextDueDate(frequency) {
         nextDate.setFullYear(nextDate.getFullYear() + 1);
     }
 
-    return toISODateString(nextDate); // ⭐️ تم الإصلاح: إرجاع التاريخ بالتنسيق القياسي
+    return toISODateString(nextDate);
 }
 
+/**
+ * الحصول على تسمية نوع الاستحقاق بالعربية
+ * @param {string} frequency - نوع الاستحقاق
+ * @returns {string} التسمية بالعربية
+ */
 function getFrequencyLabel(frequency) {
     const labels = {
         'monthly': 'شهري',
@@ -150,10 +242,18 @@ function getFrequencyLabel(frequency) {
     return labels[frequency] || frequency;
 }
 
+/**
+ * الحصول على جميع الصناديق
+ * @returns {Array} قائمة الصناديق
+ */
 function getAllBoxes() {
     return getFromStorage('boxes', []);
 }
 
+/**
+ * حذف صندوق
+ * @param {number} boxId - معرف الصندوق
+ */
 function deleteBox(boxId) {
     const boxes = getFromStorage('boxes', []);
     const filtered = boxes.filter(b => b.id !== boxId);
@@ -161,6 +261,11 @@ function deleteBox(boxId) {
     showAlert('تم حذف الصندوق بنجاح', 'success');
 }
 
+/**
+ * تحديث تاريخ استحقاق صندوق
+ * @param {number} boxId - معرف الصندوق
+ * @param {string} newDate - التاريخ الجديد
+ */
 function updateBoxDueDate(boxId, newDate) {
     const boxes = getFromStorage('boxes', []);
     const box = boxes.find(b => b.id === boxId);
@@ -170,25 +275,26 @@ function updateBoxDueDate(boxId, newDate) {
     }
 }
 
-// ⭐️ تم التعديل: إضافة دالة مركزية لتحديث الصندوق
+/**
+ * تحديث بيانات صندوق
+ * @param {number} boxId - معرف الصندوق
+ * @param {object} updatedData - البيانات المحدثة
+ * @returns {boolean} true إذا نجح التحديث
+ */
 function updateBox(boxId, updatedData) {
     const boxes = getFromStorage('boxes', []);
     const index = boxes.findIndex(b => b.id === boxId);
 
     if (index !== -1) {
-        const oldBox = { ...boxes[index] }; // نسخة من البيانات القديمة للمقارنة
-        // دمج البيانات القديمة مع الجديدة
+        const oldBox = { ...boxes[index] };
         boxes[index] = { ...boxes[index], ...updatedData };
 
-        // ⭐️ منطق تحديث تاريخ الاستحقاق التالي
+        // منطق تحديث تاريخ الاستحقاق التالي
         if (updatedData.hasOwnProperty('nextDueDate')) {
-            // إذا تم توفير تاريخ يدوي (حتى لو كان فارغاً)، استخدمه
             boxes[index].nextDueDate = updatedData.nextDueDate === '' ? null : updatedData.nextDueDate;
         } else if (updatedData.frequency && updatedData.frequency !== oldBox.frequency) {
-            // إذا تغير نوع الاستحقاق ولم يتم توفير تاريخ يدوي، أعد الحساب تلقائياً
             boxes[index].nextDueDate = calculateNextDueDate(boxes[index].frequency) || null;
         } else if (!boxes[index].nextDueDate) {
-            // إذا كان nextDueDate مفقوداً لأي سبب، أعد الحساب تلقائياً
             boxes[index].nextDueDate = calculateNextDueDate(boxes[index].frequency) || null;
         }
 
@@ -198,24 +304,38 @@ function updateBox(boxId, updatedData) {
     }
     return false;
 }
+
 // ==================== إدارة المجموعات ====================
 
+/**
+ * إضافة مجموعة جديدة
+ * @param {string} name - اسم المجموعة
+ * @returns {object} المجموعة المضافة
+ */
 function addGroup(name) {
     const groups = getFromStorage('groups', []);
     const newGroup = {
         id: Date.now(),
         name: name,
-        createdDate: new Date().toLocaleDateString('ar-SA')
+        createdDate: toISODateString(new Date())
     };
     groups.push(newGroup);
     saveToStorage('groups', groups);
     return newGroup;
 }
 
+/**
+ * الحصول على جميع المجموعات
+ * @returns {Array} قائمة المجموعات
+ */
 function getAllGroups() {
     return getFromStorage('groups', []);
 }
 
+/**
+ * استيراد مجموعات من نص
+ * @param {string} text - النص الذي يحتوي على أسماء المجموعات (سطر لكل مجموعة)
+ */
 function importGroupsFromText(text) {
     const lines = text.split('\n').filter(line => line.trim());
     let count = 0;
@@ -231,21 +351,30 @@ function importGroupsFromText(text) {
 
 // ==================== إدارة الأعضاء ====================
 
-// الكود المُصحَّح (تم إضافة 'teams')
-// ✅ الكود المُعدل والمُقترح في script.js
+/**
+ * إضافة عضو جديد
+ * @param {string} name - اسم العضو
+ * @param {Array} teams - الفرق التي ينتمي إليها
+ * @param {Array} boxes - الصناديق المشترك فيها
+ * @param {string} phone - رقم الهاتف
+ * @param {string} birthDate - تاريخ الميلاد
+ * @param {string} financialStatus - الحالة المادية
+ * @param {string} jobStatus - الحالة الوظيفية
+ * @returns {object} العضو المضاف
+ */
 function addMember(name, teams, boxes, phone, birthDate, financialStatus, jobStatus) {
     const members = getFromStorage('members', []);
     const newMember = {
         id: Date.now(),
         name: name,
-        groups: [], // بما أنها لم تعد تُستخدم، يمكن تركها فارغة
+        groups: [],
         boxes: boxes || [],
         phone: phone,
         birthDate: birthDate,
         financialStatus: financialStatus,
         jobStatus: jobStatus,
-        teams: teams || [], // الآن ستأخذ القيمة الصحيحة
-        joinDate: toISODateString(new Date()), // ⭐️ تم التعديل: تخزين التاريخ بالتنسيق القياسي
+        teams: teams || [],
+        joinDate: toISODateString(new Date()),
         paymentHistory: []
     };
     members.push(newMember);
@@ -253,10 +382,19 @@ function addMember(name, teams, boxes, phone, birthDate, financialStatus, jobSta
     showAlert('تم إضافة العضو بنجاح', 'success');
     return newMember;
 }
+
+/**
+ * الحصول على جميع الأعضاء
+ * @returns {Array} قائمة الأعضاء
+ */
 function getAllMembers() {
     return getFromStorage('members', []);
 }
 
+/**
+ * حذف عضو
+ * @param {number} memberId - معرف العضو
+ */
 function deleteMember(memberId) {
     const members = getFromStorage('members', []);
     const filtered = members.filter(m => m.id !== memberId);
@@ -264,6 +402,11 @@ function deleteMember(memberId) {
     showAlert('تم حذف العضو بنجاح', 'success');
 }
 
+/**
+ * تحديث بيانات عضو
+ * @param {number} memberId - معرف العضو
+ * @param {object} updatedData - البيانات المحدثة
+ */
 function updateMember(memberId, updatedData) {
     const members = getFromStorage('members', []);
     const index = members.findIndex(m => m.id === memberId);
@@ -274,8 +417,22 @@ function updateMember(memberId, updatedData) {
     }
 }
 
+/**
+ * تحرير عضو (قيد التطوير)
+ * @param {number} memberId - معرف العضو
+ */
+function editMember(memberId) {
+    showAlert('سيتم تطوير هذه الميزة قريباً', 'info');
+}
+
 // ==================== حساب حالات الدفع ====================
 
+/**
+ * حساب حالة الدفع لعضو في صندوق معين
+ * @param {number} memberId - معرف العضو
+ * @param {number} boxId - معرف الصندوق
+ * @returns {string} حالة الدفع (completed, delayed, unpaid, pending, unknown)
+ */
 function calculatePaymentStatus(memberId, boxId) {
     const members = getFromStorage('members', []);
     const boxes = getFromStorage('boxes', []);
@@ -305,10 +462,13 @@ function calculatePaymentStatus(memberId, boxId) {
     }
 }
 
+/**
+ * الحصول على حالات الدفع لجميع صناديق العضو
+ * @param {number} memberId - معرف العضو
+ * @returns {object} كائن يحتوي على حالة الدفع لكل صندوق
+ */
 function getMemberPaymentStatus(memberId) {
     const members = getFromStorage('members', []);
-    const boxes = getFromStorage('boxes', []);
-
     const member = members.find(m => m.id === memberId);
     if (!member) return null;
 
@@ -320,8 +480,104 @@ function getMemberPaymentStatus(memberId) {
     return statuses;
 }
 
+/**
+ * الحصول على تسمية حالة الدفع بالعربية
+ * @param {string} status - حالة الدفع
+ * @returns {string} التسمية بالعربية
+ */
+function getStatusLabel(status) {
+    const labels = {
+        completed: 'مكتمل',
+        delayed: 'متأخر',
+        unpaid: 'لم يدفع',
+        pending: 'قيد الانتظار'
+    };
+    return labels[status] || 'غير معروف';
+}
+
+/**
+ * الحصول على تسمية الحالة المادية بالعربية
+ * @param {string} status - الحالة المادية
+ * @returns {string} التسمية بالعربية
+ */
+function getFinancialStatusLabel(status) {
+    const labels = {
+        affluent: 'ميسور',
+        moderate: 'متوسط',
+        difficult: 'معسر'
+    };
+    return labels[status] || status;
+}
+
+/**
+ * الحصول على تسمية الحالة الوظيفية بالعربية
+ * @param {string} status - الحالة الوظيفية
+ * @returns {string} التسمية بالعربية
+ */
+function getJobStatusLabel(status) {
+    const labels = {
+        employed: 'موظف',
+        unemployed: 'عاطل',
+        retired: 'متقاعد'
+    };
+    return labels[status] || status;
+}
+
+/**
+ * حساب العمر من تاريخ الميلاد
+ * @param {string} birthDateString - تاريخ الميلاد بصيغة string
+ * @returns {number|string} العمر أو نص بديل
+ */
+function calculateAge(birthDateString) {
+    if (!birthDateString) return 'غير محدد';
+    
+    const birthDate = new Date(birthDateString);
+    if (isNaN(birthDate.getTime())) return 'تاريخ غير صالح';
+
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+// ==================== دوال التاريخ الهجري (معاد إضافتها) ====================
+
+function convertToHijri(date) {
+    const d = new Date(date);
+    const jd = Math.floor((d / 86400000) - (d.getTimezoneOffset() / 1440) + 2440587.5);
+    let l = jd + 68569;
+    let n = Math.floor((4 * l) / 146097);
+    l = l - Math.floor((146097 * n + 3) / 4);
+    const i = Math.floor((4000 * (l + 1)) / 1461001);
+    l = l - Math.floor((1461 * i) / 4) + 31;
+    const j2 = Math.floor((80 * l) / 2447);
+    const day = l - Math.floor((2447 * j2) / 80);
+    l = Math.floor(j2 / 11);
+    const month = j2 + 2 - (12 * l);
+    const year = (100 * (n - 49)) + i + l;
+    return { year, month, day };
+}
+
+function formatHijriDate(date) {
+    const hijri = convertToHijri(date);
+    // إرجاع التاريخ الهجري كأرقام
+    return `${hijri.day}/${hijri.month}/${hijri.year}`;
+}
+
+
 // ==================== رسائل WhatsApp ====================
 
+/**
+ * توليد رسالة واتساب بناءً على حالة الدفع
+ * @param {string} memberName - اسم العضو
+ * @param {string} boxName - اسم الصندوق
+ * @param {string} paymentStatus - حالة الدفع
+ * @returns {string} نص الرسالة
+ */
 function generateWhatsAppMessage(memberName, boxName, paymentStatus) {
     const messages = {
         completed: `السلام عليكم ${memberName}، شكراً لك على دفع اشتراكك في صندوق ${boxName}. تم استلام المبلغ بنجاح.`,
@@ -332,14 +588,77 @@ function generateWhatsAppMessage(memberName, boxName, paymentStatus) {
     return messages[paymentStatus] || messages['unpaid'];
 }
 
+/**
+ * تنظيف وتنسيق رقم الهاتف للاستخدام مع واتساب
+ * @param {string} phone - رقم الهاتف
+ * @returns {string} رقم الهاتف المنسق
+ */
+function cleanAndFormatPhone(phone) {
+    // إزالة جميع الأحرف غير الرقمية
+    let cleaned = phone.replace(/\D/g, '');
+
+    // إذا كان الرقم يبدأ بالصفر المحلي (مثلاً 05) وكان أطول من 9 أرقام
+    if (cleaned.startsWith('05') && cleaned.length >= 9) {
+        // إزالة الصفر البادئ وإضافة رمز الدولة (966)
+        cleaned = cleaned.substring(1);
+        return `966${cleaned}`;
+    }
+
+    // إذا لم يبدأ بـ 0، نستخدمه كما هو
+    return cleaned;
+}
+
+/**
+ * إرسال رسالة واتساب
+ * @param {string} phone - رقم الهاتف
+ * @param {string} message - نص الرسالة
+ */
 function sendWhatsAppMessage(phone, message) {
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
 }
 
-// ==================== واجهة المستخدم ====================
+/**
+ * إرسال رسالة واتساب لعضو بخصوص صندوق معين
+ * @param {number} memberId - معرف العضو
+ * @param {number} boxId - معرف الصندوق
+ */
+function sendMemberWhatsApp(memberId, boxId) {
+    const members = getFromStorage('members', []);
+    const boxes = getFromStorage('boxes', []);
 
+    const member = members.find(m => m.id === memberId);
+    const box = boxes.find(b => b.id === boxId);
+
+    if (!member || !box) return;
+
+    const status = calculatePaymentStatus(memberId, boxId);
+    const message = generateWhatsAppMessage(member.name, box.name, status);
+    const formattedPhone = cleanAndFormatPhone(member.phone);
+
+    sendWhatsAppMessage(formattedPhone, message);
+}
+
+// ==================== دوال مساعدة للتنسيق ====================
+
+/**
+ * تنسيق الأرقام للعرض
+ * @param {number} num - الرقم المراد تنسيقه
+ * @returns {string} الرقم المنسق
+ */
+function formatNumber(num) {
+    if (num === null || num === undefined || isNaN(num)) return '0';
+    return Math.round(parseFloat(num)).toString();
+}
+
+// ==================== واجهة المستخدم - التنبيهات والنوافذ المنبثقة ====================
+
+/**
+ * عرض رسالة تنبيه
+ * @param {string} message - نص الرسالة
+ * @param {string} type - نوع الرسالة (success, error, info)
+ */
 function showAlert(message, type = 'info') {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert ${type}`;
@@ -360,6 +679,10 @@ function showAlert(message, type = 'info') {
     }, 3000);
 }
 
+/**
+ * فتح نافذة منبثقة
+ * @param {string} modalId - معرف النافذة المنبثقة
+ */
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -367,6 +690,10 @@ function openModal(modalId) {
     }
 }
 
+/**
+ * إغلاق نافذة منبثقة
+ * @param {string} modalId - معرف النافذة المنبثقة
+ */
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -374,16 +701,16 @@ function closeModal(modalId) {
     }
 }
 
-// ==================== واجهة المستخدم (Toggle) ====================
-
+/**
+ * تبديل حالة القائمة المنسدلة للعضو
+ * @param {HTMLElement} element - عنصر الرأس الذي تم النقر عليه
+ */
 function toggleMemberDropdown(element) {
-    // 1. الحصول على العنصر الأب الحالي (العضو)
     const parentDropdown = element.closest('.member-dropdown');
     const body = element.nextElementSibling;
 
-    // 2. إغلاق جميع القوائم المنسدلة الأخرى المفتوحة
+    // إغلاق جميع القوائم المنسدلة الأخرى
     document.querySelectorAll('.member-dropdown').forEach(dropdown => {
-        // التأكد من أننا لا نغلق القائمة التي تم النقر عليها حالياً
         if (dropdown !== parentDropdown) {
             const otherHeader = dropdown.querySelector('.member-dropdown-header');
             const otherBody = dropdown.querySelector('.member-dropdown-body');
@@ -395,16 +722,31 @@ function toggleMemberDropdown(element) {
         }
     });
 
-    // 3. تبديل حالة القائمة المنسدلة التي تم النقر عليها
+    // تبديل حالة القائمة المنسدلة الحالية
     element.classList.toggle('active');
     body.classList.toggle('show');
 }
-function editMember(memberId) {
-  showAlert('سيتم تطوير هذه الميزة قريباً', 'info');
+
+/**
+ * تبديل حالة القسم القابل للطي
+ * @param {HTMLElement} element - عنصر الرأس الذي تم النقر عليه
+ */
+function toggleCollapsible(element) {
+    const content = element.nextElementSibling;
+    element.classList.toggle('active');
+    if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+    } else {
+        content.style.maxHeight = content.scrollHeight + 'px';
+    }
 }
 
-// ==================== عرض البيانات ====================
+// ==================== عرض البيانات - الفرق ====================
 
+/**
+ * عرض بطاقات الفرق
+ * @param {string} containerId - معرف الحاوية
+ */
 function renderTeamsTable(containerId) {
     const teams = getAllTeams();
     const container = document.getElementById(containerId);
@@ -413,37 +755,47 @@ function renderTeamsTable(containerId) {
 
     if (teams.length === 0) {
         container.innerHTML = '<p class="text-center">لا توجد فرق حالياً</p>';
+        container.classList.remove('cards-grid');
         return;
     }
 
-    // ⭐️ تم التعديل: جلب الأعضاء لحساب العدد
+    container.classList.add('cards-grid');
     const members = getAllMembers();
 
-    // ⭐️ تم التعديل: تغيير عنوان العمود
-    let html = '<table><thead><tr><th>اسم الفريق</th><th>عدد الأعضاء</th><th>الإجراءات</th></tr></thead><tbody>';
+    let html = '';
 
     teams.forEach(team => {
-        // ⭐️ تم التعديل: حساب عدد الأعضاء في كل فريق
         const memberCount = members.filter(m => m.teams && m.teams.includes(team.id)).length;
 
         html += `
-            <tr>
-                <td>${team.name}</td>
-                <td>${memberCount}</td>
-                <td>
-                    <div style="display: flex; gap: 8px; justify-content: center;">
-                        <button class="btn sm" onclick="openEditTeamModal(${team.id})" title="تحرير"><i class="fas fa-edit"></i></button>
-                        <button class="btn sm" onclick="deleteTeam(${team.id}); renderTeamsTable('teams-table-container');" title="حذف"><i class="fas fa-trash"></i></button>
+            <div class="card-item team-card">
+                <div class="card-item-header">
+                    <i class="fas fa-sitemap card-icon"></i>
+                    <h4 class="card-item-title">${team.name}</h4>
+                </div>
+                <div class="card-item-body">
+                    <div class="card-detail">
+                        <span class="card-detail-label">عدد الأعضاء:</span>
+                        <span class="card-detail-value">${memberCount}</span>
                     </div>
-                </td>
-            </tr>
+                </div>
+                <div class="card-item-actions">
+                    <button class="btn sm primary" onclick="openEditTeamModal(${team.id})" title="تحرير"><i class="fas fa-edit"></i> تحرير</button>
+                    <button class="btn sm error" onclick="deleteTeam(${team.id}); renderTeamsTable('teams-table-container');" title="حذف"><i class="fas fa-trash"></i> حذف</button>
+                </div>
+            </div>
         `;
     });
 
-    html += '</tbody></table>';
     container.innerHTML = html;
 }
 
+// ==================== عرض البيانات - الصناديق ====================
+
+/**
+ * عرض بطاقات الصناديق
+ * @param {string} containerId - معرف الحاوية
+ */
 function renderBoxesTable(containerId) {
     const boxes = getAllBoxes();
     const teams = getAllTeams();
@@ -453,48 +805,83 @@ function renderBoxesTable(containerId) {
 
     if (boxes.length === 0) {
         container.innerHTML = '<p class="text-center">لا توجد صناديق حالياً</p>';
+        container.classList.remove('cards-grid');
         return;
     }
 
-    // ⭐️ تم التعديل: تحديث عناوين الجدول
-    let html = '<table><thead><tr><th>الصندوق</th><th>المبلغ</th><th>الفرق</th><th>الاستحقاق</th><th>الإجراءات</th></tr></thead><tbody>';
+    container.classList.add('cards-grid');
+
+    let html = '';
 
     boxes.forEach(box => {
-        // ⭐️ تم التعديل: حساب عدد الفرق وتجهيز أسماء الفرق للـ tooltip
         const teamCount = box.teams ? box.teams.length : 0;
-        const teamsNamesTooltip = teamCount > 0
+        const participatingTeams = teamCount > 0
             ? box.teams.map(teamId => {
                 const team = teams.find(t => t.id === teamId);
                 return team ? team.name : 'غير معروف';
             }).join(', ')
             : 'لا توجد فرق مشاركة';
 
+        const collectedAmount = calculateBoxCollectedAmount(box.id);
+        const potentialAmount = calculateBoxPotentialAmount(box.id);
+
         html += `
-            <tr>
-                <td>${box.name}</td>
-                <td>${formatNumber(box.amount)}</td>
-                <td title="${teamsNamesTooltip}">${teamCount}</td>
-                <td>${box.nextDueDate ? toLocaleDateStringAR(box.nextDueDate) : 'غير محدد'}</td> <!-- ⭐️ عرض التاريخ بالتنسيق العربي -->
-                <td>
-                    <div style="display: flex; gap: 8px; justify-content: center;">
-                        <button class="btn sm" onclick="openEditBoxModal(${box.id})" title="تحرير"><i class="fas fa-edit"></i></button>
-                        <button class="btn sm" onclick="deleteBox(${box.id}); renderBoxesTable('boxes-table-container');" title="حذف"><i class="fas fa-trash"></i></button>
+            <div class="card-item box-card">
+                <div class="card-item-header">
+                    <i class="fas fa-box card-icon"></i>
+                    <h4 class="card-item-title">${box.name}</h4>
+                </div>
+                <div class="card-item-body">
+                    <div class="card-detail">
+                        <span class="card-detail-label">مبلغ الدفعة:</span>
+                        <span class="card-detail-value">${formatNumber(box.amount)}</span>
                     </div>
-                </td>
-            </tr>
+                    <div class="card-detail">
+                        <span class="card-detail-label">الاستحقاق التالي:</span>
+                        <span class="card-detail-value">${box.nextDueDate ? toLocaleDateStringAR(box.nextDueDate) : 'غير محدد'}</span>
+                    </div>
+                    <div class="card-detail">
+                        <span class="card-detail-label">الرصيد الحالي:</span>
+                        <span class="card-detail-value">${formatNumber(collectedAmount)}</span>
+                    </div>
+                    <div class="card-detail">
+                        <span class="card-detail-label">المبلغ المتوقع (دورة واحدة):</span>
+                        <span class="card-detail-value">${formatNumber(potentialAmount)}</span>
+                    </div>
+                    <div class="collapsible-section">
+                        <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                            <span class="card-detail-label">الفرق المشاركة (${teamCount}):</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="collapsible-content">
+                            <p>${participatingTeams}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-item-actions">
+                    <button class="btn sm primary" onclick="openEditBoxModal(${box.id})" title="تحرير"><i class="fas fa-edit"></i> تحرير</button>
+                    <button class="btn sm error" onclick="deleteBox(${box.id}); renderBoxesTable('boxes-table-container');" title="حذف"><i class="fas fa-trash"></i> حذف</button>
+                </div>
+            </div>
         `;
     });
 
-    html += '</tbody></table>';
     container.innerHTML = html;
 }
 
+// ==================== عرض البيانات - الأعضاء ====================
+
+/**
+ * عرض القوائم المنسدلة للأعضاء
+ * @param {string} containerId - معرف الحاوية
+ * @param {Array} membersArray - قائمة الأعضاء (اختياري)
+ */
 function renderMembersDropdowns(containerId, membersArray = null) {
-    // ⭐️ تم التعديل: لاستقبال قائمة أعضاء مصفاة
     const members = membersArray || getAllMembers();
     const boxes = getAllBoxes();
     const teams = getAllTeams();
     const container = document.getElementById(containerId);
+    
     if (!container) return;
 
     if (members.length === 0) {
@@ -510,7 +897,7 @@ function renderMembersDropdowns(containerId, membersArray = null) {
         let paymentStatusHtml = '';
 
         const allStatuses = Object.values(paymentStatuses);
-        let overallStatus = 'completed'; // الافتراضي هو مكتمل
+        let overallStatus = 'completed';
 
         if (allStatuses.some(s => s === 'delayed')) {
             overallStatus = 'delayed';
@@ -520,11 +907,16 @@ function renderMembersDropdowns(containerId, membersArray = null) {
             overallStatus = 'pending';
         }
 
-        const overallStatusClass = overallStatus === 'completed' ? 'completed' : overallStatus === 'delayed' ? 'delayed' : overallStatus === 'unpaid' ? 'unpaid' : 'pending';
+        const overallStatusClass = overallStatus === 'completed' ? 'completed' : 
+                                   overallStatus === 'delayed' ? 'delayed' : 
+                                   overallStatus === 'unpaid' ? 'unpaid' : 'pending';
+        
         member.boxes.forEach(boxId => {
             const box = boxes.find(b => b.id === boxId);
             const status = paymentStatuses[boxId];
-            const statusClass = status === 'completed' ? 'completed' : status === 'delayed' ? 'delayed' : status === 'unpaid' ? 'unpaid' : 'pending';
+            const statusClass = status === 'completed' ? 'completed' : 
+                               status === 'delayed' ? 'delayed' : 
+                               status === 'unpaid' ? 'unpaid' : 'pending';
 
             if (box) {
                 paymentStatusHtml += `
@@ -532,7 +924,7 @@ function renderMembersDropdowns(containerId, membersArray = null) {
                         <div class="member-info-label">${box.name}</div>
                         <div class="flex-between">
                             <span class="payment-status ${statusClass}">${getStatusLabel(status)}</span>
-                            <button class="btn sm" onclick="sendMemberWhatsApp(${member.id}, ${boxId})"><i class="fab fa-whatsapp"></i></button>
+                            <button class="btn sm" onclick="sendMemberWhatsApp(${member.id}, ${box.id})"><i class="fab fa-whatsapp"></i></button>
                         </div>
                     </div>
                 `;
@@ -542,27 +934,25 @@ function renderMembersDropdowns(containerId, membersArray = null) {
         html += `
             <div class="member-dropdown">
                 <div class="member-dropdown-header" onclick="toggleMemberDropdown(this)">
-
                     <div class="flex-between" style="flex-grow: 1; margin-left: 15px;">
                         <strong>${member.name}</strong>
                         <span class="payment-status ${overallStatusClass}">${getStatusLabel(overallStatus)}</span>
                     </div>
-
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="member-dropdown-body">
                     <div class="member-info">
                         <div class="member-info-item">
                             <div class="member-info-label">الفرق</div>
-                            <div class="member-info-value">${member.teams && member.teams.length > 0 ? member.teams.map(teamId => { const team = teams.find(t => t.id === teamId); return team ? team.name : 'غير معروف'; }).join(', ') : 'لم يتم تحديث'}</div>
+                            <div class="member-info-value">${member.teams && member.teams.length > 0 ? member.teams.map(teamId => { const team = teams.find(t => t.id === teamId); return team ? team.name : 'غير معروف'; }).join(', ') : 'لم يتم تحديد'}</div>
                         </div>
                         <div class="member-info-item">
                             <div class="member-info-label">الهاتف</div>
                             <div class="member-info-value">${member.phone}</div>
                         </div>
                         <div class="member-info-item">
-                            <div class="member-info-label">تاريخ الميلاد</div>
-                            <div class="member-info-value">${member.birthDate || 'لم يتم تحديد'}</div>
+                            <div class="member-info-label">العمر</div>
+                            <div class="member-info-value">${calculateAge(member.birthDate)}</div>
                         </div>
                         <div class="member-info-item">
                             <div class="member-info-label">الحالة المادية</div>
@@ -595,51 +985,12 @@ function renderMembersDropdowns(containerId, membersArray = null) {
     container.innerHTML = html;
 }
 
-function sendMemberWhatsApp(memberId, boxId) {
-    const members = getFromStorage('members', []);
-    const boxes = getFromStorage('boxes', []);
+// ==================== عرض Checkboxes ====================
 
-    const member = members.find(m => m.id === memberId);
-    const box = boxes.find(b => b.id === boxId);
-
-    if (!member || !box) return;
-
-    const status = calculatePaymentStatus(memberId, boxId);
-    const message = generateWhatsAppMessage(member.name, box.name, status);
-
-    // يتم تنسيق الرقم هنا قبل الإرسال
-    const formattedPhone = cleanAndFormatPhone(member.phone);
-
-    sendWhatsAppMessage(formattedPhone, message);
-}
-function getStatusLabel(status) {
-    const labels = {
-        completed: 'مكتمل',
-        delayed: 'متأخر',
-        unpaid: 'لم يدفع',
-        pending: 'قيد الانتظار'
-    };
-    return labels[status] || 'غير معروف';
-}
-
-function getFinancialStatusLabel(status) {
-    const labels = {
-        affluent: 'ميسور',
-        moderate: 'متوسط',
-        difficult: 'معسر'
-    };
-    return labels[status] || status;
-}
-
-function getJobStatusLabel(status) {
-    const labels = {
-        employed: 'موظف',
-        unemployed: 'عاطل',
-        retired: 'متقاعد'
-    };
-    return labels[status] || status;
-}
-
+/**
+ * عرض checkboxes المجموعات
+ * @param {string} containerId - معرف الحاوية
+ */
 function renderGroupsCheckboxes(containerId) {
     const groups = getAllGroups();
     const container = document.getElementById(containerId);
@@ -665,6 +1016,10 @@ function renderGroupsCheckboxes(containerId) {
     container.innerHTML = html;
 }
 
+/**
+ * عرض checkboxes الصناديق
+ * @param {string} containerId - معرف الحاوية
+ */
 function renderBoxesCheckboxes(containerId) {
     const boxes = getAllBoxes();
     const container = document.getElementById(containerId);
@@ -690,6 +1045,10 @@ function renderBoxesCheckboxes(containerId) {
     container.innerHTML = html;
 }
 
+/**
+ * عرض checkboxes الفرق
+ * @param {string} containerId - معرف الحاوية
+ */
 function renderTeamsCheckboxes(containerId) {
     const teams = getAllTeams();
     const container = document.getElementById(containerId);
@@ -715,36 +1074,36 @@ function renderTeamsCheckboxes(containerId) {
     container.innerHTML = html;
 }
 
-// ==================== دوال تطبيق التصفية (الجديدة) ====================
+// ==================== التصفية ====================
 
+/**
+ * تطبيق التصفية على الأعضاء
+ */
 function applyMemberFilters() {
-    // 1. الحصول على قيم التصفية
     const selectedTeamId = document.getElementById('filterByTeam').value;
     const selectedBoxId = document.getElementById('filterByBox').value;
     const selectedStatus = document.getElementById('filterByStatus').value;
 
     const allMembers = getAllMembers();
 
-    // 2. تطبيق منطق التصفية
     const filteredMembers = allMembers.filter(member => {
-
-        // أ. تصفية حسب الفريق
-        if (selectedTeamId && (!member.teams || !member.teams.includes(selectedTeamId))) {
+        // تصفية حسب الفريق
+        if (selectedTeamId && (!member.teams || !member.teams.includes(parseInt(selectedTeamId)))) {
             return false;
         }
 
-        // ب. تصفية حسب الصندوق
-        if (selectedBoxId && (!member.boxes || !member.boxes.includes(selectedBoxId))) {
+        // تصفية حسب الصندوق
+        if (selectedBoxId && (!member.boxes || !member.boxes.includes(parseInt(selectedBoxId)))) {
             return false;
         }
 
-        // ج. تصفية حسب حالة الدفع
+        // تصفية حسب حالة الدفع
         if (selectedStatus) {
             const memberStatuses = getMemberPaymentStatus(member.id);
 
             if (selectedBoxId) {
                 // إذا تم تحديد صندوق: نتحقق من حالة الدفع للصندوق المحدد فقط
-                if (memberStatuses && memberStatuses[selectedBoxId] !== selectedStatus) {
+                if (memberStatuses && memberStatuses[parseInt(selectedBoxId)] !== selectedStatus) {
                     return false;
                 }
             } else {
@@ -759,13 +1118,12 @@ function applyMemberFilters() {
         return true;
     });
 
-    // 3. عرض القوائم المنسدلة للأعضاء المصفّين
     renderMembersDropdowns('members-dropdowns-container', filteredMembers);
 }
 
-
-// ==================== دوال ملء فلاتر التصفية ====================
-
+/**
+ * ملء خيارات التصفية
+ */
 function populateMemberFilters() {
     const teams = getAllTeams();
     const boxes = getAllBoxes();
@@ -776,7 +1134,7 @@ function populateMemberFilters() {
 
     if (!teamSelect || !boxSelect || !statusSelect) return;
 
-    // 1. ملء تصفية الفرق
+    // ملء تصفية الفرق
     teamSelect.innerHTML = '<option value="">الفريق</option>';
     teams.forEach(team => {
         const option = document.createElement('option');
@@ -785,7 +1143,7 @@ function populateMemberFilters() {
         teamSelect.appendChild(option);
     });
 
-    // 2. ملء تصفية الصناديق
+    // ملء تصفية الصناديق
     boxSelect.innerHTML = '<option value="">الصندوق</option>';
     boxes.forEach(box => {
         const option = document.createElement('option');
@@ -794,42 +1152,13 @@ function populateMemberFilters() {
         boxSelect.appendChild(option);
     });
 
-    // 3. إضافة مستمعي الأحداث
+    // إضافة مستمعي الأحداث
     teamSelect.addEventListener('change', applyMemberFilters);
     boxSelect.addEventListener('change', applyMemberFilters);
     statusSelect.addEventListener('change', applyMemberFilters);
 }
 
-// ==================== دوال مساعدة ====================
-
-function formatNumber(num) {
-    if (num === null || num === undefined || isNaN(num)) return '0';
-    // ⭐️ تم التعديل: عرض الأرقام كأعداد صحيحة بدون فواصل عشرية
-    return Math.round(parseFloat(num)).toString();
-}
-
-function formatDate(date) {
-    return new Date(date).toLocaleDateString('en-CA'); // ⭐️ تم التعديل: عرض التاريخ بالتنسيق الرقمي
-}
-
-// ==================== دوال مساعدة لرقم الهاتف ====================
-
-function cleanAndFormatPhone(phone) {
-    // 1. إزالة جميع الأحرف غير الرقمية
-    let cleaned = phone.replace(/\D/g, '');
-
-    // 2. إذا كان الرقم يبدأ بالصفر المحلي (مثلاً 05) وكان أطول من 9 أرقام،
-    // نفترض أنه رقم محلي ونضيف رمز الدولة (966 لافتراض المنطقة)
-    if (cleaned.startsWith('05') && cleaned.length >= 9) {
-        // إزالة الصفر البادئ
-        cleaned = cleaned.substring(1);
-        // إضافة رمز الدولة (افتراض 966)
-        return `966${cleaned}`;
-    }
-
-    // 3. إذا لم تبدأ بـ 0، نستخدمها كما هي (افتراضاً أنها دولية أو صالحة)
-    return cleaned;
-}
+// ==================== مستمعي الأحداث العامة ====================
 
 // إغلاق النوافذ المنبثقة عند النقر خارجها
 document.addEventListener('click', function(event) {
@@ -856,7 +1185,7 @@ document.addEventListener('click', function(event) {
 document.addEventListener('DOMContentLoaded', function() {
     initializeData();
 
-    // ⭐️ استدعاء الدالة الجديدة لملء خيارات التصفية
+    // ملء خيارات التصفية
     if (typeof populateMemberFilters === 'function') {
         populateMemberFilters();
     }
@@ -868,7 +1197,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dateDisplay.innerHTML = `<div class="date-gregorian">${formatGregorianDate(today)}</div>`;
     }
 
-    // تحديث الملاحات النشطة
+    // تحديث الروابط النشطة في القائمة
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('nav a').forEach(link => {
         if (link.getAttribute('href') === currentPage ||

@@ -450,7 +450,7 @@ select option:disabled {
 }
 
 /* ========================================================== */
-/* 9. حقول التصفية المطوية                                   */
+/* 9. حقول التصفية المطوية - محدث للجوال                     */
 /* ========================================================== */
 
 .filter-controls {
@@ -481,6 +481,32 @@ select option:disabled {
   border: 1px solid var(--accent-color);
   box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.15);
   background-color: var(--bg-white);
+}
+
+/* للشاشات الصغيرة - جعل الفلاتر في صف واحد مع تمرير أفقي */
+@media (max-width: 480px) {
+  .filter-controls {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px 5px;
+    margin: 15px -5px 25px -5px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .filter-controls::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .filter-select {
+    flex: 0 0 auto;
+    min-width: 140px;
+    height: 42px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
 }
 
 /* ========================================================== */
@@ -1158,11 +1184,5 @@ footer {
     border-right: 3px solid var(--accent-color);
   }
 }
-@media (max-width: 200px) {
-    .filter-controls {
-        /* في الشاشات الصغيرة، نعود إلى عمود واحد */
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-}
+
 

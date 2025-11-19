@@ -7,6 +7,13 @@
   <title>Studio10 - الأعضاء</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    header nav a.active {
+      background-color: #e9ecef; /* لون رمادي فاتح للتظليل */
+      color: var(--primary-color); /* تغيير لون النص ليتناسب مع الخلفية */
+      border-radius: 8px; /* حواف دائرية لمظهر أنعم */
+    }
+  </style>
+  <style>
     /* ... (Existing styles - unchanged) ... */
     .section-buttons {
       display: flex;
@@ -542,19 +549,19 @@
         return;
       }
 
-      const boxes = getFromStorage('boxes', []);
-      const box = boxes.find(b => b.id === boxId);
-      if (box) {
-        box.name = name;
-        box.amount = parseFloat(amount);
-        box.frequency = frequency;
-        box.teams = teams;
-        saveToStorage('boxes', boxes);
-        showAlert('تم تحديث الصندوق بنجاح', 'success');
-        closeModal('editBoxModal');
-        renderBoxesTable('boxes-table-container');
-        renderTeamsCheckboxes('boxTeamsCheckboxes');
-      }
+      // ⭐️ تم التعديل: استخدام دالة التحديث المركزية من script.js
+      const updatedData = {
+        name: name,
+        amount: parseFloat(amount),
+        frequency: frequency,
+        teams: teams
+      };
+
+      updateBox(boxId, updatedData);
+
+      closeModal('editBoxModal');
+      renderBoxesTable('boxes-table-container');
+      renderTeamsCheckboxes('boxTeamsCheckboxes'); // لتحديث أي نماذج أخرى قد تستخدمها
     }
 
     // إضافة عضو

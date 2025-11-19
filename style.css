@@ -1174,19 +1174,27 @@ nav a.active {
 /* ========================================================== */
 
 input[type="date"] {
-    /* 1. إجبار الاتجاه والمحاذاة لليمين لمنع الزحف */
+    /* ⭐️⭐️ التعديل الذي يحل مشكلة الحجم ⭐️⭐️ */
+    padding: 10px 15px; /* قيمة يجب أن تتطابق مع حقول الإدخال العادية لديك */
+    
+    /* الخصائص الأخرى التي تم إضافتها سابقاً */
     direction: rtl; 
     text-align: right;
     
-    /* 2. إزالة التنسيق الأصلي للمتصفح لمنح سيطرة أكبر على التخطيط 
-       (قد يزيل أيقونة التقويم الافتراضية) */
+    /* لإزالة التنسيق الافتراضي للمتصفح (وهو سبب المشكلة) */
     -webkit-appearance: none; 
     -moz-appearance: none;
     appearance: none;
+    
+    /* خصائص إضافية للتناسق البصري مع حقولك الأخرى */
+    border: 1px solid var(--border-color); /* يفترض أن يكون هذا هو نمط حقولك */
+    border-radius: var(--border-radius); /* للحواف المستديرة */
+    background-color: var(--bg-primary); 
+    color: var(--text-color);
+    width: 100%; /* لضمان عرض الحقل بالكامل */
 }
 
-/* 3. استهداف مكونات التاريخ الداخلية (الشهر، اليوم، السنة) لفرض RTL عليها أيضاً */
-/* هذه المحددات خاصة بمتصفحات Chromium/Android */
+/* الأنماط الخاصة بعناصر Shadow DOM الداخلية (ابقِ عليها كما هي) */
 input[type="date"]::-webkit-datetime-edit {
     direction: rtl;
     text-align: right;
@@ -1201,13 +1209,3 @@ input[type="date"]::-webkit-datetime-edit-year-field {
     direction: rtl;
     text-align: right;
 }
-
-/* 4. إذا كنت تريد إضافة أيقونة تقويم يدوياً بعد استخدام appearance: none 
-   (تجاهل هذا القسم إذا كنت لا تحتاج لأيقونة) */
-/*
-input[type="date"] {
-    background: url('مسار/أيقونة-التقويم.svg') no-repeat left 10px center;
-    background-size: 20px;
-    padding-left: 35px;
-}
-*/

@@ -553,7 +553,7 @@ select option:disabled {
 }
 
 .card-item-body {
-  padding: 15px 20px;
+  padding: 12px 20px;
   flex-grow: 1;
 }
 

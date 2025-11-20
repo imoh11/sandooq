@@ -27,18 +27,29 @@ function toLocaleDateStringAR(dateString) {
  * @param {Date} date - التاريخ المراد تنسيقه
  * @returns {string} التاريخ بتنسيق YYYY-MM-DD
  */
-function formatGregorianDate(date) {
-    const d = new Date(date);
-    return d.toLocaleDateString('en-CA');
+function formatGregorianDate(date = new Date()) {
+    // تنسيق التاريخ الميلادي (مثال: ٢٠ يوليو ٢٠٢٤ م)
+    const gregorianFormatter = new Intl.DateTimeFormat('ar-EG', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+    return gregorianFormatter.format(date);
 }
 
 /**
  * تنسيق التاريخ للعرض
  * @param {Date|string} date - التاريخ المراد تنسيقه
- * @returns {string} التاريخ بتنسيق YYYY-MM-DD
+ * @returns {string} التاريخ الهجري المنسق
  */
-function formatDate(date) {
-    return new Date(date).toLocaleDateString('en-CA');
+function formatHijriDate(date = new Date()) {
+    // تنسيق التاريخ الهجري (مثال: ١٤ محرم ١٤٤٦ هـ)
+    const hijriFormatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+    return hijriFormatter.format(date);
 }
 
 // ==================== دوال التخزين المحلي ====================
@@ -557,30 +568,6 @@ function calculateAge(birthDateString) {
         age--;
     }
     return age;
-}
-
-// ==================== دوال التاريخ الهجري (معاد إضافتها) ====================
-
-function convertToHijri(date) {
-    const d = new Date(date);
-    const jd = Math.floor((d / 86400000) - (d.getTimezoneOffset() / 1440) + 2440587.5);
-    let l = jd + 68569;
-    let n = Math.floor((4 * l) / 146097);
-    l = l - Math.floor((146097 * n + 3) / 4);
-    const i = Math.floor((4000 * (l + 1)) / 1461001);
-    l = l - Math.floor((1461 * i) / 4) + 31;
-    const j2 = Math.floor((80 * l) / 2447);
-    const day = l - Math.floor((2447 * j2) / 80);
-    l = Math.floor(j2 / 11);
-    const month = j2 + 2 - (12 * l);
-    const year = (100 * (n - 49)) + i + l;
-    return { year, month, day };
-}
-
-function formatHijriDate(date) {
-    const hijri = convertToHijri(date);
-    // إرجاع التاريخ الهجري كأرقام
-    return `${hijri.day}/${hijri.month}/${hijri.year}`;
 }
 
 
@@ -1207,10 +1194,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // تحديث التاريخ
-    const dateDisplay = document.querySelector('.date-display');
-    if (dateDisplay) {
+    const hijriDateContainer = document.querySelector('.date-display .date-hijri');
+    const gregorianDateContainer = document.querySelector('.date-display .date-gregorian');
+
+    // التحقق من وجود العناصر في الصفحة الرئيسية قبل تحديث التاريخ
+    if (hijriDateContainer && gregorianDateContainer) {
         const today = new Date();
-        dateDisplay.innerHTML = `<div class="date-gregorian">${formatGregorianDate(today)}</div>`;
+        hijriDateContainer.textContent = formatHijriDate(today);
+        gregorianDateContainer.textContent = formatGregorianDate(today);
     }
 
     // تحديث الروابط النشطة في القائمة

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Studio10 - السحب</title>
+  <title>السحب</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,7 +12,7 @@
     <div class="container">
       <a href="index.html" class="logo">
         <i class="fas fa-cogs"></i>
-        Studio10
+       صندوق | box
       </a>
       <nav>
         <a href="index.html" class="active">
@@ -53,41 +53,48 @@
     <div class="container">
 
       <section>
-        <div class="flex-between mb-20">
-          <h2></h2>
-        </div>
-        
-        <div class="card mb-20">
-          <div class="card-header">
-            <div class="card-title"><i class="fas fa-university"></i> نموذج السحب</div>
-          </div>
-          <div class="card-content">
-            <form id="withdraw-form" style="display: grid; gap: 15px;">
-              <div class="form-group">
-                <select id="withdraw-member" required>
-                  <option value="">اختر العضو</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <input type="number" id="withdraw-amount" placeholder="المبلغ" step="0.01" required>
-              </div>
-              <div class="form-group">
-                <textarea id="withdraw-description" placeholder="الوصف (اختياري)" rows="3"></textarea>
-              </div>
-              <button type="submit" class="btn primary" style="width: 100%;"><i class="fas fa-check"></i> تسجيل السحب</button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <section>
         <div class="card">
           <div class="card-header">
             <div class="card-title"><i class="fas fa-list"></i> آخر السحوبات</div>
+            <button class="btn primary sm" onclick="openWithdrawModal()"><i class="fas fa-plus"></i> سحب جديد</button>
           </div>
           <div id="withdrawals-table-container"></div>
         </div>
       </section>
+
+      <!-- نافذة السحب المنبثقة -->
+      <div id="withdraw-modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 id="modal-title" class="modal-title">إضافة سحب جديد</h3>
+            <button class="modal-close" onclick="closeWithdrawModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form id="withdraw-form">
+              <input type="hidden" id="withdraw-id">
+              <div class="form-group">
+                <select id="withdraw-fund" required>
+                  <option value="">اختر الصندوق</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input type="number" id="withdraw-amount" placeholder="أدخل المبلغ" step="0.01" required>
+              </div>
+              <div class="form-group">
+                <input type="text" id="withdraw-recipient" placeholder="المستلم" required>
+              </div>
+              <div class="form-group">
+                <textarea id="withdraw-notes" placeholder="ملاحظات" rows="2"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn" onclick="closeWithdrawModal()">إلغاء</button>
+            <button type="submit" form="withdraw-form" class="btn primary">حفظ السحب</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
 
@@ -99,26 +106,109 @@
 
   <script src="script.js"></script>
   <script>
+    // ==========================================================
+    // إدارة نافذة السحب (Modal)
+    // ==========================================================
+    const withdrawModal = document.getElementById('withdraw-modal');
+    const withdrawForm = document.getElementById('withdraw-form');
+    const modalTitle = document.getElementById('modal-title');
+
+    function openWithdrawModal(withdrawId = null) {
+      withdrawForm.reset();
+      document.getElementById('withdraw-id').value = '';
+
+      if (withdrawId) {
+        modalTitle.textContent = 'تحرير السحب';
+        const withdrawals = getFromStorage('withdrawals', []);
+        const withdrawal = withdrawals.find(w => w.id === withdrawId);
+        if (withdrawal) {
+          // تعبئة بيانات النموذج
+          document.getElementById('withdraw-id').value = withdrawal.id;
+          document.getElementById('withdraw-fund').value = withdrawal.fundId;
+          document.getElementById('withdraw-amount').value = withdrawal.amount;
+          document.getElementById('withdraw-recipient').value = withdrawal.recipient;
+          document.getElementById('withdraw-notes').value = withdrawal.notes;
+        }
+      } else {
+        modalTitle.textContent = 'إضافة سحب جديد';
+      }
+      withdrawModal.classList.add('show');
+    }
+
+    function closeWithdrawModal() {
+      withdrawModal.classList.remove('show');
+    }
+
+    // ==========================================================
+    // معالجة نموذج السحب
+    // ==========================================================
     document.getElementById('withdraw-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      const memberId = parseInt(document.getElementById('withdraw-member').value);
+      const withdrawId = document.getElementById('withdraw-id').value;
+      const fundId = parseInt(document.getElementById('withdraw-fund').value);
       const amount = document.getElementById('withdraw-amount').value;
-      const description = document.getElementById('withdraw-description').value || 'سحب عام';
-      
-      if (!memberId) {
-        showAlert('يرجى اختيار عضو', 'error');
+      const recipient = document.getElementById('withdraw-recipient').value;
+      const notes = document.getElementById('withdraw-notes').value || '';
+
+      if (!fundId || !amount || !recipient) {
+        showAlert('يرجى تعبئة جميع الحقول المطلوبة.', 'error');
         return;
       }
-      
-      addWithdrawal(memberId, amount, description);
-      this.reset();
-      renderMembersDropdown('withdraw-member');
+
+      const withdrawalData = { fundId, amount, recipient, notes };
+
+      if (withdrawId) {
+        updateWithdrawal(parseInt(withdrawId), withdrawalData);
+      } else {
+        addWithdrawal(withdrawalData);
+      }
+
+      closeWithdrawModal();
       renderWithdrawalsTable('withdrawals-table-container');
     });
 
+    // ==========================================================
+    // دوال إدارة بيانات السحوبات
+    // ==========================================================
+    function addWithdrawal(data) {
+      const withdrawals = getFromStorage('withdrawals', []);
+      const newWithdrawal = {
+        id: Date.now(),
+        fundId: data.fundId,
+        amount: parseFloat(data.amount),
+        recipient: data.recipient,
+        notes: data.notes,
+        date: new Date().toLocaleDateString('ar-SA'),
+        time: new Date().toLocaleTimeString('ar-SA')
+      };
+      withdrawals.push(newWithdrawal);
+      saveToStorage('withdrawals', withdrawals);
+      showAlert('تم تسجيل السحب بنجاح', 'success');
+    }
+
+    function updateWithdrawal(id, data) {
+      const withdrawals = getFromStorage('withdrawals', []);
+      const index = withdrawals.findIndex(w => w.id === id);
+      if (index !== -1) {
+        withdrawals[index] = { ...withdrawals[index], ...data, amount: parseFloat(data.amount) };
+        saveToStorage('withdrawals', withdrawals);
+        showAlert('تم تحديث السحب بنجاح', 'success');
+      }
+    }
+
+    function deleteWithdrawal(id) {
+      if (confirm('هل أنت متأكد من حذف هذا السحب؟ لا يمكن التراجع عن هذا الإجراء.')) {
+        let withdrawals = getFromStorage('withdrawals', []);
+        withdrawals = withdrawals.filter(w => w.id !== id);
+        saveToStorage('withdrawals', withdrawals);
+        showAlert('تم حذف السحب.', 'info');
+        renderWithdrawalsTable('withdrawals-table-container');
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
-      renderMembersDropdown('withdraw-member');
       renderWithdrawalsTable('withdrawals-table-container');
+      populateWithdrawDropdowns(); // ⭐️ تم إضافة استدعاء الدالة هنا
     });
 
     function logout() {
@@ -127,76 +217,64 @@
       }
     }
 
-    function addWithdrawal(memberId, amount, description) {
-      const withdrawals = getFromStorage('withdrawals', []);
-      const newWithdrawal = {
-        id: Date.now(),
-        memberId: memberId,
-        amount: parseFloat(amount),
-        description: description,
-        date: new Date().toLocaleDateString('ar-SA'),
-        time: new Date().toLocaleTimeString('ar-SA')
-      };
-      withdrawals.push(newWithdrawal);
-      saveToStorage('withdrawals', withdrawals);
-      
-      const members = getFromStorage('members', []);
-      const memberIndex = members.findIndex(m => m.id === memberId);
-      if (memberIndex !== -1) {
-        members[memberIndex].balance = (members[memberIndex].balance || 0) - parseFloat(amount);
-        saveToStorage('members', members);
-      }
-      
-      showAlert('تم تسجيل السحب بنجاح', 'success');
-      return newWithdrawal;
-    }
-
     function renderWithdrawalsTable(containerId) {
       const withdrawals = getFromStorage('withdrawals', []);
       const members = getFromStorage('members', []);
+      const funds = getFromStorage('boxes', []); // أو 'funds' إذا كنت تستخدم هذا الاسم
       const container = document.getElementById(containerId);
-      
+
       if (!container) return;
-      
+
       if (withdrawals.length === 0) {
-        container.innerHTML = '<p class="text-center">لا توجد سحوبات حالياً</p>';
+        container.innerHTML = '<p class="text-center mt-20 text-muted">لا توجد سحوبات حالياً. ابدأ بإضافة سحب جديد.</p>';
         return;
       }
-      
+
       const sorted = [...withdrawals].reverse();
-      let html = '<table><thead><tr><th>اسم العضو</th><th>المبلغ</th><th>الوصف</th><th>التاريخ</th><th>الوقت</th></tr></thead><tbody>';
-      
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>الصندوق</th>
+              <th>المبلغ</th>
+              <th>المستلم</th>
+              <th>التاريخ</th>
+              <th>الإجراء</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
       sorted.forEach(withdrawal => {
-        const member = members.find(m => m.id === withdrawal.memberId);
+        const fund = funds.find(f => f.id === withdrawal.fundId);
         html += `
           <tr>
-            <td>${member ? member.name : 'غير معروف'}</td>
+            <td>${fund ? fund.name : 'صندوق محذوف'}</td>
             <td>${formatNumber(withdrawal.amount)}</td>
-            <td>${withdrawal.description}</td>
+            <td>${withdrawal.recipient}</td>
             <td>${withdrawal.date}</td>
-            <td>${withdrawal.time}</td>
+            <td>
+              <div class="flex" style="gap: 5px; justify-content: center;">
+                <button class="btn icon-only sm" onclick="openWithdrawModal(${withdrawal.id})" title="تحرير"><i class="fas fa-edit"></i></button>
+                <button class="btn icon-only sm" onclick="deleteWithdrawal(${withdrawal.id})" title="حذف"><i class="fas fa-trash-alt"></i></button>
+              </div>
+            </td>
           </tr>
         `;
       });
-      
+
       html += '</tbody></table>';
       container.innerHTML = html;
     }
 
-    function renderMembersDropdown(selectId) {
-      const members = getFromStorage('members', []);
-      const select = document.getElementById(selectId);
-      
-      if (!select) return;
-      
-      select.innerHTML = '<option value="">اختر العضو</option>';
-      
-      members.forEach(member => {
-        const option = document.createElement('option');
-        option.value = member.id;
-        option.textContent = member.name;
-        select.appendChild(option);
-      });
+    // ==========================================================
+    // دوال مساعدة لتعبئة القوائم المنسدلة
+    // ==========================================================
+    function populateWithdrawDropdowns() {
+      const funds = getFromStorage('boxes', []);
+      const fundSelect = document.getElementById('withdraw-fund');
+
+      fundSelect.innerHTML = '<option value="">اختر الصندوق</option>';
+      funds.forEach(fund => fundSelect.innerHTML += `<option value="${fund.id}">${fund.name}</option>`);
     }
   </script>
 </body>

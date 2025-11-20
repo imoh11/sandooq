@@ -31,7 +31,7 @@ function formatGregorianDate(date = new Date()) {
     // تنسيق التاريخ الميلادي (مثال: ٢٠ يوليو ٢٠٢٤ م)
     const gregorianFormatter = new Intl.DateTimeFormat('ar-EG', {
         day: 'numeric',
-        month: 'long',
+        month: '2-digit',
         year: 'numeric'
     });
     return gregorianFormatter.format(date);
@@ -46,7 +46,7 @@ function formatHijriDate(date = new Date()) {
     // تنسيق التاريخ الهجري (مثال: ١٤ محرم ١٤٤٦ هـ)
     const hijriFormatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
         day: 'numeric',
-        month: 'long',
+        month: '2-digit',
         year: 'numeric'
     });
     return hijriFormatter.format(date);

@@ -31,7 +31,7 @@ function formatGregorianDate(date = new Date()) {
     // تنسيق التاريخ الميلادي (مثال: ٢٠ يوليو ٢٠٢٤ م)
     const gregorianFormatter = new Intl.DateTimeFormat('ar-EG', {
         day: 'numeric',
-        month: '2-digit',
+        month: 'long',
         year: 'numeric'
     });
     return gregorianFormatter.format(date);
@@ -46,7 +46,7 @@ function formatHijriDate(date = new Date()) {
     // تنسيق التاريخ الهجري (مثال: ١٤ محرم ١٤٤٦ هـ)
     const hijriFormatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
         day: 'numeric',
-        month: '2-digit',
+        month: 'long',
         year: 'numeric'
     });
     return hijriFormatter.format(date);
@@ -1194,14 +1194,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // تحديث التاريخ
-    const hijriDateContainer = document.querySelector('.date-display .date-hijri');
-    const gregorianDateContainer = document.querySelector('.date-display .date-gregorian');
+    const dateDisplay = document.querySelector('.date-display');
 
     // التحقق من وجود العناصر في الصفحة الرئيسية قبل تحديث التاريخ
-    if (hijriDateContainer && gregorianDateContainer) {
+    if (dateDisplay) {
         const today = new Date();
-        hijriDateContainer.textContent = formatHijriDate(today);
-        gregorianDateContainer.textContent = formatGregorianDate(today);
+
+        // 1. الحصول على اسم اليوم
+        const dayName = new Intl.DateTimeFormat('ar-SA', { weekday: 'long' }).format(today);
+
+        // 2. تنسيق التاريخ الميلادي بالأرقام
+        const gregorianDate = new Intl.DateTimeFormat('ar-SA', {
+            day: '2-digit', month: '2-digit', year: 'numeric'
+        }).format(today);
+
+        // 3. دمج اليوم والتاريخ الميلادي في سطر واحد
+        dateDisplay.textContent = `${dayName} | ${gregorianDate} م`;
     }
 
     // تحديث الروابط النشطة في القائمة

@@ -533,7 +533,7 @@ select option:disabled {
 
 .card-item-header {
   background-color: var(--bg-secondary);
-  padding: 15px 20px;
+  padding: 8px 20px;
   display: flex;
   align-items: center;
   gap: 15px;
@@ -584,7 +584,7 @@ select option:disabled {
 }
 
 .card-item-actions {
-  padding: 15px 20px;
+  padding: 8px 20px;
   background-color: var(--bg-secondary);
   border-top: 1px solid var(--border-light);
   display: flex;

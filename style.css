@@ -389,6 +389,17 @@ button.icon-only {
   justify-content: center;
 }
 
+/* ⭐️ جديد: زر أيقونة بدون إطار */
+.btn.icon-frameless {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 6px;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+
 /* ========================================================== */
 /* 8. النماذج (Forms)                                        */
 /* ========================================================== */
@@ -721,18 +732,23 @@ thead {
 }
 
 th {
-  padding: 12px;
-  text-align: right;
+  padding: 8px; /* ⭐️ تم تقليل الحشو لتصغير المسافات */
+  text-align: center; /* ⭐️ تم توسطة جميع العناوين */
   font-weight: 600;
   color: var(--primary-color);
   font-size: 11px;
 }
+/* ⭐️ توسيط عنوان العمود الأخير (الإجراء) */
+th:last-child {
+  /* القاعدة العامة في th تجعل هذا غير ضروري الآن */
+}
 
 td {
-  padding: 12px;
+  padding: 8px; /* ⭐️ تم تقليل الحشو لتصغير المسافات */
   border-bottom: 1px solid var(--border-light);
   font-size: 11px;
   color: var(--text-secondary);
+  text-align: center; /* ⭐️ تم توسطة محتوى الخلايا */
 }
 
 tbody tr {

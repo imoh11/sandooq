@@ -116,6 +116,21 @@ function initializeData() {
     }
 }
 
+
+
+
+
+
+
+
+function populateDropdownsForModal() {
+  const funds = getFromStorage('boxes', []); // ⭐️ تصحيح: استخدام 'boxes' بدلاً من 'funds'
+  const fundSelect = document.getElementById('deposit-fund');
+
+  fundSelect.innerHTML = '<option value="">اختر الصندوق</option>'; // النص النائب
+  funds.forEach(fund => fundSelect.innerHTML += `<option value="${fund.id}">${fund.name}</option>`);
+}
+
 // ==================== إدارة الفرق ====================
 
 /**
@@ -582,6 +597,7 @@ function generateWhatsAppMessage(memberName, boxName, paymentStatus) {
     const messages = {
         completed: `السلام عليكم ${memberName}، شكراً لك على دفع اشتراكك في صندوق ${boxName}. تم استلام المبلغ بنجاح.`,
         delayed: `السلام عليكم ${memberName}، نود تذكيرك بأن اشتراكك في صندوق ${boxName} متأخر عن موعده. يرجى التسديد في أقرب وقت.`,
+
         unpaid: `السلام عليكم ${memberName}، يرجى تسديد اشتراكك في صندوق ${boxName} في أقرب وقت ممكن.`
     };
 
@@ -928,7 +944,7 @@ function renderMembersDropdowns(containerId, membersArray = null) {
                         </div>
                     </div>
                 `;
-            }
+        }
         });
 
         html += `

@@ -12,7 +12,7 @@
     <div class="container">
       <a href="index.html" class="logo">
         <i class="fas fa-cogs"></i>
-        صندوق | box
+        Studio10
       </a>
       <nav>
         <a href="index.html" class="active">
@@ -207,7 +207,7 @@
         amount: parseFloat(data.amount),
 
         description: 'إيداع',
-        date: new Date().toLocaleDateString('ar-SA'),
+        date: new Date().toLocaleDateString('en-CA'), // ⭐️ تم التعديل: استخدام تنسيق ميلادي رقمي
         time: new Date().toLocaleTimeString('ar-SA')
       };
       deposits.push(newDeposit);
@@ -277,9 +277,9 @@
             <td>${formatNumber(deposit.amount)}</td>
             <td>
               <div class="flex" style="gap: 5px; justify-content: center;">
-                <button class="btn icon-only sm" onclick="sendDepositWhatsApp(${deposit.id})" title="إرسال إشعار واتساب"><i class="fab fa-whatsapp"></i></button>
-                <button class="btn icon-only sm" onclick="openDepositModal(${deposit.id})" title="تحرير"><i class="fas fa-edit"></i></button>
-                <button class="btn icon-only sm" onclick="deleteDeposit(${deposit.id})" title="حذف"><i class="fas fa-trash-alt"></i></button>
+                <button class="btn icon-frameless" onclick="sendDepositWhatsApp(${deposit.id})" title="إرسال إشعار واتساب"><i class="fab fa-whatsapp" style="color: var(--success-color);"></i></button>
+                <button class="btn icon-frameless" onclick="openDepositModal(${deposit.id})" title="تحرير"><i class="fas fa-edit" style="color: var(--text-primary);"></i></button>
+                <button class="btn icon-frameless" onclick="deleteDeposit(${deposit.id})" title="حذف"><i class="fas fa-trash-alt" style="color: var(--error-color);"></i></button>
               </div>
             </td>
           </tr>

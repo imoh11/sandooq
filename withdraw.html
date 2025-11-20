@@ -12,7 +12,7 @@
     <div class="container">
       <a href="index.html" class="logo">
         <i class="fas fa-cogs"></i>
-       صندوق | box
+        Studio10
       </a>
       <nav>
         <a href="index.html" class="active">
@@ -178,7 +178,7 @@
         amount: parseFloat(data.amount),
         recipient: data.recipient,
         notes: data.notes,
-        date: new Date().toLocaleDateString('ar-SA'),
+        date: new Date().toLocaleDateString('en-CA'), // ⭐️ تم التعديل: استخدام تنسيق ميلادي رقمي
         time: new Date().toLocaleTimeString('ar-SA')
       };
       withdrawals.push(newWithdrawal);
@@ -254,8 +254,8 @@
             <td>${withdrawal.date}</td>
             <td>
               <div class="flex" style="gap: 5px; justify-content: center;">
-                <button class="btn icon-only sm" onclick="openWithdrawModal(${withdrawal.id})" title="تحرير"><i class="fas fa-edit"></i></button>
-                <button class="btn icon-only sm" onclick="deleteWithdrawal(${withdrawal.id})" title="حذف"><i class="fas fa-trash-alt"></i></button>
+                <button class="btn icon-frameless" onclick="openWithdrawModal(${withdrawal.id})" title="تحرير"><i class="fas fa-edit" style="color: var(--text-primary);"></i></button>
+                <button class="btn icon-frameless" onclick="deleteWithdrawal(${withdrawal.id})" title="حذف"><i class="fas fa-trash-alt" style="color: var(--error-color);"></i></button>
               </div>
             </td>
           </tr>

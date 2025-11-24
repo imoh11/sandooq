@@ -1368,6 +1368,32 @@ footer {
     gap: 10px;
   }
 
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .dashboard-box-card {
+    padding: 15px;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .dashboard-box-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .dashboard-box-title {
+    font-size: 12px;
+  }
+
+  .dashboard-box-balance {
+    font-size: 14px;
+  }
+
   nav {
     flex-wrap: nowrap;
     overflow-x: auto;

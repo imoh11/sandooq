@@ -74,6 +74,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding-top: 70px;
+  /* ⭐️ تم التعديل: زيادة الهامش العلوي لمنع اختفاء المحتوى خلف الرأس */
 }
 
 .container {
@@ -93,9 +95,13 @@ header {
   padding: 0;
   margin-bottom: 5px;
   border-bottom: 3px solid var(--accent-color);
-  position: sticky;
+  position: fixed;
+  /* ⭐️ تم التعديل: تثبيت الرأس */
   top: 0;
-  z-index: 100;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  /* ⭐️ تم التعديل: رفع الطبقة لتكون فوق كل شيء */
 }
 
 header .container {

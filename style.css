@@ -214,7 +214,9 @@ nav a span {
 
 main {
   flex-grow: 1;
-  padding-bottom: 20px;
+  flex-grow: 1;
+  padding-bottom: 70px;
+  /* ⭐️ تم التعديل: زيادة الهامش السفلي لمنع اختفاء المحتوى خلف التذييل */
 }
 
 section {
@@ -1196,8 +1198,13 @@ footer {
   background-color: var(--bg-secondary);
   border-top: 1px solid var(--border-light);
   padding: 10px 0;
-  margin-top: 40px;
+  /* margin-top: 40px; تم الإلغاء */
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
   color: var(--text-secondary);
   font-size: 12px;
   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.05);

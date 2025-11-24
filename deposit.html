@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>الإيداع</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <i class="fas fa-cogs"></i>
+        Studio10
+      </a>
+      <nav>
+        <a href="index.html" class="active">
+          <i class="fas fa-home"></i>
+          <span>الرئيسية</span>
+        </a>
+        <a href="members.html">
+          <i class="fas fa-users"></i>
+          <span>الأعضاء</span>
+        </a>
+        <a href="deposit.html">
+          <i class="fas fa-wallet"></i>
+          <span>إيداع</span>
+        </a>
+        <a href="withdraw.html">
+          <i class="fas fa-university"></i>
+          <span>سحب</span>
+        </a>
+        <a href="reports.html">
+          <i class="fas fa-chart-bar"></i>
+          <span>تقارير</span>
+        </a>
+        <a href="users.html">
+          <i class="fas fa-user-cog"></i>
+          <span>المستخدمين</span>
+        </a>
+        <a href="settings.html">
+          <i class="fas fa-cog"></i>
+          <span>الإعدادات</span>
+        </a>
+      </nav>
+      <div class="header-actions">
+        <button onclick="logout()" title="تسجيل الخروج"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+
+      <!-- تم نقل هذا القسم إلى الأسفل داخل قسم آخر الإيداعات -->
+
+      <section>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fas fa-list"></i> آخر الإيداعات</div>
+            <button class="btn primary sm" onclick="openDepositModal()"><i class="fas fa-plus"></i> إيداع جديد</button>
+          </div>
+          <div id="deposits-table-container"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- نافذة الإيداع المنبثقة -->
+  <div id="deposit-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title" class="modal-title">إضافة إيداع جديد</h3>
+        <button class="modal-close" onclick="closeDepositModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="deposit-form">
+          <input type="hidden" id="deposit-id">
+          <div class="form-group">
+            <select id="deposit-team" required>
+              <option value="">اختر الفريق</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select id="deposit-member" required disabled>
+              <option value="">اختر العضو</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select id="deposit-fund" required>
+              <option value="">اختر الصندوق</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="number" id="deposit-amount" placeholder="أدخل المبلغ" step="0.01" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" onclick="closeDepositModal()">إلغاء</button>
+        <button type="submit" form="deposit-form" class="btn primary">حفظ الإيداع</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Studio10 للأنظمة الإدارية. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // ==========================================================
+    // تهيئة الصفحة عند التحميل
+    // ==========================================================
+    document.addEventListener('DOMContentLoaded', function () {
+      renderDepositsTable('deposits-table-container');
+      populateDropdownsForModal();
+
+      // ربط حدث تغيير الفريق لتحديث قائمة الأعضاء
+      document.getElementById('deposit-team').addEventListener('change', function () {
+        const teamId = this.value;
+        const memberSelect = document.getElementById('deposit-member');
+        renderMembersDropdown('deposit-member', teamId);
+        memberSelect.disabled = !teamId;
+      });
+    });
+
+    // ==========================================================
+    // إدارة نافذة الإيداع (Modal)
+    // ==========================================================
+    const depositModal = document.getElementById('deposit-modal');
+    const depositForm = document.getElementById('deposit-form');
+    const modalTitle = document.getElementById('modal-title');
+
+    function openDepositModal(depositId = null) {
+      depositForm.reset();
+      document.getElementById('deposit-id').value = '';
+      document.getElementById('deposit-member').disabled = true; // ابدأ معطل
+
+      if (depositId) {
+        modalTitle.textContent = 'تحرير الإيداع';
+        const deposits = getFromStorage('deposits', []);
+        const deposit = deposits.find(d => d.id === depositId);
+        if (deposit) {
+          // تعبئة بيانات النموذج
+          document.getElementById('deposit-id').value = deposit.id;
+          document.getElementById('deposit-team').value = deposit.teamId;
+
+          // تحديث قائمة الأعضاء للفريق المحدد ثم اختيار العضو
+          renderMembersDropdown('deposit-member', deposit.teamId);
+          document.getElementById('deposit-member').disabled = false;
+          document.getElementById('deposit-member').value = deposit.memberId;
+
+          document.getElementById('deposit-fund').value = deposit.boxId || deposit.fundId;
+          document.getElementById('deposit-amount').value = deposit.amount;
+        }
+      } else {
+        modalTitle.textContent = 'إضافة إيداع جديد';
+      }
+      depositModal.classList.add('show');
+    }
+
+    function closeDepositModal() {
+      depositModal.classList.remove('show');
+    }
+
+    // ==========================================================
+    // معالجة نموذج الإيداع
+    // ==========================================================
+    document.getElementById('deposit-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const depositId = document.getElementById('deposit-id').value;
+      const teamId = parseInt(document.getElementById('deposit-team').value);
+      const memberId = parseInt(document.getElementById('deposit-member').value);
+      const fundId = parseInt(document.getElementById('deposit-fund').value);
+      const amount = document.getElementById('deposit-amount').value;
+
+      if (!teamId || !memberId || !fundId) {
+        showAlert('يرجى تعبئة جميع الحقول المطلوبة.', 'error');
+        return;
+      }
+
+      const depositData = { teamId, memberId, boxId: fundId, amount, description: 'إيداع' };
+
+      if (depositId) {
+        updateDeposit(parseInt(depositId), depositData);
+      } else {
+        addDeposit(depositData);
+      }
+
+      closeDepositModal();
+      renderDepositsTable('deposits-table-container');
+    });
+
+    // ==========================================================
+    // دوال إدارة بيانات الإيداعات
+    // ==========================================================
+    function addDeposit(data) {
+      const deposits = getFromStorage('deposits', []);
+      const newDeposit = {
+        id: Date.now(),
+        teamId: data.teamId,
+        memberId: data.memberId,
+        boxId: data.boxId,
+        amount: parseFloat(data.amount),
+
+        description: 'إيداع',
+        date: new Date().toLocaleDateString('en-CA'), // ⭐️ تم التعديل: استخدام تنسيق ميلادي رقمي
+        time: new Date().toLocaleTimeString('ar-SA')
+      };
+      deposits.push(newDeposit);
+      saveToStorage('deposits', deposits);
+      showAlert('تم تسجيل الإيداع بنجاح', 'success');
+    }
+
+    function updateDeposit(id, data) {
+      const deposits = getFromStorage('deposits', []);
+      const index = deposits.findIndex(d => d.id === id);
+      if (index !== -1) {
+        deposits[index] = { ...deposits[index], ...data, amount: parseFloat(data.amount) };
+        saveToStorage('deposits', deposits);
+        showAlert('تم تحديث الإيداع بنجاح', 'success');
+      }
+    }
+
+    function deleteDeposit(id) {
+      if (confirm('هل أنت متأكد من حذف هذا الإيداع؟ لا يمكن التراجع عن هذا الإجراء.')) {
+        let deposits = getFromStorage('deposits', []);
+        deposits = deposits.filter(d => d.id !== id);
+        saveToStorage('deposits', deposits);
+        showAlert('تم حذف الإيداع.', 'info');
+        renderDepositsTable('deposits-table-container');
+      }
+    }
+
+    function renderDepositsTable(containerId) {
+      const deposits = getFromStorage('deposits', []);
+      const members = getFromStorage('members', []);
+      const teams = getFromStorage('teams', []);
+      const funds = getFromStorage('boxes', []); // ⭐️ تصحيح: استخدام 'boxes' بدلاً من 'funds'
+      const container = document.getElementById(containerId);
+
+      if (!container) return;
+
+      if (deposits.length === 0) {
+        container.innerHTML = '<p class="text-center mt-20 text-muted">لا توجد إيداعات حالياً. ابدأ بإضافة إيداع جديد.</p>';
+        return;
+      }
+
+      const sorted = [...deposits].reverse();
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>الفريق</th>
+              <th>الاسم</th>
+              <th>الصندوق</th>
+              <th>تاريخ الإيداع</th>
+              <th>المبلغ</th>
+              <th>الإجراء</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+      sorted.forEach(deposit => {
+        const member = members.find(m => m.id === deposit.memberId);
+        const team = teams.find(t => t.id === deposit.teamId);
+        const fund = funds.find(f => f.id === (deposit.boxId || deposit.fundId));
+        html += `
+          <tr>
+            <td>${team ? team.name : 'غير معروف'}</td>
+            <td>${member ? member.name : 'عضو محذوف'}</td>
+            <td>${fund ? fund.name : 'صندوق محذوف'}</td>
+            <td>${deposit.date}</td>
+            <td>${formatNumber(deposit.amount)}</td>
+            <td>
+              <div class="flex" style="gap: 5px; justify-content: center;">
+                <button class="btn icon-frameless" onclick="sendDepositWhatsApp(${deposit.id})" title="إرسال إشعار واتساب"><i class="fab fa-whatsapp" style="color: var(--success-color);"></i></button>
+                <button class="btn icon-frameless" onclick="openDepositModal(${deposit.id})" title="تحرير"><i class="fas fa-edit" style="color: var(--text-primary);"></i></button>
+                <button class="btn icon-frameless" onclick="deleteDeposit(${deposit.id})" title="حذف"><i class="fas fa-trash-alt" style="color: var(--error-color);"></i></button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    // ==========================================================
+    // إرسال إشعار واتساب
+    // ==========================================================
+    function sendDepositWhatsApp(depositId) {
+      const deposits = getFromStorage('deposits', []);
+      const deposit = deposits.find(d => d.id === depositId);
+
+      if (!deposit) {
+        showAlert('لم يتم العثور على بيانات الإيداع.', 'error');
+        return;
+      }
+
+      const members = getFromStorage('members', []);
+      const member = members.find(m => m.id === deposit.memberId);
+
+      const funds = getFromStorage('boxes', []);
+      const fund = funds.find(f => f.id === (deposit.boxId || deposit.fundId));
+
+      if (!member || !fund) {
+        showAlert('لم يتم العثور على بيانات العضو أو الصندوق.', 'error');
+        return;
+      }
+
+      if (!member.phone || member.phone.trim() === '') {
+        showAlert('لا يوجد رقم هاتف مسجل لهذا العضو.', 'error');
+        return;
+      }
+
+      const message = `عزيزي ${member.name}، تم دفع مبلغ ${formatNumber(deposit.amount)} لصندوق ${fund.name}. شكراً لتعاونك.`;
+      sendWhatsAppMessage(cleanAndFormatPhone(member.phone), message);
+    }
+
+    // ==========================================================
+    // دوال مساعدة لتعبئة القوائم المنسدلة
+    // ==========================================================
+    function populateDropdownsForModal() {
+      const teams = getFromStorage('teams', []);
+      const funds = getFromStorage('boxes', []); // ⭐️ تصحيح: استخدام 'boxes' بدلاً من 'funds'
+      const teamSelect = document.getElementById('deposit-team');
+      const fundSelect = document.getElementById('deposit-fund');
+
+      teamSelect.innerHTML = '<option value="">اختر الفريق</option>'; // النص النائب
+      teams.forEach(team => teamSelect.innerHTML += `<option value="${team.id}">${team.name}</option>`);
+
+      fundSelect.innerHTML = '<option value="">اختر الصندوق</option>'; // النص النائب
+      funds.forEach(fund => fundSelect.innerHTML += `<option value="${fund.id}">${fund.name}</option>`);
+    }
+
+    function renderMembersDropdown(selectId, teamId) {
+      const members = getFromStorage('members', []);
+      const select = document.getElementById(selectId);
+      if (!select) return;
+
+      select.innerHTML = '<option value="">اختر العضو</option>'; // إعادة تعيين
+      if (teamId) {
+        const filteredMembers = members.filter(m => m.teams && m.teams.includes(parseInt(teamId))); // ⭐️ تصحيح: البحث في مصفوفة الفرق
+        filteredMembers.forEach(member => {
+          select.innerHTML += `<option value="${member.id}">${member.name}</option>`;
+        });
+      }
+    }
+  </script>
+</body>
+
+</html>

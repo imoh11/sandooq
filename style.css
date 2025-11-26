@@ -1403,7 +1403,7 @@ footer {
   }
 
   .dashboard-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(4, 1fr) !important; /* ⭐️ تم التعديل: 4 أعمدة دائماً */
     gap: 10px;
   }
 
@@ -1531,7 +1531,7 @@ footer {
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* ⭐️ تم التعديل: 4 أعمدة دائماً */
   gap: 20px;
   justify-content: center; /* ⭐️ تم التعديل: لمحاذاة الكتل كاملة للوسط */
   justify-items: center; /* ⭐️ تم التعديل: لتمركز البطاقات داخل الشبكة */

@@ -1402,7 +1402,12 @@ footer {
     gap: 10px;
   }
 
-
+  .dashboard-grid {
+    grid-template-columns: repeat(4, auto);
+    /* ⭐️ تم التعديل: فرض 4 أعمدة بحجم المحتوى */
+    justify-content: center;
+    gap: 10px;
+  }
 
   .dashboard-box-card {
     padding: 15px;
@@ -1528,9 +1533,9 @@ footer {
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, max-content)); /* ⭐️ تم التعديل: أعمدة مرنة */
+  grid-template-columns: repeat(4, auto);
   gap: 20px;
-  justify-content: space-around; /* ⭐️ تم التعديل: توزيع المسافات تلقائياً */
+  justify-content: center;
   align-items: center;
 }
 
@@ -1539,10 +1544,12 @@ footer {
   border-radius: var(--radius-lg);
   padding: 12px;
   display: flex;
-  flex-direction: column; /* ⭐️ تم التعديل: ترتيب المحتوى عمودياً */
+  flex-direction: column;
+  /* ⭐️ تم التعديل: ترتيب المحتوى عمودياً */
   align-items: center;
   justify-content: center;
-  gap: 8px; /* ⭐️ تم التعديل: تعديل المسافة لتناسب الترتيب العمودي */
+  gap: 8px;
+  /* ⭐️ تم التعديل: تعديل المسافة لتناسب الترتيب العمودي */
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border-light);
   transition: all 0.3s ease;
@@ -1568,7 +1575,8 @@ footer {
 
 .dashboard-box-info {
   flex-grow: 1;
-  text-align: center; /* ⭐️ تم التعديل: لتمركز النص داخل البطاقة */
+  text-align: center;
+  /* ⭐️ تم التعديل: لتمركز النص داخل البطاقة */
 }
 
 .dashboard-box-title {

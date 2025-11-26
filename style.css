@@ -1403,7 +1403,7 @@ footer {
   }
 
   .dashboard-grid {
-    grid-template-columns: repeat(4, 1fr) !important; /* ⭐️ تم التعديل: 4 أعمدة دائماً */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* ⭐️ تم التعديل: جعلها متجاوبة على الشاشات الصغيرة جداً */
     gap: 10px;
   }
 
@@ -1531,10 +1531,10 @@ footer {
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* ⭐️ تم التعديل: 4 أعمدة دائماً */
+  grid-template-columns: repeat(auto-fit, minmax(150px, max-content)); /* ⭐️ تم التعديل: أعمدة مرنة */
   gap: 20px;
-  justify-content: center; /* ⭐️ تم التعديل: لمحاذاة الكتل كاملة للوسط */
-  justify-items: center; /* ⭐️ تم التعديل: لتمركز البطاقات داخل الشبكة */
+  justify-content: space-around; /* ⭐️ تم التعديل: توزيع المسافات تلقائياً */
+  align-items: center;
 }
 
 .dashboard-box-card {

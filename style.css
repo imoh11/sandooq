@@ -1402,10 +1402,7 @@ footer {
     gap: 10px;
   }
 
-  .dashboard-grid {
-    grid-template-columns: repeat(4, 1fr); /* ⭐️ تم التعديل: فرض 4 أعمدة على الشاشات الصغيرة */
-    gap: 10px;
-  }
+
 
   .dashboard-box-card {
     padding: 15px;

@@ -1403,7 +1403,7 @@ footer {
   }
 
   .dashboard-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* ⭐️ تم التعديل: جعلها متجاوبة على الشاشات الصغيرة جداً */
+    grid-template-columns: repeat(4, 1fr); /* ⭐️ تم التعديل: فرض 4 أعمدة على الشاشات الصغيرة */
     gap: 10px;
   }
 

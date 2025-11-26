@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Studio10 - الإعدادات</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="header-top">
+        <a href="index.html" class="logo">
+          <i class="fas fa-cogs"></i>
+          صندوق | box
+        </a>
+        <div class="header-actions">
+          <button onclick="logout()" title="تسجيل الخروج"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+      </div>
+      <nav>
+        <a href="index.html">
+          <i class="fas fa-home"></i>
+          <span>الرئيسية</span>
+        </a>
+        <a href="members.html">
+          <i class="fas fa-users"></i>
+          <span>الأعضاء</span>
+        </a>
+        <a href="deposit.html">
+          <i class="fas fa-wallet"></i>
+          <span>إيداع</span>
+        </a>
+        <a href="withdraw.html">
+          <i class="fas fa-university"></i>
+          <span>سحب</span>
+        </a>
+        <a href="reports.html">
+          <i class="fas fa-chart-bar"></i>
+          <span>تقارير</span>
+        </a>
+        <a href="users.html">
+          <i class="fas fa-user-cog"></i>
+          <span>المستخدمين</span>
+        </a>
+        <a href="settings.html" class="active">
+          <i class="fas fa-cog"></i>
+          <span>الإعدادات</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+
+      <section>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-sliders-h"></i> الإعدادات العامة
+            </div>
+          </div>
+          <div class="card-content">
+            <form id="settingsForm">
+              <div class="form-group">
+                <label>اسم المؤسسة:</label>
+                <input type="text" id="organizationName" placeholder="اسم المؤسسة" value="Studio10 للأنظمة الإدارية">
+              </div>
+              <div class="form-group">
+                <label>البريد الإلكتروني:</label>
+                <input type="email" id="organizationEmail" placeholder="البريد الإلكتروني">
+              </div>
+              <div class="form-group">
+                <label>رقم الهاتف:</label>
+                <input type="tel" id="organizationPhone" placeholder="رقم الهاتف">
+              </div>
+              <div class="form-group">
+                <label>العنوان:</label>
+                <textarea id="organizationAddress" placeholder="العنوان" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn primary" style="width: 100%; margin-top: 20px;">
+                <i class="fas fa-save"></i> حفظ الإعدادات
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-database"></i> إدارة البيانات
+            </div>
+          </div>
+          <div class="card-content">
+            <div style="display: grid; gap: 15px;">
+              <button class="btn" onclick="exportData()">
+                <i class="fas fa-download"></i> تصدير البيانات
+              </button>
+              <button class="btn" onclick="clearAllData()">
+                <i class="fas fa-trash"></i> حذف جميع البيانات
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-info-circle"></i> معلومات النظام
+            </div>
+          </div>
+          <div class="card-content">
+            <div class="member-info">
+              <div class="member-info-item">
+                <div class="member-info-label">إصدار النظام</div>
+                <div class="member-info-value">1.0</div>
+              </div>
+              <div class="member-info-item">
+                <div class="member-info-label">آخر تحديث</div>
+                <div class="member-info-value" id="lastUpdate"></div>
+              </div>
+              <div class="member-info-item">
+                <div class="member-info-label">عدد الأعضاء</div>
+                <div class="member-info-value" id="membersCount">0</div>
+              </div>
+              <div class="member-info-item">
+                <div class="member-info-label">عدد الصناديق</div>
+                <div class="member-info-value" id="boxesCount">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Studio10 للأنظمة الإدارية. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // حفظ الإعدادات
+    document.getElementById('settingsForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const settings = {
+        organizationName: document.getElementById('organizationName').value,
+        organizationEmail: document.getElementById('organizationEmail').value,
+        organizationPhone: document.getElementById('organizationPhone').value,
+        organizationAddress: document.getElementById('organizationAddress').value,
+        lastUpdate: new Date().toLocaleDateString('ar-SA')
+      };
+      saveToStorage('settings', settings);
+      showAlert('تم حفظ الإعدادات بنجاح', 'success');
+    });
+
+    // تصدير البيانات
+    function exportData() {
+      const data = {
+        members: getFromStorage('members', []),
+        teams: getFromStorage('teams', []),
+        boxes: getFromStorage('boxes', []),
+        groups: getFromStorage('groups', []),
+        deposits: getFromStorage('deposits', []),
+        withdrawals: getFromStorage('withdrawals', []),
+        settings: getFromStorage('settings', {})
+      };
+
+      const dataStr = JSON.stringify(data, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `studio10-backup-${new Date().getTime()}.json`;
+      link.click();
+
+      showAlert('تم تصدير البيانات بنجاح', 'success');
+    }
+
+    // حذف جميع البيانات
+    function clearAllData() {
+      if (confirm('هل أنت متأكد من حذف جميع البيانات؟ هذا الإجراء لا يمكن التراجع عنه.')) {
+        localStorage.clear();
+        initializeData();
+        showAlert('تم حذف جميع البيانات بنجاح', 'success');
+        location.reload();
+      }
+    }
+
+    // تحديث معلومات النظام
+    document.addEventListener('DOMContentLoaded', function () {
+      const settings = getFromStorage('settings', {});
+      if (settings.organizationName) {
+        document.getElementById('organizationName').value = settings.organizationName;
+      }
+      if (settings.organizationEmail) {
+        document.getElementById('organizationEmail').value = settings.organizationEmail;
+      }
+      if (settings.organizationPhone) {
+        document.getElementById('organizationPhone').value = settings.organizationPhone;
+      }
+      if (settings.organizationAddress) {
+        document.getElementById('organizationAddress').value = settings.organizationAddress;
+      }
+
+      document.getElementById('lastUpdate').textContent = settings.lastUpdate || new Date().toLocaleDateString('ar-SA');
+      document.getElementById('membersCount').textContent = getAllMembers().length;
+      document.getElementById('boxesCount').textContent = getAllBoxes().length;
+    });
+
+    function logout() {
+      if (confirm('هل تريد تسجيل الخروج؟')) {
+        showAlert('تم تسجيل الخروج بنجاح', 'success');
+      }
+    }
+  </script>
+</body>
+
+</html>

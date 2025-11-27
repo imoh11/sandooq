@@ -1079,6 +1079,13 @@ function renderMembersDropdowns(containerId, membersArray = null) {
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="member-dropdown-body">
+                    <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;">
+                        <div class="member-info-label" style="margin-bottom: 10px;">حالة الدفع</div>
+                        <div class="member-info" style="grid-template-columns: 1fr;">
+                            ${paymentStatusHtml}
+                        </div>
+                    </div>
+
                     <div class="member-info">
                         <div class="member-info-item">
                             <div class="member-info-label">الفرق</div>
@@ -1106,12 +1113,6 @@ function renderMembersDropdowns(containerId, membersArray = null) {
                         <div class="member-info-item">
                             <div class="member-info-label">تاريخ الانضمام</div>
                             <div class="member-info-value">${toLocaleDateStringAR(member.joinDate)}</div>
-                        </div>
-                    </div>
-                    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 15px;">
-                        <div class="member-info-label" style="margin-bottom: 10px;">حالة الدفع</div>
-                        <div class="member-info" style="grid-template-columns: 1fr;">
-                            ${paymentStatusHtml}
                         </div>
                     </div>
                     <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 15px; display: flex; gap: 10px;">

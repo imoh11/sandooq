@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>الأعضاء</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    header nav a.active {
+      background-color: #e9ecef;
+      /* لون رمادي فاتح للتظليل */
+      color: var(--primary-color);
+      /* تغيير لون النص ليتناسب مع الخلفية */
+      border-radius: 8px;
+      /* حواف دائرية لمظهر أنعم */
+    }
+  </style>
+  <style>
+    /* ... (Existing styles - unchanged) ... */
+    .section-buttons {
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .table-actions button {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+
+    table td {
+      text-align: center;
+    }
+
+    table th {
+      text-align: center;
+    }
+
+    /* === NEW: Styling for the three main section buttons (Tabs) === */
+    .section-tab-buttons .btn {
+      background-color: #f8f9fa;
+      border-color: #dee2e6;
+      color: #495057;
+      min-width: 100px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .section-tab-buttons .btn:hover {
+      background-color: #e9ecef;
+      border-color: #ced4da;
+    }
+
+    .section-tab-buttons .btn.active-tab {
+      background-color: #6c757d;
+      border-color: #6c757d;
+      color: #ffffff;
+      box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
+    }
+
+    /* ========================================================== */
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="header-top">
+        <a href="index.html" class="logo">
+          <i class="fas fa-cogs"></i>
+          صندوق | box
+        </a>
+        <div class="header-actions">
+          <button onclick="logout()" title="تسجيل الخروج"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+      </div>
+      <nav>
+        <a href="index.html">
+          <i class="fas fa-home"></i>
+          <span>الرئيسية</span>
+        </a>
+        <a href="members.html" class="active">
+          <i class="fas fa-users"></i>
+          <span>الأعضاء</span>
+        </a>
+        <a href="deposit.html">
+          <i class="fas fa-wallet"></i>
+          <span>إيداع</span>
+        </a>
+        <a href="withdraw.html">
+          <i class="fas fa-university"></i>
+          <span>سحب</span>
+        </a>
+        <a href="reports.html">
+          <i class="fas fa-chart-bar"></i>
+          <span>تقارير</span>
+        </a>
+        <a href="users.html">
+          <i class="fas fa-user-cog"></i>
+          <span>المستخدمين</span>
+        </a>
+        <a href="settings.html">
+          <i class="fas fa-cog"></i>
+          <span>الإعدادات</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+
+
+      <section>
+        <div class="flex-center section-tab-buttons"
+          style="gap: 15px; margin-bottom: 30px; flex-direction: row-reverse;">
+          <button id="members-btn" class="btn primary" onclick="showPage('members-section', this)">
+            <i class="fas fa-users"></i> الأعضاء
+          </button>
+          <button id="boxes-btn" class="btn primary" onclick="showPage('boxes-section', this)">
+            <i class="fas fa-box"></i> الصندوق
+          </button>
+          <button id="teams-btn" class="btn primary" onclick="showPage('teams-section', this)">
+            <i class="fas fa-sitemap"></i> الفريق
+          </button>
+        </div>
+      </section>
+      <section id="teams-section" class="page">
+        <div style="text-align: right; margin-bottom: 20px;">
+          <button class="btn primary" onclick="openModal('addTeamModal')">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <div id="teams-table-container"></div>
+      </section>
+
+      <section id="boxes-section" class="page">
+        <div style="text-align: right; margin-bottom: 20px;">
+          <button class="btn primary" onclick="openAddBoxModal()">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <div id="boxes-table-container"></div>
+      </section>
+
+      <section id="members-section" class="page active">
+        <div style="text-align: right; margin-bottom: 20px;">
+          <button class="btn primary" onclick="openAddMemberModal()">
+            <i class="fas fa-plus"></i>
+          </button>
+          <button class="btn primary" onclick="openModal('importMembersModal')">
+            <i class="fas fa-paste"></i>
+          </button>
+        </div>
+        <div class="filter-controls">
+          <select id="filterByTeam" class="filter-select">
+            <option value="">الفريق</option>
+          </select>
+
+          <select id="filterByBox" class="filter-select">
+            <option value="">الصندوق</option>
+          </select>
+
+          <select id="filterByStatus" class="filter-select">
+            <option value="">حالة الدفع</option>
+            <option value="completed">مكتمل</option>
+            <option value="delayed">متأخر</option>
+            <option value="unpaid">لم يدفع</option>
+            <option value="pending">قيد الانتظار</option>
+          </select>
+        </div>
+
+        <div id="members-dropdowns-container">
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="addTeamModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">إضافة فريق جديد</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="addTeamForm">
+          <div class="form-group">
+            <input type="text" id="teamName" placeholder="اسم الفريق" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('addTeamModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitAddTeam()">إضافة</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="editTeamModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">تحرير الفريق</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="editTeamForm">
+          <div class="form-group">
+            <input type="hidden" id="editTeamId">
+            <input type="text" id="editTeamName" placeholder="اسم الفريق" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('editTeamModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitEditTeam()">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="addBoxModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">إضافة صندوق جديد</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="addBoxForm">
+          <div class="form-group">
+            <input type="text" id="boxName" placeholder="اسم الصندوق" required>
+          </div>
+          <div class="form-group">
+            <input type="number" id="boxAmount" placeholder="مبلغ الدفع" step="0.01" required inputmode="numeric">
+          </div>
+          <div class="form-group">
+            <label>الاستحقاق:</label>
+            <select id="boxFrequency" required>
+              <option value="">اختر الاستحقاق</option>
+              <option value="monthly">شهري</option>
+              <option value="quarterly">ربع سنوي</option>
+              <option value="annual">سنوي</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>الفرق المشاركة:</label>
+            <div id="boxTeamsCheckboxes" style="min-height: 50px;"></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('addBoxModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitAddBox()">إضافة</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="editBoxModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">تحرير الصندوق</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="editBoxForm">
+          <div class="form-group">
+            <input type="hidden" id="editBoxId">
+            <input type="text" id="editBoxName" placeholder="اسم الصندوق" required>
+          </div>
+          <div class="form-group">
+            <input type="number" id="editBoxAmount" placeholder="مبلغ الدفع" step="0.01" required inputmode="numeric">
+          </div>
+          <div class="form-group">
+            <label>الاستحقاق:</label>
+            <select id="editBoxFrequency" required>
+              <option value="">اختر الاستحقاق</option>
+              <option value="monthly">شهري</option>
+              <option value="quarterly">ربع سنوي</option>
+              <option value="annual">سنوي</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>تاريخ الاستحقاق التالي (يدوي):</label>
+            <input type="date" id="editBoxNextDueDate"> <!-- ⭐️ حقل جديد لتعديل التاريخ يدوياً -->
+          </div>
+          <div class="form-group">
+            <label>الفرق المشاركة:</label>
+            <div id="editBoxTeamsCheckboxes" style="min-height: 50px;"></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('editBoxModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitEditBox()">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="addMemberModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">إضافة عضو جديد</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="addMemberForm">
+          <div class="form-group">
+            <input type="text" id="memberName" placeholder="الاسم" required>
+          </div>
+          <div class="form-group">
+            <input type="tel" id="memberPhone" placeholder="رقم الجوال" required>
+          </div>
+          <div class="form-group">
+            <button type="button" id="btnAddBirthDate" class="btn sm secondary"
+              onclick="showField('containerBirthDate', 'btnAddBirthDate')"
+              style="width: 100%; justify-content: center;">
+              <i class="fas fa-plus"></i> إضافة تاريخ الميلاد
+            </button>
+            <div id="containerBirthDate" style="display: none; margin-top: 10px;">
+              <input type="date" id="memberBirthDate" placeholder="تاريخ الميلاد">
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" id="btnAddFinancialStatus" class="btn sm secondary"
+              onclick="showField('containerFinancialStatus', 'btnAddFinancialStatus')"
+              style="width: 100%; justify-content: center;">
+              <i class="fas fa-plus"></i> إضافة الحالة المادية
+            </button>
+            <div id="containerFinancialStatus" style="display: none; margin-top: 10px;">
+              <select id="memberFinancialStatus">
+                <option value="">اختر الحالة المادية</option>
+                <option value="affluent">ميسور</option>
+                <option value="moderate">متوسط</option>
+                <option value="difficult">معسر</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" id="btnAddJobStatus" class="btn sm secondary"
+              onclick="showField('containerJobStatus', 'btnAddJobStatus')"
+              style="width: 100%; justify-content: center;">
+              <i class="fas fa-plus"></i> إضافة الحالة الوظيفية
+            </button>
+            <div id="containerJobStatus" style="display: none; margin-top: 10px;">
+              <select id="memberJobStatus">
+                <option value="">اختر الحالة الوظيفية</option>
+                <option value="employed">موظف</option>
+                <option value="unemployed">عاطل</option>
+                <option value="retired">متقاعد</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom: -3px;">
+            <label>الفرق:</label>
+            <div id="memberTeamsCheckboxes" style="min-height: 50px;"></div>
+          </div>
+          <div class="form-group">
+            <label>الصناديق:</label>
+            <div id="memberBoxesCheckboxes" style="min-height: 50px;"></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('addMemberModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitAddMember()">إضافة</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="importMembersModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">استيراد أعضاء (دفعة واحدة)</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="importMembersForm">
+          <div class="form-group">
+            <label>البيانات (بالصيغة: الاسم | الهاتف | الحالة المادية | الحالة الوظيفية)</label>
+            <textarea id="membersImportData"
+              placeholder="أحمد | 0501234567 | ميسور | موظف&#10;فاطمة | 0509876543 | متوسط | عاطل&#10;علي | 0505555555 | معسر | متقاعد"
+              rows="8" required style="font-family: monospace; font-size: 12px;"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('importMembersModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitImportMembers()">استيراد</button>
+      </div>
+    </div>
+  </div>
+  <div id="editMemberModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">تحرير بيانات العضو</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="editMemberForm">
+          <input type="hidden" id="editMemberId">
+          <div class="form-group">
+            <input type="text" id="editMemberName" placeholder="الاسم" required>
+          </div>
+          <div class="form-group" style="margin-bottom: -3px;">
+            <label>الفرق:</label>
+            <div id="editMemberTeamsCheckboxes" style="min-height: 50px;"></div>
+          </div>
+          <div class="form-group">
+            <label>الصناديق:</label>
+            <div id="editMemberBoxesCheckboxes" style="min-height: 50px;"></div>
+          </div>
+          <div class="form-group">
+            <input type="tel" id="editMemberPhone" placeholder="رقم الجوال" required>
+          </div>
+          <div class="form-group">
+            <input type="date" id="editMemberBirthDate" placeholder="تاريخ الميلاد">
+          </div>
+          <div class="form-group">
+            <select id="editMemberFinancialStatus">
+              <option value="">اختر الحالة المادية</option>
+              <option value="affluent">ميسور</option>
+              <option value="moderate">متوسط</option>
+              <option value="difficult">معسر</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select id="editMemberJobStatus">
+              <option value="">اختر الحالة الوظيفية</option>
+              <option value="employed">موظف</option>
+              <option value="unemployed">عاطل</option>
+              <option value="retired">متقاعد</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" onclick="closeModal('editMemberModal')">إلغاء</button>
+        <button class="btn primary" onclick="submitEditMember()">حفظ</button>
+      </div>
+    </div>
+  </div>
+  <!-- Confirmation Modal -->
+  <div id="confirmationModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3 id="confirmationModalTitle" class="modal-title">تأكيد الإجراء</h3>
+        <button class="modal-close" onclick="closeConfirmationModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirmationModalText">هل أنت متأكد من رغبتك في المتابعة؟</p>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelBtn" class="btn" onclick="closeConfirmationModal()">إلغاء</button>
+        <button id="confirmBtn" class="btn primary" onclick="handleConfirm()">تأكيد</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Studio10 للأنظمة الإدارية. جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // عرض الأقسام المختلفة
+    function showPage(pageId, clickedButton) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+
+      // التعديل: إدارة زر التبويب النشط
+      const tabButtons = document.querySelectorAll('.section-tab-buttons .btn');
+      tabButtons.forEach(btn => btn.classList.remove('active-tab'));
+      if (clickedButton) {
+        clickedButton.classList.add('active-tab');
+      }
+      // نهاية التعديل
+
+      if (pageId === 'teams-section') {
+        renderTeamsTable('teams-table-container');
+      } else if (pageId === 'boxes-section') {
+        renderBoxesTable('boxes-table-container');
+      } else if (pageId === 'members-section') {
+        renderMembersDropdowns('members-dropdowns-container');
+      }
+    }
+
+    // إضافة فريق
+    function submitAddTeam() {
+      const name = document.getElementById('teamName').value;
+      if (!name) {
+        showAlert('يرجى إدخال اسم الفريق', 'error');
+        return;
+      }
+      addTeam(name);
+      document.getElementById('addTeamForm').reset();
+      closeModal('addTeamModal');
+      renderTeamsTable('teams-table-container');
+      renderTeamsCheckboxes('boxTeamsCheckboxes');
+      renderTeamsCheckboxes('editBoxTeamsCheckboxes');
+    }
+
+    // تحرير فريق
+    function openEditTeamModal(teamId) {
+      const teams = getFromStorage('teams', []);
+      const team = teams.find(t => t.id === teamId);
+      if (team) {
+        document.getElementById('editTeamId').value = team.id;
+        document.getElementById('editTeamName').value = team.name;
+        openModal('editTeamModal');
+      }
+    }
+
+    function submitEditTeam() {
+      const teamId = parseInt(document.getElementById('editTeamId').value);
+      const name = document.getElementById('editTeamName').value;
+
+      if (!name) {
+        showAlert('يرجى إدخال اسم الفريق', 'error');
+        return;
+      }
+
+      const teams = getFromStorage('teams', []);
+      const team = teams.find(t => t.id === teamId);
+      if (team) {
+        team.name = name;
+        saveToStorage('teams', teams);
+        showAlert('تم تحديث الفريق بنجاح', 'success');
+        closeModal('editTeamModal');
+        renderTeamsTable('teams-table-container');
+        renderTeamsCheckboxes('boxTeamsCheckboxes');
+        renderTeamsCheckboxes('editBoxTeamsCheckboxes');
+      }
+    }
+
+    // إضافة صندوق
+    function submitAddBox() {
+      const name = document.getElementById('boxName').value;
+      const amount = document.getElementById('boxAmount').value;
+      const frequency = document.getElementById('boxFrequency').value;
+
+      const teamCheckboxes = document.querySelectorAll('#boxTeamsCheckboxes input[type="checkbox"]:checked');
+      const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
+
+      if (!name || !amount || !frequency) {
+        showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
+        return;
+      }
+
+      addBox(name, amount, teams, frequency);
+      document.getElementById('addBoxForm').reset();
+      document.getElementById('boxFrequency').value = '';
+      closeModal('addBoxModal');
+      renderBoxesTable('boxes-table-container');
+      renderTeamsCheckboxes('boxTeamsCheckboxes');
+    }
+
+    // تحرير صندوق
+    function openEditBoxModal(boxId) {
+      const boxes = getFromStorage('boxes', []);
+      const box = boxes.find(b => b.id === boxId);
+      if (box) {
+        document.getElementById('editBoxId').value = box.id;
+        document.getElementById('editBoxName').value = box.name;
+        document.getElementById('editBoxAmount').value = box.amount;
+        document.getElementById('editBoxFrequency').value = box.frequency; // ⭐️ تعبئة نوع الاستحقاق
+        document.getElementById('editBoxNextDueDate').value = box.nextDueDate || ''; // ⭐️ تعبئة التاريخ اليدوي (أو فارغ إذا كان null)
+
+        renderTeamsCheckboxes('editBoxTeamsCheckboxes');
+
+        setTimeout(() => {
+          const checkboxes = document.querySelectorAll('#editBoxTeamsCheckboxes input[type="checkbox"]');
+          checkboxes.forEach(cb => {
+            cb.checked = box.teams && box.teams.includes(parseInt(cb.value));
+          });
+        }, 50);
+
+        openModal('editBoxModal');
+      }
+    }
+
+    function submitEditBox() {
+      const boxId = parseInt(document.getElementById('editBoxId').value);
+      const name = document.getElementById('editBoxName').value;
+      const amount = document.getElementById('editBoxAmount').value;
+      const frequency = document.getElementById('editBoxFrequency').value;
+      const nextDueDate = document.getElementById('editBoxNextDueDate').value; // ⭐️ جلب التاريخ اليدوي
+
+      const teamCheckboxes = document.querySelectorAll('#editBoxTeamsCheckboxes input[type="checkbox"]:checked');
+      const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
+
+      if (!name || !amount || !frequency) {
+        showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
+        return;
+      }
+
+      // ⭐️ تم التعديل: استخدام دالة التحديث المركزية من script.js
+      const updatedData = {
+        name: name,
+        amount: parseFloat(amount),
+        frequency: frequency,
+        teams: teams,
+        nextDueDate: nextDueDate // ⭐️ تمرير التاريخ اليدوي إلى دالة التحديث
+      };
+
+      updateBox(boxId, updatedData);
+
+      closeModal('editBoxModal');
+      renderBoxesTable('boxes-table-container');
+      renderTeamsCheckboxes('boxTeamsCheckboxes'); // لتحديث أي نماذج أخرى قد تستخدمها
+    }
+
+    // إضافة عضو
+    function submitAddMember() {
+      const name = document.getElementById('memberName').value;
+      const phone = document.getElementById('memberPhone').value;
+      const birthDate = document.getElementById('memberBirthDate').value;
+      const financialStatus = document.getElementById('memberFinancialStatus').value;
+      const jobStatus = document.getElementById('memberJobStatus').value;
+
+      // جمع الفرق المختارة بشكل أكثر دقة
+      const teamContainer = document.getElementById('memberTeamsCheckboxes');
+      const teamInputs = teamContainer.querySelectorAll('input[type="checkbox"]');
+      const teams = [];
+      teamInputs.forEach(input => {
+        if (input.checked) {
+          teams.push(parseInt(input.value));
+        }
+      });
+
+      // جمع الصناديق المختارة
+      const boxContainer = document.getElementById('memberBoxesCheckboxes');
+      const boxInputs = boxContainer.querySelectorAll('input[type="checkbox"]');
+      const boxes = [];
+      boxInputs.forEach(input => {
+        if (input.checked) {
+          boxes.push(parseInt(input.value));
+        }
+      });
+
+      if (!name || !phone) {
+        showAlert('يرجى إدخال الاسم ورقم الجوال', 'error');
+        return;
+      }
+
+      addMember(name, teams, boxes, phone, birthDate, financialStatus, jobStatus);
+      document.getElementById('addMemberForm').reset();
+      closeModal('addMemberModal');
+      renderMembersDropdowns('members-dropdowns-container');
+    }
+
+    // استيراد الأعضاء
+    function submitImportMembers() {
+      const data = document.getElementById('membersImportData').value;
+
+      if (!data.trim()) {
+        showAlert('يرجى لصق بيانات الأعضاء', 'error');
+        return;
+      }
+
+      const lines = data.split('\n').filter(line => line.trim());
+      let count = 0;
+      let errors = [];
+
+      lines.forEach((line, index) => {
+        const parts = line.split('|').map(p => p.trim());
+
+        if (parts.length !== 4) {
+          errors.push(`السطر ${index + 1}: بيانات غير كاملة`);
+          return;
+        }
+
+        const [name, phone, financial, job] = parts;
+
+        if (!name || !phone || !financial || !job) {
+          errors.push(`السطر ${index + 1}: بيانات فارغة`);
+          return;
+        }
+
+        const validFinancial = ['affluent', 'moderate', 'difficult'];
+        const validJob = ['employed', 'unemployed', 'retired'];
+
+        if (!validFinancial.includes(financial)) {
+          errors.push(`السطر ${index + 1}: حالة مادية غير صحيحة`);
+          return;
+        }
+
+        if (!validJob.includes(job)) {
+          errors.push(`السطر ${index + 1}: حالة وظيفية غير صحيحة`);
+          return;
+        }
+
+        addMember(name, [], [], phone, '', financial, job);
+        count++;
+      });
+
+      if (errors.length > 0) {
+        showAlert('أخطاء: ' + errors.join(', '), 'error');
+        return;
+      }
+
+      showAlert('تم استيراد ' + count + ' أعضاء بنجاح', 'success');
+      document.getElementById('importMembersForm').reset();
+      closeModal('importMembersModal');
+      renderMembersDropdowns('members-dropdowns-container');
+    }
+
+    // فتح نافذة إضافة عضو
+    function openAddMemberModal() {
+      renderTeamsCheckboxes('memberTeamsCheckboxes');
+      renderBoxesCheckboxes('memberBoxesCheckboxes');
+      openModal('addMemberModal');
+    }
+
+    // فتح نافذة إضافة صندوق
+    function openAddBoxModal() {
+      renderTeamsCheckboxes('boxTeamsCheckboxes');
+      openModal('addBoxModal');
+    }
+
+    // تحديث البيانات عند التحميل
+    document.addEventListener('DOMContentLoaded', function () {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      if (isLoggedIn !== 'true') {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // التعديل: تفعيل زر التبويب النشط عند التحميل بناءً على القسم النشط افتراضياً (teams-section)
+      const activeSection = document.querySelector('.page.active');
+      if (activeSection) {
+        const activeId = activeSection.id.replace('-section', '-btn');
+        const activeBtn = document.getElementById(activeId);
+        if (activeBtn) {
+          activeBtn.classList.add('active-tab');
+        }
+      }
+      // نهاية التعديل
+
+      renderTeamsTable('teams-table-container');
+      renderBoxesTable('boxes-table-container'); // ⭐️ تم التعديل: استدعاء دالة عرض البطاقات
+      renderMembersDropdowns('members-dropdowns-container');
+    });
+    // ⭐️ مكان الإضافة: في ملف members.html، داخل وسم <script>، بعد آخر دالة موجودة.
+
+    // ⭐️ تم التعديل: إضافة مستمع أحداث لتحديث التاريخ تلقائياً عند تغيير الاستحقاق
+    document.getElementById('editBoxFrequency').addEventListener('change', function () {
+      const frequency = this.value;
+      if (frequency) {
+        // استدعاء دالة الحساب من script.js
+        const nextDueDate = calculateNextDueDate(frequency);
+        document.getElementById('editBoxNextDueDate').value = nextDueDate;
+      }
+    });
+
+    // 1. فتح نافذة تحرير العضو وتعبئة البيانات
+    function openEditMemberModal(memberId) {
+      const members = getFromStorage('members', []);
+      const member = members.find(m => m.id === memberId);
+
+      if (member) {
+        // 1. تعبئة الحقول النصية والقيم المختارة
+        document.getElementById('editMemberId').value = member.id;
+        document.getElementById('editMemberName').value = member.name;
+        document.getElementById('editMemberPhone').value = member.phone;
+        document.getElementById('editMemberBirthDate').value = member.birthDate;
+        document.getElementById('editMemberFinancialStatus').value = member.financialStatus;
+        document.getElementById('editMemberJobStatus').value = member.jobStatus;
+
+        // 2. عرض خيارات الفرق والصناديق وتحديد الخيارات الحالية
+        renderTeamsCheckboxes('editMemberTeamsCheckboxes');
+        renderBoxesCheckboxes('editMemberBoxesCheckboxes');
+
+        // تأخير بسيط لضمان عرض Checkboxes قبل محاولة تحديدها
+        setTimeout(() => {
+          // تحديد الفرق المشارك بها العضو حاليًا
+          const teamCheckboxes = document.querySelectorAll('#editMemberTeamsCheckboxes input[type="checkbox"]');
+          teamCheckboxes.forEach(cb => {
+            cb.checked = member.teams && member.teams.includes(parseInt(cb.value));
+          });
+
+          // تحديد الصناديق المشترك بها العضو حاليًا
+          const boxCheckboxes = document.querySelectorAll('#editMemberBoxesCheckboxes input[type="checkbox"]');
+          boxCheckboxes.forEach(cb => {
+            cb.checked = member.boxes && member.boxes.includes(parseInt(cb.value));
+          });
+        }, 50);
+
+        // 3. فتح النافذة المنبثقة
+        openModal('editMemberModal');
+      }
+    }
+
+    // 2. إرسال التعديلات وحفظها
+    function submitEditMember() {
+      const memberId = parseInt(document.getElementById('editMemberId').value);
+      const name = document.getElementById('editMemberName').value;
+      const phone = document.getElementById('editMemberPhone').value;
+      const birthDate = document.getElementById('editMemberBirthDate').value;
+      const financialStatus = document.getElementById('editMemberFinancialStatus').value;
+      const jobStatus = document.getElementById('editMemberJobStatus').value;
+
+      // جمع مُعرّفات الفرق والصناديق المحددة
+      const teamCheckboxes = document.querySelectorAll('#editMemberTeamsCheckboxes input[type="checkbox"]:checked');
+      const teams = Array.from(teamCheckboxes).map(cb => parseInt(cb.value));
+
+      const boxCheckboxes = document.querySelectorAll('#editMemberBoxesCheckboxes input[type="checkbox"]:checked');
+      const boxes = Array.from(boxCheckboxes).map(cb => parseInt(cb.value));
+
+      if (!name || !phone) {
+        showAlert('يرجى إدخال الاسم ورقم الجوال', 'error');
+        return;
+      }
+
+      const updatedData = {
+        name,
+        phone,
+        birthDate,
+        financialStatus,
+        jobStatus,
+        teams,
+        boxes
+      };
+
+      // استدعاء دالة التحديث الموجودة في script.js
+      updateMember(memberId, updatedData);
+
+      closeModal('editMemberModal');
+      renderMembersDropdowns('members-dropdowns-container');
+    }
+    // ⭐️ دالة لإظهار الحقول المخفية
+    function showField(containerId, btnId) {
+      document.getElementById(containerId).style.display = 'block';
+      document.getElementById(btnId).style.display = 'none';
+    }
+
+function logout() {
+    const message = 'هل أنت متأكد من رغبتك في تسجيل الخروج؟';
+    showConfirmationModal(message, () => {
+        localStorage.setItem('isLoggedIn', 'false');
+        localStorage.removeItem('currentUser');
+        showAlert('تم تسجيل الخروج بنجاح', 'success');
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 1000);
+    });
+}
+  </script>
+</body>
+
+</html>

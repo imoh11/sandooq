@@ -1015,7 +1015,7 @@ tbody tr:last-child td {
 
 .member-info {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr); /* ⭐️ تم التعديل: عرض 3 عناصر في السطر الواحد */
   gap: 15px;
   margin-bottom: 15px;
 }
@@ -1673,10 +1673,6 @@ footer {
 
   .modal-content {
     max-width: 90%;
-  }
-
-  .member-info {
-    grid-template-columns: 1fr;
   }
 
   .filter-controls {
